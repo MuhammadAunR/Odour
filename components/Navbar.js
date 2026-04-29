@@ -24,12 +24,12 @@ const Navbar = () => {
             }
         }
         window.addEventListener('scroll', handleNavbarPosition)
-        
+
         return () => window.removeEventListener('scroll', handleNavbarPosition)
     }, [])
 
     return (
-        <nav className='w-10/12 mx-auto flex items-center justify-between py-7 px-3'>
+        <nav className={`w-10/12 mx-auto flex items-center justify-between py-7 px-3`}>
             <div>
                 <Link href={'/'}>
                     <h1 className='font-display font-bold text-4xl'>Odour</h1>

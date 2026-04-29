@@ -8,6 +8,8 @@ export default function Home() {
         <header>
         <HeroSection />
         </header>
+
+        <section className="h-screen">h</section>
       </main>
     </>
   );
