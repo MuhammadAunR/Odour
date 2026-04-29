@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <main>
-        <header className="bg-surface">
+        <header>
         <HeroSection />
         </header>
       </main>
