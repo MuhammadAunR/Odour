@@ -36,8 +36,9 @@ const Navbar = () => {
                 </Link>
                 <ul className='flex items-center gap-15'>
                     {navOptions.map((opt, i) => (
-                        <li key={i} className='text-lg hover:text-muted transition-all ease-linear duration-300'>
+                        <li key={i} className='text-lg hover:text-muted transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
                             <Link href={opt.src}>{opt.option}</Link>
+                            <span className='absolute bg-foreground text-background px-5 py-1 rounded-3xl -left-5 -bottom-10 transition-all ease-linear duration-300 group-hover/navOption:bottom-0'>{opt.option}</span>
                         </li>
                     ))}
                 </ul>
