@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import "./styles/globals.css";
 import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
+import AppWrapper from "./context/AppWrapper";
+import Cart from "@/components/Cart";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -33,8 +35,11 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${dubiel.variable} ${topLuxury.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
+        <AppWrapper>
+          <Cart />
+          <Navbar />
+          {children}
+        </AppWrapper>
       </body>
     </html>
   );

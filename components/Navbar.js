@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { ShoppingBag, UserRound } from 'lucide-react'
 import Link from 'next/link'
+import { useCart } from '@/app/context/CartContext'
 
 const Navbar = () => {
 
@@ -13,6 +14,7 @@ const Navbar = () => {
     ]
 
     const [fixNavbar, setFixNavbar] = useState(false)
+    const { toggleCart } = useCart()
 
     useEffect(() => {
         const handleNavbarPosition = () => {
@@ -41,7 +43,7 @@ const Navbar = () => {
                 </ul>
                 <div className='flex items-center gap-10'>
                     <span className='flex items-center gap-2'>
-                        <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
+                        <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                             <ShoppingBag />
                         </span>
                         <span><span className='text-xs'>PKR</span> 0.00</span>
@@ -70,7 +72,7 @@ const Navbar = () => {
                     </ul>
                     <div className='flex items-center gap-10'>
                         <span className='flex items-center gap-2'>
-                            <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
+                            <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                                 <ShoppingBag />
                             </span>
                             <span><span className='text-xs'>PKR</span> 0.00</span>

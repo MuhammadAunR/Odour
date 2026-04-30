@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { heroSectionSlideData } from './Assets'
+import { Button1 } from './ButtonUI'
 
 const HeroSection = () => {
 
@@ -56,11 +57,9 @@ const HeroSection = () => {
 
               <p className=''>{currentSlide.desc}</p>
 
-              <motion.button
-                whileTap={{ scale: 0.95 }}
-                className='text-lg border-2 border-foreground px-10 py-3 uppercase hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer'>
-                Shop Now
-              </motion.button>
+              <span>
+                <Button1 text={'Shop Now'}/>
+              </span>
 
             </motion.div>
 
