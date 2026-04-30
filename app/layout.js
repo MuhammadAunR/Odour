@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
 import AppWrapper from "./context/AppWrapper";
 import Cart from "@/components/Cart";
+import NavSidebar from "@/components/NavSidebar";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <AppWrapper>
           <Cart />
+          <NavSidebar />
           <Navbar />
           {children}
         </AppWrapper>

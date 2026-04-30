@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { ShoppingBag, UserRound } from 'lucide-react'
 import Link from 'next/link'
 import { useCart } from '@/app/context/CartContext'
+import HamburgerComp from './HamburgerComp'
+import { useNavContext } from '@/app/context/NavbarContext'
+import { motion } from "framer-motion"
 
 const Navbar = () => {
 
@@ -14,7 +17,8 @@ const Navbar = () => {
     ]
 
     const [fixNavbar, setFixNavbar] = useState(false)
-    const { toggleCart } = useCart()
+    const { toggleCart, cartItems } = useCart()
+    const { toggleNavbar, isOpen } = useNavContext()
 
     useEffect(() => {
         const handleNavbarPosition = () => {
@@ -30,24 +34,30 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='w-10/12 mx-auto flex items-center justify-between py-4 px-3'>
-                <Link href={'/'}>
-                    <h1 className='font-display font-bold text-4xl'>Odour</h1>
+            <nav className='w-10/12 mx-auto flex items-center justify-between py-4 px-3 h-20'>
+                <Link href={'/'} className=''>
+                    <h1 className='font-display font-bold text-4xl max-lg:hidden'>Odour</h1>
+                    <span className='lg:hidden'>
+                        <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
+                    </span>
                 </Link>
-                <ul className='flex items-center gap-3'>
+
+                <h1 className='font-display font-bold text-4xl lg:hidden'>Odour</h1>
+
+                <ul className='flex items-center gap-3 max-lg:hidden'>
                     {navOptions.map((opt, i) => (
-                        <li key={i} className='text-lg w-30 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
+                        <li key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
                             <Link href={opt.src} className='group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</Link>
-                            <span className='absolute bg-foreground text-background w-25 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
+                            <span className='absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
                         </li>
                     ))}
                 </ul>
-                <div className='flex items-center gap-10'>
+                <div className='flex items-center gap-5'>
                     <span className='flex items-center gap-2'>
                         <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                             <ShoppingBag />
                         </span>
-                        <span><span className='text-xs'>PKR</span> 0.00</span>
+                        <span className='max-md:hidden'><span className='text-xs'>PKR</span> 0.00</span>
                     </span>
                     <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                         <UserRound />
@@ -60,24 +70,28 @@ const Navbar = () => {
                 bg-background transition-transform duration-500 ease-in-out border-b border-foreground
                 ${fixNavbar ? 'translate-y-0 scale-100' : '-translate-y-full scale-0'}
             `}>
-                <div className='w-10/12 mx-auto flex items-center justify-between py-4 px-3'>
-                    <Link href={'/'}>
-                        <h1 className='font-display font-bold text-4xl'>Odour</h1>
+                <div className='w-10/12 mx-auto flex items-center justify-between py-4 px-3 h-20'>
+                    <Link href={'/'} className=''>
+                        <h1 className='font-display font-bold text-4xl max-lg:hidden'>Odour</h1>
+                        <span className='lg:hidden'>
+                            <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
+                        </span>
                     </Link>
-                    <ul className='flex items-center gap-3'>
+                    <h1 className='font-display font-bold text-4xl lg:hidden'>Odour</h1>
+                    <ul className='flex items-center gap-3 max-lg:hidden'>
                         {navOptions.map((opt, i) => (
-                            <li key={i} className='text-lg w-30 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
+                            <li key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
                                 <Link href={opt.src} className='group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</Link>
-                                <span className='absolute bg-foreground text-background w-25 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
+                                <span className='absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
                             </li>
                         ))}
                     </ul>
-                    <div className='flex items-center gap-10'>
+                    <div className='flex items-center gap-5'>
                         <span className='flex items-center gap-2'>
                             <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                                 <ShoppingBag />
                             </span>
-                            <span><span className='text-xs'>PKR</span> 0.00</span>
+                            <span className='max-md:hidden'><span className='text-xs'>PKR</span> 0.00</span>
                         </span>
                         <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                             <UserRound />
