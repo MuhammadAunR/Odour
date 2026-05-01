@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronUp, Dot } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { heroSectionSlideData } from './Assets'
@@ -48,13 +48,22 @@ const HeroSection = () => {
     window.scrollTo(0, 0)
   }
 
-  const GoToWhatsapp = () => {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImgCount(prev => (prev + 1) % heroSectionSlideData.length)
+    }, 3000)
 
-  }
-
+    return () => clearInterval(interval)
+  }, [])
   return (
     <>
       <main className='bg-surface group relative'>
+
+        <div className='flex items-center justify-center absolute bottom-0 left-1/2 -translate-x-1/2 py-5'>
+          {heroSectionSlideData.map((slide, index) => {
+            return <span key={index} className={`${index === imgCount ? 'text-muted' : 'text-foreground'}`}><Dot size={60} /></span>
+          })}
+        </div>
 
         {yScroll && <span
           onClick={handleScrollToTop}
@@ -69,14 +78,14 @@ const HeroSection = () => {
           </svg>
         </a>
 
-        <section className='h-screen w-10/12 mx-auto flex items-center justify-between'>
+        <section className='min-h-screen py-10 h-fit w-10/12 mx-auto flex items-center justify-between max-lg:flex-col'>
 
           <section className='flex items-center gap-5 relative'>
 
             <motion.div
               whileTap={{ scale: 0.95 }}
               onClick={handleBackwardCarousel}
-              className='opacity-0 group-hover:opacity-100 absolute -left-25 bg-background p-3 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer'>
+              className='opacity-0 group-hover:opacity-100 absolute -left-25 bg-background p-3 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer max-md:hidden'>
               <ChevronLeft />
             </motion.div>
 
@@ -86,9 +95,11 @@ const HeroSection = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className='w-10/12 flex flex-col items-start gap-5'>
+              className='lg:w-10/12 flex flex-col items-start gap-5'>
 
-              <h1 className='text-8xl font-bold font-serif tracking-wider'>{currentSlide.title}</h1>
+              <h1 className='max-md:text-5xl max-lg:text-7xl 2xl:text-8xl font-bold font-serif tracking-wider'>
+                {currentSlide.title}
+              </h1>
 
               <p className=''>{currentSlide.desc}</p>
 
@@ -101,28 +112,31 @@ const HeroSection = () => {
           </section>
 
           <section className='w-1/2 flex items-center gap-5 relative'>
-
             <motion.div
               key={imgCount}
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className='relative w-100 h-100 rounded-full overflow-hidden'>
-              <Image
-                src={currentSlide.imgSrc}
-                alt={currentSlide.alt}
-                fill
-                sizes='3000px'
-                loading='lazy'
-                className='object-cover'
-              />
+              className='relative w-full max-w-md aspect-4/5 self-center'
+            >
+              <div className='absolute top-4 left-4 w-full h-full bg-surface border border-muted/30' />
+              <div className='absolute inset-0 bottom-4 right-4'>
+                <Image
+                  src={currentSlide.imgSrc}
+                  alt={currentSlide.alt}
+                  fill
+                  sizes='(max-width: 768px) 90vw, 450px'
+                  loading='lazy'
+                  className='object-cover'
+                />
+              </div>
             </motion.div>
 
             <motion.div
               whileTap={{ scale: 0.95 }}
               onClick={handleForwardCarousel}
-              className='opacity-0 group-hover:opacity-100 absolute -right-25 bg-background p-3 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer'>
+              className='max-md:hidden opacity-0 group-hover:opacity-100 absolute -right-25 bg-background p-3 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer'>
               <ChevronRight />
             </motion.div>
           </section>

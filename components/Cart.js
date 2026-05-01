@@ -26,7 +26,6 @@ const Cart = () => {
         };
     }, [isCartOpen]);
 
-    console.log(cartItems)
     return (
         <main className='w-full flex'>
 
