@@ -48,6 +48,7 @@ const FeatureStrip = () => {
                         alt='Feature Strip Section Photo'
                         fill
                         loading='lazy' 
+                        sizes='1000px'
                         className='object-cover hover:scale-105 ease-linear transition-all'/>
                 </section>
             </main>

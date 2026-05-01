@@ -1,5 +1,5 @@
 'use client'
-import { Heart, Search, ShoppingBag } from 'lucide-react'
+import { Search, ShoppingBag } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 import { motion } from "framer-motion"
@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
             initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: product.id * 0.1 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
             className='flex flex-col items-start justify-center border border-surface group/productCard hover:shadow-xl transition-shadow ease-in-out duration-500'>
             <div className='relative w-full aspect-3/4 overflow-hidden'>
                 <Image
@@ -35,8 +35,8 @@ const ProductCard = ({ product }) => {
                 </div>
             </div>
             <div className='p-4'>
-                <h3 className='text-2xl font-bold font-display'>{product.name}</h3>
-                <div className='text-lg'>
+                <h3 className='text-xl font-bold font-display'>{product.name}</h3>
+                <div className=''>
                     <span className='text-xs'>PKR</span>
                     <span className='font-semibold text-red-600'> {product.price}</span>
                 </div>
