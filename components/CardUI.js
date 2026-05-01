@@ -23,20 +23,14 @@ const ProductCard = ({ product }) => {
                     sizes='(max-width: 768px) 50vw, 25vw'
                     className='object-cover'
                 />
-                <div className='flex items-center justify-center gap-5 absolute -bottom-15 scale-0 group-hover/productCard:bottom-2 group-hover/productCard:scale-100 transition-all ease-in-out duration-300  left-16 bg-white border border-foreground/20 px-7 py-2 rounded-full'>
+                <div className='flex items-center justify-center gap-5 absolute -bottom-15 left-1/2 -translate-x-1/2 scale-0 group-hover/productCard:bottom-2 group-hover/productCard:scale-100 transition-all ease-in-out duration-300 bg-white border border-foreground/20 px-7 py-2 rounded-full'>
                     <span className='hover:text-muted cursor-pointer transition-colors ease-in-out relative group/productActions'>
                         <Search />
-                        <span className='absolute -top-10 left-1/2 -translate-x-1/2 text-sm bg-foreground text-background w-30 flex items-center justify-center opacity-0 group-hover/productActions:opacity-100 transition-opacity ease-linear rounded-full p-2 whitespace-nowrap'>Quick View</span>
-                    </span>
-                    <span className='hover:text-muted cursor-pointer transition-colors ease-in-out relative group/productActions'>
-                        <Heart />
-                        <span className='absolute -top-10 left-1/2 -translate-x-1/2 text-sm bg-foreground text-background w-30 flex items-center justify-center opacity-0 group-hover/productActions:opacity-100 transition-opacity ease-linear rounded-full p-2 whitespace-nowrap'>
-                            Add to Favorite
-                        </span>
+                        <span className='absolute top-0 scale-0 left-1/2 -translate-x-1/2 text-xs bg-foreground text-background w-20 flex items-center justify-center group-hover/productActions:-top-12 group-hover/productActions:scale-100 transition-all ease-linear rounded-full p-2 whitespace-nowrap'>Quick View</span>
                     </span>
                     <span onClick={() => handleAddCartItems(product)} className='hover:text-muted cursor-pointer transition-colors ease-in-out relative group/productActions'>
                         <ShoppingBag />
-                        <span className='absolute -top-10 left-1/2 -translate-x-1/2 text-sm bg-foreground text-background w-30 flex items-center justify-center opacity-0 group-hover/productActions:opacity-100 transition-opacity ease-linear rounded-full p-2 whitespace-nowrap'>Add to Cart</span>
+                        <span className='absolute top-0 scale-0 left-1/2 -translate-x-1/2 text-xs bg-foreground text-background w-20 flex items-center justify-center group-hover/productActions:-top-12 group-hover/productActions:scale-100 transition-all ease-linear rounded-full p-2 whitespace-nowrap'>Add to Cart</span>
                     </span>
                 </div>
             </div>
