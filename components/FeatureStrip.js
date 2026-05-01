@@ -28,7 +28,7 @@ const FeatureStrip = () => {
 
                 <section className='flex items-center justify-between gap-7 pt-15 flex-wrap'>
                     {featureStrip.map((feature, i) => {
-                        return <div key={i} className='flex flex-col items-start gap-3 w-70 min-h-70 h-50 p-5'>
+                        return <div key={i} className='flex flex-col items-start gap-3 w-70 p-5'>
                             <h3 className='text-xl font-semibold'>{feature.title}</h3>
                             <div className='bg-foreground h-1 w-1/5'></div>
                             <p className='text-muted'>{feature.desc}</p>
@@ -36,7 +36,7 @@ const FeatureStrip = () => {
                     })}
                 </section>
 
-                <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-30'>
+                <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-20'>
                     {products.slice(0, 4).map(prod => {
                         return <ProductCard key={prod.id} product={prod} />
                     })}
