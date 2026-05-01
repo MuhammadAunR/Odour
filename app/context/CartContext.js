@@ -15,7 +15,7 @@ const CartContext = ({ children }) => {
         setIsCartOpen(!isCartOpen)
     }
 
-    const handleCartItems = (i) => {
+    const handleAddCartItems = (i) => {
         setCartItems(prev => {
             const exist = prev.find(item => item.id === i.id)
 
@@ -83,7 +83,7 @@ const CartContext = ({ children }) => {
 
     return (
         <ContextProvider.Provider value={{
-            isCartOpen, toggleCart, handleCartItems, cartItems, handleSubTotal, removeCartItem,
+            isCartOpen, toggleCart, handleAddCartItems, cartItems, handleSubTotal, removeCartItem,
             handleItemDec, handleItemInc, handleCheckout
         }}>
             {children}

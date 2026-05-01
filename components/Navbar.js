@@ -54,8 +54,13 @@ const Navbar = () => {
                 </ul>
                 <div className='flex items-center gap-5'>
                     <span className='flex items-center gap-2'>
-                        <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
+                        <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative'>
                             <ShoppingBag />
+                            {cartItems.length > 0 &&
+                                <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
+                                    {cartItems.length}
+                                </span>
+                            }
                         </span>
                         <span className='max-md:hidden'><span className='text-xs'>PKR</span> 0.00</span>
                     </span>
@@ -88,8 +93,13 @@ const Navbar = () => {
                     </ul>
                     <div className='flex items-center gap-5'>
                         <span className='flex items-center gap-2'>
-                            <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
+                            <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative'>
                                 <ShoppingBag />
+                                {cartItems.length > 0 &&
+                                    <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
+                                        {cartItems.length}
+                                    </span>
+                                }
                             </span>
                             <span className='max-md:hidden'><span className='text-xs'>PKR</span> 0.00</span>
                         </span>

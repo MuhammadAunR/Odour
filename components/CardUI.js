@@ -3,8 +3,10 @@ import { Heart, Search, ShoppingBag } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 import { motion } from "framer-motion"
+import { useCart } from '@/app/context/CartContext'
 
 const ProductCard = ({ product }) => {
+    const { handleAddCartItems } = useCart()
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
@@ -32,7 +34,7 @@ const ProductCard = ({ product }) => {
                             Add to Favorite
                         </span>
                     </span>
-                    <span className='hover:text-muted cursor-pointer transition-colors ease-in-out relative group/productActions'>
+                    <span onClick={() => handleAddCartItems(product)} className='hover:text-muted cursor-pointer transition-colors ease-in-out relative group/productActions'>
                         <ShoppingBag />
                         <span className='absolute -top-10 left-1/2 -translate-x-1/2 text-sm bg-foreground text-background w-30 flex items-center justify-center opacity-0 group-hover/productActions:opacity-100 transition-opacity ease-linear rounded-full p-2 whitespace-nowrap'>Add to Cart</span>
                     </span>

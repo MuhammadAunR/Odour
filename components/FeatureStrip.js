@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductCard from './CardUI'
 import { products } from './Assets'
+import { span } from 'motion/react-client'
 
 const FeatureStrip = () => {
     const featureStrip = [
@@ -35,9 +36,9 @@ const FeatureStrip = () => {
                     })}
                 </section>
 
-                <section className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-10'>
-                    {products.slice(0,4).map(prod => {
-                        return <ProductCard key={prod.id} product={prod}/>
+                <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-10'>
+                    {products.slice(0, 4).map(prod => {
+                        return <ProductCard key={prod.id} product={prod} />
                     })}
                 </section>
             </main>

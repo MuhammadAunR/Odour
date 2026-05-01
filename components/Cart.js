@@ -26,6 +26,7 @@ const Cart = () => {
         };
     }, [isCartOpen]);
 
+    console.log(cartItems)
     return (
         <main className='w-full flex'>
 
@@ -69,9 +70,10 @@ const Cart = () => {
 
                             <div className='relative w-15 h-15 overflow-hidden shrink-0'>
                                 <Image
-                                    src={item.image}
-                                    alt={item.name}
+                                    src={item.imgSrc}
+                                    alt={item.alt}
                                     fill
+                                    loading='lazy'
                                     sizes="60px"
                                     className='object-cover rounded-full'
                                 />
@@ -79,7 +81,7 @@ const Cart = () => {
 
                             <div className='flex flex-col flex-1 min-w-0'>
                                 <h4 className='truncate'>{item.name}</h4>
-                                <span className='text-sm text-gray-400'>{item.type}</span>
+                                {/* <span className='text-sm text-gray-400'>{item.type}</span> */}
                             </div>
 
                             <span className='text-sm font-semibold whitespace-nowrap gap-2 flex flex-col items-center justify-center'>
@@ -104,7 +106,7 @@ const Cart = () => {
                             <span className='text-xs'>PKR</span> {handleSubTotal}
                         </span>
                     </div>
-                    <span onClick={() => { toggleCart(); handleCheckout() }} className='flex flex-col items-end'>
+                    <span onClick={() => { toggleCart(), handleCheckout() }} className='flex flex-col items-end'>
                         <span>
                             <Button1 text={'Check Out'} />
                         </span>
