@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductCard from './CardUI'
 import { products } from './Assets'
-import { span } from 'motion/react-client'
+import Image from 'next/image'
 
 const FeatureStrip = () => {
     const featureStrip = [
@@ -31,15 +31,24 @@ const FeatureStrip = () => {
                         return <div key={i} className='flex flex-col items-start gap-3 w-70 min-h-70 h-50 p-5'>
                             <h3 className='text-xl font-semibold'>{feature.title}</h3>
                             <div className='bg-foreground h-1 w-1/5'></div>
-                            <p className='text-gray-600'>{feature.desc}</p>
+                            <p className='text-muted'>{feature.desc}</p>
                         </div>
                     })}
                 </section>
 
-                <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-10'>
+                <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-30'>
                     {products.slice(0, 4).map(prod => {
                         return <ProductCard key={prod.id} product={prod} />
                     })}
+                </section>
+
+                <section className='relative h-80 w-full pb-20 overflow-hidden'>
+                    <Image
+                        src={'/featureStripSection.webp'}
+                        alt='Feature Strip Section Photo'
+                        fill
+                        loading='lazy' 
+                        className='object-cover hover:scale-105 ease-linear transition-all'/>
                 </section>
             </main>
         </>

@@ -34,7 +34,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='w-10/12 mx-auto flex items-center justify-between py-4 px-3 h-20'>
+            <nav className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
                 <Link href={'/'} className=''>
                     <h1 className='font-display font-bold text-4xl max-lg:hidden'>Odour</h1>
                     <span className='lg:hidden'>
@@ -75,7 +75,7 @@ const Navbar = () => {
                 bg-background transition-transform duration-500 ease-in-out border-b border-foreground
                 ${fixNavbar ? 'translate-y-0 scale-100' : '-translate-y-full scale-0'}
             `}>
-                <div className='w-10/12 mx-auto flex items-center justify-between py-4 px-3 h-20'>
+                <div className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
                     <Link href={'/'} className=''>
                         <h1 className='font-display font-bold text-4xl max-lg:hidden'>Odour</h1>
                         <span className='lg:hidden'>
