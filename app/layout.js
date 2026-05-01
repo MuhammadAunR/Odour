@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import AppWrapper from "./context/AppWrapper";
 import Cart from "@/components/Cart";
 import NavSidebar from "@/components/NavSidebar";
+import LenisWrapper from "@/components/LenisWrapper";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -36,12 +37,14 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${dubiel.variable} ${topLuxury.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <AppWrapper>
-          <Cart />
-          <NavSidebar />
-          <Navbar />
-          {children}
-        </AppWrapper>
+        <LenisWrapper>
+          <AppWrapper>
+            <Cart />
+            <NavSidebar />
+            <Navbar />
+            {children}
+          </AppWrapper>
+        </LenisWrapper>
       </body>
     </html>
   );
