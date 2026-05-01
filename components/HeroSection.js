@@ -1,6 +1,6 @@
 'use client'
-import React, { useState } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { heroSectionSlideData } from './Assets'
@@ -9,8 +9,21 @@ import { Button1 } from './ButtonUI'
 const HeroSection = () => {
 
   const [imgCount, setImgCount] = useState(0)
+  const [yScroll, setYScroll] = useState(false)
 
   const currentSlide = heroSectionSlideData[imgCount]
+
+  useEffect(() => {
+    const handleYScroll = () => {
+      if (window.scrollY > 100) {
+        setYScroll(true)
+      } else {
+        setYScroll(false)
+      }
+    }
+    window.addEventListener('scroll', handleYScroll)
+    return () => window.removeEventListener('scroll', handleYScroll)
+  }, [])
 
   const handleForwardCarousel = () => {
     if (imgCount < heroSectionSlideData.length - 1) {
@@ -30,9 +43,21 @@ const HeroSection = () => {
     }
   }
 
+  const handleScrollToTop = () => {
+    window.lenis?.scrollTo(0, { immediate: true })
+    window.scrollTo(0, 0)
+  }
+
   return (
     <>
-      <main className='bg-surface group'>
+      <main className='bg-surface group relative'>
+
+        {yScroll && <span
+          onClick={handleScrollToTop}
+          className='fixed bottom-7 right-7 z-90 bg-muted p-2 text-background'>
+          <ChevronUp />
+        </span>
+        }
 
         <section className='h-screen w-10/12 mx-auto flex items-center justify-between'>
 
@@ -58,7 +83,7 @@ const HeroSection = () => {
               <p className=''>{currentSlide.desc}</p>
 
               <span>
-                <Button1 text={'Shop Now'}/>
+                <Button1 text={'Shop Now'} />
               </span>
 
             </motion.div>
