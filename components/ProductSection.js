@@ -21,7 +21,7 @@ const ProductSection = () => {
                     master craftsmanship, and the art of lasting impression.
                 </p>
 
-                <div className='flex items-center justify-center gap-5'>
+                <div className='flex items-center justify-center gap-5 flex-wrap'>
                     {['New Arrivals', 'Best Sellers', 'Trending Now'].map(btn => {
                         return <button
                             key={btn}
