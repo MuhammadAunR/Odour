@@ -5,16 +5,9 @@ import Link from 'next/link'
 import { useCart } from '@/app/context/CartContext'
 import HamburgerComp from './HamburgerComp'
 import { useNavContext } from '@/app/context/NavbarContext'
-import { motion } from "framer-motion"
+import { navOptions } from './Assets'
 
 const Navbar = () => {
-
-    const navOptions = [
-        { option: 'Home', src: '/' },
-        { option: 'Shop', src: '/shop' },
-        { option: 'About', src: '/about' },
-        { option: 'Contact', src: '/contact' },
-    ]
 
     const [fixNavbar, setFixNavbar] = useState(false)
     const { toggleCart, cartItems } = useCart()

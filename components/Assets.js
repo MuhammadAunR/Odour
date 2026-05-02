@@ -1,4 +1,11 @@
-import { tr } from "motion/react-client"
+const navOptions = [
+    { option: 'Home', src: '/' },
+    { option: 'Shop', src: '/shop' },
+    { option: 'About', src: '/about' },
+    { option: 'Contact', src: '/contact' },
+]
+
+export { navOptions }
 
 const heroSectionSlideData = [
     {
