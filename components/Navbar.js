@@ -11,9 +11,9 @@ const Navbar = () => {
 
     const navOptions = [
         { option: 'Home', src: '/' },
-        { option: 'Shop', src: '/' },
-        { option: 'About', src: '/' },
-        { option: 'Contact', src: '/' },
+        { option: 'Shop', src: '/shop' },
+        { option: 'About', src: '/about' },
+        { option: 'Contact', src: '/contact' },
     ]
 
     const [fixNavbar, setFixNavbar] = useState(false)
@@ -46,10 +46,10 @@ const Navbar = () => {
 
                 <ul className='flex items-center gap-3 max-lg:hidden'>
                     {navOptions.map((opt, i) => (
-                        <li key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
-                            <Link href={opt.src} className='group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</Link>
+                        <Link href={opt.src} key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
+                            <li className='group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</li>
                             <span className='absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
-                        </li>
+                        </Link>
                     ))}
                 </ul>
                 <div className='flex items-center gap-5'>
@@ -85,10 +85,10 @@ const Navbar = () => {
                     <h1 className='font-display font-bold text-4xl lg:hidden'>Odour</h1>
                     <ul className='flex items-center gap-3 max-lg:hidden'>
                         {navOptions.map((opt, i) => (
-                            <li key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
-                                <Link href={opt.src} className='group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</Link>
+                            <Link href={opt.src} key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
+                                <li className='group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</li>
                                 <span className='absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
-                            </li>
+                            </Link>
                         ))}
                     </ul>
                     <div className='flex items-center gap-5'>
