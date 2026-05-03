@@ -9,7 +9,6 @@ const ProductSection = () => {
 
     const handleActiveFilter = (text) => {
         setActiveFilter(text)
-        console.log(text)
     }
     return (
         <main className='w-10/12 mx-auto py-20'>

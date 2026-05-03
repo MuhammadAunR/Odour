@@ -10,7 +10,7 @@ const NavSidebar = () => {
 
     const { isOpen, toggleNavbar } = useNavContext()
 
-    const MotionLink = motion(Link);
+    const MotionLink = motion.create(Link);
 
     useEffect(() => {
         if (isOpen) {

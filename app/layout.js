@@ -8,6 +8,7 @@ import NavSidebar from "@/components/NavSidebar";
 import LenisWrapper from "@/components/LenisWrapper";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
+import FooterSection from "@/components/FooterSection";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -47,6 +48,7 @@ export default function RootLayout({ children }) {
               <NavSidebar />
               <Navbar />
               {children}
+              <FooterSection />
             </AppWrapper>
           </LenisWrapper>
         </ReactToastContainer>
