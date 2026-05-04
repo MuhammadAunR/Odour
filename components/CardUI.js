@@ -4,7 +4,6 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { motion } from "framer-motion"
 import { useCart } from '@/app/context/CartContext'
-import { Button1 } from './ButtonUI'
 
 const ProductCard = ({ product }) => {
     const { handleAddCartItems } = useCart()
@@ -49,7 +48,7 @@ const ProductCard = ({ product }) => {
                 <button
                     onClick={() => setWishListed(!wishListed)}
                     className='absolute bottom-14 right-3 p-1.5 bg-background/80 backdrop-blur-sm rounded-full
-                        opacity-0 group-hover/productCard:opacity-100 transition-all duration-300'>
+                        scale-0 group-hover/productCard:scale-100 transition-all duration-300'>
                     <Heart
                         size={16}
                         className={wishListed ? 'fill-red-500 text-red-500' : 'text-foreground'}
@@ -64,7 +63,7 @@ const ProductCard = ({ product }) => {
 
                     <button
                         className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                            hover:bg-muted hover:text-background transition-colors duration-300
+                            hover:bg-muted hover:text-background transition-colors duration-500
                             border-r border-foreground/10'>
                         <Search size={15} />
                         <span>Quick View</span>
@@ -73,7 +72,7 @@ const ProductCard = ({ product }) => {
                     <button
                         onClick={() => handleAddCartItems(product)}
                         className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                            hover:bg-muted hover:text-background transition-colors duration-300'>
+                            hover:bg-muted hover:text-background transition-colors duration-500'>
                         <ShoppingBag size={15} />
                         <span>Add to Cart</span>
                     </button>

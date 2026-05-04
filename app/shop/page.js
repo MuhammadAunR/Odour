@@ -1,16 +1,16 @@
 'use client'
-import { products } from '@/components/Assets'
 import ProductCard from '@/components/CardUI'
 import { ChevronDown, LayoutGrid, LayoutList } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const ShopPage = () => {
 
     const [open, setOpen] = useState('Categories')
     const [productView, setProductView] = useState('grid')
     const [currentPage, setCurrentPage] = useState(1)
+    const [products, setProducts] = useState([])
 
-    const productsPerPage = 9
+    const productsPerPage = 12
     const totalPages = Math.ceil((products.length / productsPerPage))
 
     const startIndex = (currentPage - 1) * productsPerPage
@@ -58,6 +58,17 @@ const ShopPage = () => {
         //     step: 500,
         // },
     ]
+
+    useEffect(() => {
+        async function getAllProducts() {
+            const res = await fetch('/api/products')
+            const data = await res.json()
+            setProducts(data.products)
+            console.log(data)
+        }
+        getAllProducts()
+    }, [])
+
 
     const handleOpenFilterSection = (section) => {
         setOpen(prev => prev === section ? null : section)
