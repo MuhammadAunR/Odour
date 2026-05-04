@@ -5,7 +5,7 @@ import Product from "@/models/Product"
 export async function GET(req, { params }) {
     try {
         await connectDB()
-        const { slug } = params
+        const { slug } = await params
         const product = await Product.findOne({ slug })
         return Response.json(product)
     } catch (error) {

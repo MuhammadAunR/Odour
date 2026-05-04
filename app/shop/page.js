@@ -5,10 +5,13 @@ import React, { useEffect, useState } from 'react'
 
 const ShopPage = () => {
 
-    const [open, setOpen] = useState('Categories')
+    const [open, setOpen] = useState('')
     const [productView, setProductView] = useState('grid')
     const [currentPage, setCurrentPage] = useState(1)
     const [products, setProducts] = useState([])
+    const [filters, setFilters] = useState([])
+    const [apiResponse, setApiResponse] = useState({})
+    const [itemsPerFilter, setItemsPerFilter] = useState([])
 
     const productsPerPage = 12
     const totalPages = Math.ceil((products.length / productsPerPage))
@@ -18,55 +21,47 @@ const ShopPage = () => {
 
     const currentProducts = products.slice(startIndex, endIndex)
 
-
-    const filterSections = [
-        {
-            title: 'Categories',
-            type: 'checkbox',
-            options: ['New Arrivals', 'Best Sellers', 'Trending Now', 'Gift Sets'],
-        },
-        {
-            title: 'Gender',
-            type: 'checkbox',
-            options: ['Men', 'Women', 'Unisex'],
-        },
-        {
-            title: 'Brand',
-            type: 'checkbox',
-            options: ['Dior', 'Chanel', 'Tom Ford', 'Creed', 'Giorgio Armani', 'Lancôme'],
-        },
-        {
-            title: 'Size',
-            type: 'checkbox',
-            options: ['30ml', '50ml', '75ml', '90ml', '100ml'],
-        },
-        {
-            title: 'Fragrance Family',
-            type: 'checkbox',
-            options: ['Floral', 'Woody', 'Oriental / Oud', 'Fresh & Aquatic', 'Citrus', 'Musk', 'Spicy', 'Gourmand'],
-        },
-        {
-            title: 'Concentration',
-            type: 'checkbox',
-            options: ['Parfum (EDP)', 'Eau de Toilette (EDT)', 'Eau de Cologne (EDC)', 'Body Mist'],
-        },
-        // {
-        //     title: 'Price Range',
-        //     type: 'range',
-        //     min: 0,
-        //     max: 50000,
-        //     step: 500,
-        // },
-    ]
-
     useEffect(() => {
         async function getAllProducts() {
             const res = await fetch('/api/products')
             const data = await res.json()
             setProducts(data.products)
             console.log(data)
+
+            setApiResponse(data)
         }
+
+        async function getAllFilters() {
+            const res = await fetch('/api/filters')
+            const data = await res.json()
+            console.log(data)
+
+            const filterArray = Object.entries(data).map(([key, value]) => ({
+                title: key.charAt(0).toUpperCase() + key.slice(1),
+                options: value
+            }))
+            setFilters(filterArray)
+        }
+
+        async function getItemsPerFilter() {
+            const res = await fetch('/api/filter-count')
+            const data = await res.json()
+            console.log(data)
+
+            const filterItemArray = Object.entries(data).map(([key, value]) => ({
+                title: key.charAt(0).toUpperCase() + key.slice(1),
+                options: value.map(item => ({
+                    value: item._id,
+                    count: item.count
+                }))
+            }))
+            setItemsPerFilter(filterItemArray)
+        }
+
         getAllProducts()
+        getAllFilters()
+        getItemsPerFilter()
+
     }, [])
 
 
@@ -99,8 +94,8 @@ const ShopPage = () => {
                 <div className="flex items-center justify-between py-4 border-b border-foreground/10">
 
                     <p className="text-sm text-foreground/50">
-                        Showing <span className="text-foreground font-semibold">24</span> of{' '}
-                        <span className="text-foreground font-semibold">{products.length}</span> products
+                        Showing <span className="text-foreground font-semibold">{products.length}</span> of{' '}
+                        <span className="text-foreground font-semibold">{apiResponse.total}</span> products
                     </p>
 
                     <div className="flex items-center gap-1 border border-foreground/20 rounded p-1">
@@ -137,16 +132,16 @@ const ShopPage = () => {
 
                         <section className='py-5 flex flex-col gap-'>
 
-                            {filterSections.map((sec) => {
-                                const isOpen = open === sec.title;
+                            {filters.map((filter) => {
+                                const isOpen = open === filter.title;
 
                                 return (
-                                    <div key={sec.title} className="flex flex-col border-b border-foreground/20">
+                                    <div key={filter.title} className="flex flex-col border-b border-foreground/20">
 
                                         <div
-                                            onClick={() => handleOpenFilterSection(sec.title)}
+                                            onClick={() => handleOpenFilterSection(filter.title)}
                                             className="flex items-center justify-between hover:bg-foreground/5 px-2 py-3 cursor-pointer">
-                                            <h3 className="font-semibold">{sec.title}</h3>
+                                            <h3 className="font-semibold">{filter.title === 'FragranceFamily' ? 'Fragrance Family' : filter.title}</h3>
                                             <span className={`transition-transform duration-300 ease-linear ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
                                                 <ChevronDown size={20} />
                                             </span>
@@ -157,7 +152,7 @@ const ShopPage = () => {
                                             className="grid transition-all duration-300 ease-in-out"
                                             style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}>
                                             <div className="overflow-hidden">
-                                                {sec.options.map((opt) => (
+                                                {filter.options.map((opt) => (
                                                     <div
                                                         key={opt}
                                                         className="flex items-center py-2 justify-between group/category px-2"
@@ -167,7 +162,7 @@ const ShopPage = () => {
                                                             <span>{opt}</span>
                                                         </label>
                                                         <div className="bg-foreground/30 p-0.5 rounded-full text-xs w-7 h-7 flex items-center justify-center cursor-pointer group-hover/category:bg-muted group-hover/category:text-background transition-colors duration-300">
-                                                            0
+                                                            {''}
                                                         </div>
                                                     </div>
                                                 ))}
