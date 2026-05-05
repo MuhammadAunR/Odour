@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
         <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: product.id * 0.1 }}
+            transition={{ duration: 0.2, delay: product.id * 0.1 }}
             viewport={{ once: true }}
             className='flex flex-col items-start border border-surface group/productCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit'>
 
