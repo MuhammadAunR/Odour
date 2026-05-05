@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { Button1 } from './ButtonUI'
+import Link from 'next/link'
 
 
 const Cart = () => {
@@ -55,7 +56,7 @@ const Cart = () => {
                         >
                             <span><ShoppingCart size={70} color='grey' /></span>
                             <span className='text-lg'>Your cart is empty</span>
-                            <span className='text-xl underline cursor-pointer hover:text-blue-600 transition-colors'>Go to Shop</span>
+                            <Link href={'/shop'} className='text-xl underline cursor-pointer hover:text-blue-600 transition-colors'>Go to Shop</Link>
                         </motion.div>
                     )}
                     {cartItems.map(item => (
