@@ -19,6 +19,7 @@ export async function GET(request) {
         const sort = searchParams.get('sort') || 'id_asc'
         const page = parseInt(searchParams.get('page')) || 1
         const limit = parseInt(searchParams.get('limit')) || 12
+        const search = searchParams.get('search')
 
         const filter = {}
         if (gender) filter.gender = gender
@@ -32,6 +33,12 @@ export async function GET(request) {
             filter.price = {}
             if (minPrice) filter.price.$gte = parseInt(minPrice)
             if (maxPrice) filter.price.$lte = parseInt(maxPrice)
+        }
+        if (search) {
+            filter.$or = [
+                { name: { $regex: search, $options: 'i' } },
+                { brand: { $regex: search, $options: 'i' } },
+            ]
         }
 
         const sortMap = {

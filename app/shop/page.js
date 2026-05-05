@@ -21,8 +21,10 @@ const ShopPage = () => {
         season: '',
         concentration: '',
         fragranceFamily: '',
+        search: '',
         sort: 'id_asc'
     })
+    const [searchInput, setSearchInput] = useState('')
 
     const totalPages = apiResponse.totalPages
 
@@ -120,6 +122,17 @@ const ShopPage = () => {
         })
     }
 
+    useEffect(() => {
+        setTimeout(() => {
+            const value = searchInput.trim()
+            setQueryParams(prev => ({
+                ...prev,
+                search: value,
+                page: 1,
+            }))
+        }, 500);
+    }, [searchInput])
+
     return (
         <>
             <main className='w-10/12 mx-auto relative'>
@@ -155,11 +168,13 @@ const ShopPage = () => {
                             <label htmlFor="search" className='flex flex-col items-start gap-4'>
                                 <span className='font-semibold text-foreground'>Search</span>
                                 <input
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    value={searchInput}
                                     type="text"
                                     name="search"
                                     id="search"
                                     placeholder='Search our store'
-                                    className='w-full outline-none px-3 border border-foreground/20 py-2 hover:bg-foreground/5 transition-all ease-linear cursor-pointer text-foreground/70' />
+                                    className='w-full outline-none px-3 border border-foreground/20 py-2 hover:bg-foreground/5 transition-all ease-linear text-foreground/70' />
                             </label>
                         </section>
 

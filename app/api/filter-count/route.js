@@ -16,11 +16,11 @@ export async function GET() {
                 { $group: { _id: "$concentration", count: { $sum: 1 } } }
             ]),
             Product.aggregate([
-                { $unwind: "$season" },              
+                { $unwind: "$season" },
                 { $group: { _id: "$season", count: { $sum: 1 } } }
             ]),
             Product.aggregate([
-                { $group: { _id: "$fragranceFamily", count: { $sum: 1 } } }  
+                { $group: { _id: "$fragranceFamily", count: { $sum: 1 } } }
             ]),
         ])
 

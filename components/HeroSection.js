@@ -62,7 +62,7 @@ const HeroSection = () => {
         <div className='flex items-center justify-center gap-2 absolute bottom-0 left-1/2 -translate-x-1/2 py-5'>
           {heroSectionSlideData.map((slide, index) => {
             return <span key={index} className={`${index === imgCount ? 'text-muted' : 'text-foreground transform rotate-45'} transition-all ease-linear duration-500`}>
-              <Diamond strokeWidth={3} size={14}/>
+              <Diamond strokeWidth={3} size={14} />
             </span>
           })}
         </div>
