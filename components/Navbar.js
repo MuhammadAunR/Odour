@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation'
 const Navbar = () => {
 
     const [fixNavbar, setFixNavbar] = useState(false)
-    const { toggleCart, cartItems } = useCart()
+    const { toggleCart, cartItems, handleSubTotal } = useCart()
     const { toggleNavbar, isOpen } = useNavContext()
     const [activeNav, setActiveNav] = useState('home')
 
@@ -73,7 +73,7 @@ const Navbar = () => {
                                     </span>
                                 }
                             </span>
-                            <span className='max-md:hidden'><span className='text-xs'>PKR</span> 0.00</span>
+                            <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
                         </span>
                         <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                             <UserRound />
@@ -116,7 +116,7 @@ const Navbar = () => {
                                     </span>
                                 }
                             </span>
-                            <span className='max-md:hidden'><span className='text-xs'>PKR</span> 0.00</span>
+                            <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
                         </span>
                         <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
                             <UserRound />
