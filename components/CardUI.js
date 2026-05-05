@@ -29,13 +29,13 @@ const ProductCard = ({ product }) => {
 
 
                 <span className={`absolute top-2 left-2 px-2 py-1 text-xs font-medium
-                    ${product.category === 'Men'
+                    ${product.gender === 'Men'
                         ? 'bg-foreground text-background'
-                        : product.category === 'Women'
+                        : product.gender === 'Women'
                             ? 'bg-foreground text-background'
                             : 'bg-foreground text-background'
                     }`}>
-                    {product.category}
+                    {product.gender}
                 </span>
 
                 {product.isOnSale &&
