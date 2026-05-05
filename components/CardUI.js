@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: product.id * 0.1 }}
             viewport={{ once: true }}
-            className='flex flex-col items-start border border-surface group/productCard hover:shadow-xl transition-shadow ease-in-out duration-500'>
+            className='flex flex-col items-start border border-surface group/productCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit'>
 
             <div className='relative w-full aspect-3/4 overflow-hidden'>
                 <Image

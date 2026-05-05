@@ -7,7 +7,7 @@ export async function GET(request) {
 
         const { searchParams } = new URL(request.url)
 
-        const category = searchParams.get('category')
+        const gender = searchParams.get('gender')
         const brand = searchParams.get('brand')
         const fragranceFamily = searchParams.get('fragranceFamily')
         const concentration = searchParams.get('concentration')
@@ -21,7 +21,7 @@ export async function GET(request) {
         const limit = parseInt(searchParams.get('limit')) || 12
 
         const filter = {}
-        if (category) filter.category = category
+        if (gender) filter.gender = gender
         if (brand) filter.brand = brand
         if (fragranceFamily) filter.fragranceFamily = fragranceFamily
         if (concentration) filter.concentration = concentration

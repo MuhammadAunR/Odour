@@ -13,19 +13,31 @@ const ShopPage = () => {
     const [apiResponse, setApiResponse] = useState({})
     const [itemsPerFilter, setItemsPerFilter] = useState([])
     const [loading, setLoading] = useState(false)
+    const [queryParams, setQueryParams] = useState({
+        page: 1,
+        limit: 12,
+        brand: '',
+        gender: '',
+        season: '',
+        concentration: '',
+        fragranceFamily: '',
+        sort: 'id_asc'
+    })
 
-    const productsPerPage = 12
-    const totalPages = Math.ceil((products.length / productsPerPage))
+    const totalPages = apiResponse.totalPages
 
-    const startIndex = (currentPage - 1) * productsPerPage
-    const endIndex = startIndex + productsPerPage
-
-    const currentProducts = products.slice(startIndex, endIndex)
+    const buildUrl = React.useCallback(() => {
+        const cleanParams = Object.fromEntries(
+            Object.entries(queryParams).filter(([_, v]) => v !== '' && v !== null)
+        )
+        const params = new URLSearchParams(cleanParams)
+        return `/api/products?${params.toString()}`
+    }, [queryParams])
 
     useEffect(() => {
         setLoading(true)
         async function getAllProducts() {
-            const res = await fetch('/api/products')
+            const res = await fetch(buildUrl())
             const data = await res.json()
             setProducts(data.products)
             console.log("All Products", data)
@@ -34,6 +46,11 @@ const ShopPage = () => {
             setLoading(false)
         }
 
+        getAllProducts()
+
+    }, [queryParams])
+
+    useEffect(() => {
         async function getItemsPerFilter() {
             const res = await fetch('/api/filter-count')
             const data = await res.json()
@@ -41,6 +58,7 @@ const ShopPage = () => {
 
             const filterItemArray = Object.entries(data).map(([key, value]) => ({
                 title: key.charAt(0).toUpperCase() + key.slice(1),
+                key: key,
                 options: value.map(item => ({
                     value: item._id,
                     count: item.count || 0,
@@ -48,11 +66,9 @@ const ShopPage = () => {
             }))
             setItemsPerFilter(filterItemArray)
         }
-
-        getAllProducts()
         getItemsPerFilter()
-
     }, [])
+
 
 
     const handleOpenFilterSection = (section) => {
@@ -61,12 +77,22 @@ const ShopPage = () => {
 
     const handleCurrentPage = (page) => {
         setCurrentPage(page)
+        setQueryParams(prev => ({
+            ...prev,
+            page: page
+        }))
+        window.scrollTo(0, 0)
     }
 
     const handelForwardPagination = () => {
         if (currentPage < totalPages) {
             const page = currentPage + 1
             setCurrentPage(page)
+            setQueryParams(prev => ({
+                ...prev,
+                page: page
+            }))
+            window.scrollTo(0, 0)
         } else return
     }
 
@@ -74,7 +100,24 @@ const ShopPage = () => {
         if (currentPage > 1) {
             const page = currentPage - 1
             setCurrentPage(page)
+            setQueryParams(prev => ({
+                ...prev,
+                page: page
+            }))
+            window.scrollTo(0, 0)
         } else return
+    }
+
+    const handleApplyFilter = (filterType, filterName) => {
+
+        setQueryParams(prev => {
+            const newValue = prev[filterType] === filterName ? '' : filterName
+            return {
+                ...prev,
+                [filterType]: newValue,
+                page: 1
+            }
+        })
     }
 
     return (
@@ -143,18 +186,29 @@ const ShopPage = () => {
                                             style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}>
                                             <div className="overflow-hidden">
                                                 {filter.options.map((opt) => (
-                                                    <div
+                                                    <label
                                                         key={opt.value}
-                                                        className="flex items-center py-2 justify-between group/category px-2"
+                                                        className="flex items-center py-2 justify-between group/category px-2 cursor-pointer hover:bg-foreground/5 transition-colors duration-300"
                                                     >
-                                                        <label className="flex items-center gap-5 cursor-pointer group-hover/category:text-muted transition-colors duration-300">
-                                                            <input type="checkbox" />
-                                                            <span>{opt.value}</span>
-                                                        </label>
-                                                        <div className="bg-foreground/30 p-0.5 rounded-full text-xs w-7 h-7 flex items-center justify-center cursor-pointer group-hover/category:bg-muted group-hover/category:text-background transition-colors duration-300">
+                                                        <div className="flex items-center gap-5">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={
+                                                                    Array.isArray(queryParams[filter.key])
+                                                                        ? queryParams[filter.key].includes(opt.value)
+                                                                        : queryParams[filter.key] === opt.value
+                                                                }
+                                                                onChange={() => handleApplyFilter(filter.key, opt.value)}
+                                                            />
+                                                            <span className="group-hover/category:text-muted transition-colors duration-300">
+                                                                {opt.value}
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="bg-foreground/30 p-0.5 rounded-full text-xs w-7 h-7 flex items-center justify-center group-hover/category:bg-muted group-hover/category:text-background transition-colors duration-300">
                                                             {opt.count}
                                                         </div>
-                                                    </div>
+                                                    </label>
                                                 ))}
                                             </div>
                                         </div>
@@ -172,10 +226,10 @@ const ShopPage = () => {
                         <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 min-h-screen h-fit relative'>
 
                             <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-                                {loading && currentProducts.length === 0 && <Loader />}
+                                {loading && products.length === 0 && <Loader />}
                             </span>
 
-                            {currentProducts.map(prod => (
+                            {products.map(prod => (
                                 <ProductCard key={prod.id} product={prod} />
                             ))}
                         </div>
