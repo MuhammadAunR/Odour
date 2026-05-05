@@ -6,12 +6,21 @@ import { useCart } from '@/app/context/CartContext'
 import HamburgerComp from './HamburgerComp'
 import { useNavContext } from '@/app/context/NavbarContext'
 import { navOptions } from './Assets'
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
 
     const [fixNavbar, setFixNavbar] = useState(false)
     const { toggleCart, cartItems } = useCart()
     const { toggleNavbar, isOpen } = useNavContext()
+    const [activeNav, setActiveNav] = useState('home')
+
+    const pathname = usePathname()
+    useEffect(() => {
+        const nav = pathname.slice(1) === '' ? 'home' : pathname.slice(1)
+        setActiveNav(nav)
+    }, [pathname])
+
 
     useEffect(() => {
         const handleNavbarPosition = () => {
@@ -24,6 +33,10 @@ const Navbar = () => {
         window.addEventListener('scroll', handleNavbarPosition)
         return () => window.removeEventListener('scroll', handleNavbarPosition)
     }, [])
+
+    const handleActiveNavOption = (option) => {
+        setActiveNav(option)
+    }
 
     return (
         <>
@@ -39,9 +52,12 @@ const Navbar = () => {
 
                 <ul className='flex items-center gap-3 max-lg:hidden'>
                     {navOptions.map((opt, i) => (
-                        <Link href={opt.src} key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
-                            <li className='group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</li>
-                            <span className='absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
+                        <Link onClick={() => handleActiveNavOption(opt.option)} href={opt.src} key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
+
+                            <li className={`transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? '' : 'group-hover/navOption:translate-y-10 group-hover/navOption:scale-0'}`}>{opt.option}</li>
+                            <span className={`absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 cursor-pointer
+                            ${activeNav === opt.option.toLowerCase() ? 'translate-y-0  scale-100' : 'translate-y-12  scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0'}`}>{opt.option}</span>
+
                         </Link>
                     ))}
                 </ul>
