@@ -26,40 +26,27 @@ const ShopPage = () => {
             const res = await fetch('/api/products')
             const data = await res.json()
             setProducts(data.products)
-            console.log(data)
+            console.log("All Products", data)
 
             setApiResponse(data)
-        }
-
-        async function getAllFilters() {
-            const res = await fetch('/api/filters')
-            const data = await res.json()
-            console.log(data)
-
-            const filterArray = Object.entries(data).map(([key, value]) => ({
-                title: key.charAt(0).toUpperCase() + key.slice(1),
-                options: value
-            }))
-            setFilters(filterArray)
         }
 
         async function getItemsPerFilter() {
             const res = await fetch('/api/filter-count')
             const data = await res.json()
-            console.log(data)
+            console.log("Filter Count", data)
 
             const filterItemArray = Object.entries(data).map(([key, value]) => ({
                 title: key.charAt(0).toUpperCase() + key.slice(1),
                 options: value.map(item => ({
                     value: item._id,
-                    count: item.count
+                    count: item.count || 0,
                 }))
             }))
             setItemsPerFilter(filterItemArray)
         }
 
         getAllProducts()
-        getAllFilters()
         getItemsPerFilter()
 
     }, [])
@@ -132,7 +119,7 @@ const ShopPage = () => {
 
                         <section className='py-5 flex flex-col gap-'>
 
-                            {filters.map((filter) => {
+                            {itemsPerFilter.map((filter) => {
                                 const isOpen = open === filter.title;
 
                                 return (
@@ -154,15 +141,15 @@ const ShopPage = () => {
                                             <div className="overflow-hidden">
                                                 {filter.options.map((opt) => (
                                                     <div
-                                                        key={opt}
+                                                        key={opt.value}
                                                         className="flex items-center py-2 justify-between group/category px-2"
                                                     >
                                                         <label className="flex items-center gap-5 cursor-pointer group-hover/category:text-muted transition-colors duration-300">
                                                             <input type="checkbox" />
-                                                            <span>{opt}</span>
+                                                            <span>{opt.value}</span>
                                                         </label>
                                                         <div className="bg-foreground/30 p-0.5 rounded-full text-xs w-7 h-7 flex items-center justify-center cursor-pointer group-hover/category:bg-muted group-hover/category:text-background transition-colors duration-300">
-                                                            {''}
+                                                            {opt.count}
                                                         </div>
                                                     </div>
                                                 ))}
