@@ -41,6 +41,45 @@ export async function GET(request) {
             ]
         }
 
+        const filterWithoutGender = { ...filter }
+        delete filterWithoutGender.gender
+
+        const filterWithoutBrand = { ...filter }
+        delete filterWithoutBrand.brand
+
+        const filterWithoutConcentration = { ...filter }
+        delete filterWithoutConcentration.concentration
+
+        const filterWithoutSeason = { ...filter }
+        delete filterWithoutSeason.season
+
+        const filterWithoutFragranceFamily = { ...filter }
+        delete filterWithoutFragranceFamily.fragranceFamily
+
+        const [gender_count, brand_count, concentration_count, season_count, fragranceFamily_count] = await Promise.all([
+            Product.aggregate([
+                { $match: filterWithoutGender },
+                { $group: { _id: "$gender", count: { $sum: 1 } } }
+            ]),
+            Product.aggregate([
+                { $match: filterWithoutBrand },
+                { $group: { _id: "$brand", count: { $sum: 1 } } }
+            ]),
+            Product.aggregate([
+                { $match: filterWithoutConcentration },
+                { $group: { _id: "$concentration", count: { $sum: 1 } } }
+            ]),
+            Product.aggregate([
+                { $match: filterWithoutSeason },
+                { $unwind: "$season" },
+                { $group: { _id: "$season", count: { $sum: 1 } } }
+            ]),
+            Product.aggregate([
+                { $match: filterWithoutFragranceFamily },
+                { $group: { _id: "$fragranceFamily", count: { $sum: 1 } } }
+            ]),
+        ])
+
         const sortMap = {
             'price_asc': { price: 1 },
             'price_desc': { price: -1 },
@@ -63,6 +102,11 @@ export async function GET(request) {
             page,
             totalPages: Math.ceil(total / limit),
             products,
+            gender: gender_count,
+            brand: brand_count,
+            concentration: concentration_count,
+            season: season_count,
+            fragranceFamily: fragranceFamily_count,
         })
     } catch (error) {
         return Response.json(

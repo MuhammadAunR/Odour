@@ -56,7 +56,7 @@ const Cart = () => {
                         >
                             <span><ShoppingCart size={70} color='grey' /></span>
                             <span className='text-lg'>Your cart is empty</span>
-                            <Link href={'/shop'} className='text-xl underline cursor-pointer hover:text-blue-600 transition-colors'>Go to Shop</Link>
+                            <Link href={'/shop'} onClick={toggleCart} className='text-xl underline cursor-pointer hover:text-blue-600 transition-colors'>Go to Shop</Link>
                         </motion.div>
                     )}
                     {cartItems.map(item => (

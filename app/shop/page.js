@@ -45,31 +45,27 @@ const ShopPage = () => {
             console.log("All Products", data)
 
             setApiResponse(data)
+
+            const filterCountKeys = ['gender', 'brand', 'concentration', 'season', 'fragranceFamily']
+
+            const itemCountPerFilter = filterCountKeys
+                .filter(key => Array.isArray(data[key]))
+                .map(key => ({
+                    title: key === 'fragranceFamily' ? 'Fragrance Family' : key.charAt(0).toUpperCase() + key.slice(1),
+                    key: key,
+                    options: data[key].map(item => ({
+                        value: item._id,
+                        count: item.count || 0,
+                    }))
+                        .sort((a, b) => a.value.localeCompare(b.value))
+                }))
+            console.log(itemCountPerFilter)
+            setItemsPerFilter(itemCountPerFilter)
             setLoading(false)
         }
-
         getAllProducts()
 
     }, [queryParams])
-
-    useEffect(() => {
-        async function getItemsPerFilter() {
-            const res = await fetch('/api/filter-count')
-            const data = await res.json()
-            console.log("Filter Count", data)
-
-            const filterItemArray = Object.entries(data).map(([key, value]) => ({
-                title: key.charAt(0).toUpperCase() + key.slice(1),
-                key: key,
-                options: value.map(item => ({
-                    value: item._id,
-                    count: item.count || 0,
-                }))
-            }))
-            setItemsPerFilter(filterItemArray)
-        }
-        getItemsPerFilter()
-    }, [])
 
 
 
@@ -130,7 +126,7 @@ const ShopPage = () => {
                 search: value,
                 page: 1,
             }))
-        }, 500);
+        }, 1000);
     }, [searchInput])
 
     return (
@@ -238,7 +234,7 @@ const ShopPage = () => {
 
                     <section className="flex-1 min-w-0 pb-5">
 
-                        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 min-h-screen h-fit relative'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 relative'>
 
                             <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                                 {loading && products.length === 0 && <Loader />}
