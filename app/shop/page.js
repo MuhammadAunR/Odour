@@ -1,5 +1,6 @@
 'use client'
 import ProductCard from '@/components/CardUI'
+import Loader from '@/components/LoaderUI'
 import { ChevronDown, LayoutGrid, LayoutList } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
@@ -9,9 +10,9 @@ const ShopPage = () => {
     const [productView, setProductView] = useState('grid')
     const [currentPage, setCurrentPage] = useState(1)
     const [products, setProducts] = useState([])
-    const [filters, setFilters] = useState([])
     const [apiResponse, setApiResponse] = useState({})
     const [itemsPerFilter, setItemsPerFilter] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const productsPerPage = 12
     const totalPages = Math.ceil((products.length / productsPerPage))
@@ -22,6 +23,7 @@ const ShopPage = () => {
     const currentProducts = products.slice(startIndex, endIndex)
 
     useEffect(() => {
+        setLoading(true)
         async function getAllProducts() {
             const res = await fetch('/api/products')
             const data = await res.json()
@@ -29,6 +31,7 @@ const ShopPage = () => {
             console.log("All Products", data)
 
             setApiResponse(data)
+            setLoading(false)
         }
 
         async function getItemsPerFilter() {
@@ -166,7 +169,12 @@ const ShopPage = () => {
 
                     <section className="flex-1 min-w-0 pb-5">
 
-                        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 min-h-screen h-fit relative'>
+
+                            <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+                                {loading && currentProducts.length === 0 && <Loader />}
+                            </span>
+
                             {currentProducts.map(prod => (
                                 <ProductCard key={prod.id} product={prod} />
                             ))}
