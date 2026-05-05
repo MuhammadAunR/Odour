@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
                     src={product.imgSrc}
                     alt={product.alt}
                     fill
-                    loading='lazy'
+                    priority
                     sizes='(max-width: 768px) 50vw, 25vw'
                     className='object-cover transition-transform duration-500 group-hover/productCard:scale-105'
                 />
