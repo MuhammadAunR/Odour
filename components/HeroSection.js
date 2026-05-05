@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion } from "framer-motion"
 import { heroSectionSlideData } from './Assets'
 import { Button1 } from './ButtonUI'
+import Link from 'next/link'
 
 const HeroSection = () => {
 
@@ -105,9 +106,9 @@ const HeroSection = () => {
 
               <p className=''>{currentSlide.desc}</p>
 
-              <span>
+              <Link href={'/shop'}>
                 <Button1 text={'Shop Now'} />
-              </span>
+              </Link>
 
             </motion.div>
 
