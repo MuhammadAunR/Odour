@@ -35,9 +35,9 @@ const ProductCard = ({ product }) => {
 
                 <span className={`absolute top-2 left-2 px-2 py-1 text-xs font-medium
                     ${product.gender === 'Men'
-                        ? 'bg-foreground text-background'
+                        ? 'bg-blue-950 text-background'
                         : product.gender === 'Women'
-                            ? 'bg-foreground text-background'
+                            ? 'bg-pink-900 text-background'
                             : 'bg-foreground text-background'
                     }`}>
                     {product.gender}
@@ -69,7 +69,7 @@ const ProductCard = ({ product }) => {
                     <button
                         onClick={() => { togglePopup(), handleProduct(product) }}
                         className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                            hover:bg-muted hover:text-background transition-colors duration-500
+                            hover:bg-foreground hover:text-background transition-colors duration-500
                             border-r border-foreground/10'>
                         <Search size={15} />
                         <span>Quick View</span>
@@ -78,7 +78,7 @@ const ProductCard = ({ product }) => {
                     <button
                         onClick={() => handleAddCartItems(product)}
                         className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                            hover:bg-muted hover:text-background transition-colors duration-500'>
+                            hover:bg-foreground hover:text-background transition-colors duration-500'>
                         <ShoppingBag size={15} />
                         <span>Add to Cart</span>
                     </button>
