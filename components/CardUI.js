@@ -1,13 +1,18 @@
 'use client'
 import { Search, ShoppingBag, Heart } from 'lucide-react'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from "framer-motion"
 import { useCart } from '@/app/context/CartContext'
+import { usePopup } from '@/app/context/QuickPopupContext'
 
 const ProductCard = ({ product }) => {
+
+    const { togglePopup, handleProduct } = usePopup()
     const { handleAddCartItems } = useCart()
     const [wishListed, setWishListed] = useState(false)
+
+    const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
 
     return (
         <motion.div
@@ -40,7 +45,7 @@ const ProductCard = ({ product }) => {
 
                 {product.isOnSale &&
                     <span className='absolute top-2 right-2 px-2 py-1 text-xs font-semibold bg-red-500 text-white'>
-                        -{Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
+                        -{Math.round(((defaultPriceAndSize.price - defaultPriceAndSize.discountedPrice) / defaultPriceAndSize.price) * 100)}%
                     </span>
                 }
 
@@ -62,6 +67,7 @@ const ProductCard = ({ product }) => {
                     flex items-center border-t border-foreground/10 bg-background/95 backdrop-blur-sm'>
 
                     <button
+                        onClick={() => { togglePopup(), handleProduct(product) }}
                         className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
                             hover:bg-muted hover:text-background transition-colors duration-500
                             border-r border-foreground/10'>
@@ -88,15 +94,15 @@ const ProductCard = ({ product }) => {
                 {product.isOnSale ? (
                     <div className='flex items-baseline gap-2'>
                         <span className='text-sm text-foreground/40 line-through'>
-                            PKR {product.price.toLocaleString()}
+                            PKR {defaultPriceAndSize.price.toLocaleString()}
                         </span>
                         <span className='font-bold text-red-500'>
-                            PKR {product.discountedPrice.toLocaleString()}
+                            PKR {defaultPriceAndSize.discountedPrice.toLocaleString()}
                         </span>
                     </div>
                 ) : (
                     <span className='font-bold text-foreground'>
-                        PKR {product.price.toLocaleString()}
+                        PKR {defaultPriceAndSize.price.toLocaleString()}
                     </span>
                 )}
             </div>

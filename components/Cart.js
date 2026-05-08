@@ -6,26 +6,14 @@ import Image from 'next/image'
 import { motion } from "framer-motion"
 import { Button1 } from './ButtonUI'
 import Link from 'next/link'
+import useBlockYScroll from './BlockYScroll'
 
 
 const Cart = () => {
 
     const { toggleCart, isCartOpen, cartItems, handleSubTotal, removeCartItem, handleItemDec, handleItemInc, handleCheckout } = useCart()
 
-    useEffect(() => {
-        if (isCartOpen) {
-            document.body.style.overflow = 'hidden';
-            window.lenis?.stop();
-        } else {
-            document.body.style.overflow = 'auto';
-            window.lenis?.start();
-        }
-
-        return () => {
-            document.body.style.overflow = 'auto';
-            window.lenis?.start();
-        };
-    }, [isCartOpen]);
+    useBlockYScroll(isCartOpen)
 
     return (
         <main className='w-full flex'>

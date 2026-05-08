@@ -1,6 +1,7 @@
 'use client'
 import ProductCard from '@/components/CardUI'
 import Loader from '@/components/LoaderUI'
+import ProductQuickView from '@/components/ProductQuickView'
 import { ChevronDown, LayoutGrid, LayoutList } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
@@ -59,7 +60,6 @@ const ShopPage = () => {
                     }))
                         .sort((a, b) => a.value.localeCompare(b.value))
                 }))
-            console.log(itemCountPerFilter)
             setItemsPerFilter(itemCountPerFilter)
             setLoading(false)
         }
@@ -131,7 +131,9 @@ const ShopPage = () => {
 
     return (
         <>
+            <ProductQuickView />
             <main className='w-10/12 mx-auto relative'>
+
 
                 <div className="flex items-center justify-between py-4 border-b border-foreground/10">
 
