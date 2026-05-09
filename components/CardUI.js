@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
     const { handleAddCartItems } = useCart()
     const [wishListed, setWishListed] = useState(false)
 
-    const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
+    const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0]
 
     return (
         <motion.div
@@ -43,11 +43,11 @@ const ProductCard = ({ product }) => {
                     {product.gender}
                 </span>
 
-                {product.isOnSale &&
+                {/* {product.isOnSale &&
                     <span className='absolute top-2 right-2 px-2 py-1 text-xs font-semibold bg-red-500 text-white'>
                         -{Math.round(((defaultPriceAndSize.price - defaultPriceAndSize.discountedPrice) / defaultPriceAndSize.price) * 100)}%
                     </span>
-                }
+                } */}
 
 
                 <button
@@ -91,7 +91,7 @@ const ProductCard = ({ product }) => {
                 <h3 className='text-xl font-bold font-display'>{product.name}</h3>
                 <p className='text-xs text-foreground/40 mb-1'>{product.brand}</p>
 
-                {product.isOnSale ? (
+                {/* {product.isOnSale ? (
                     <div className='flex items-baseline gap-2'>
                         <span className='text-sm text-foreground/40 line-through'>
                             PKR {defaultPriceAndSize.price.toLocaleString()}
@@ -104,7 +104,7 @@ const ProductCard = ({ product }) => {
                     <span className='font-bold text-foreground'>
                         PKR {defaultPriceAndSize.price.toLocaleString()}
                     </span>
-                )}
+                )} */}
             </div>
 
         </motion.div>

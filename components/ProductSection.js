@@ -1,11 +1,13 @@
 'use client'
 import React, { useState } from 'react'
-import { products } from './Assets'
+
 import ProductCard from './CardUI'
+import { useProducts } from '@/app/context/ProductContext'
 
 const ProductSection = () => {
 
     const [activeFilter, setActiveFilter] = useState('New Arrivals')
+     const { products } = useProducts()
 
     const handleActiveFilter = (text) => {
         setActiveFilter(text)

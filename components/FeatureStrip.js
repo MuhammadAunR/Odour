@@ -1,9 +1,13 @@
+'use client'
 import React from 'react'
 import ProductCard from './CardUI'
-import { products } from './Assets'
 import Image from 'next/image'
+import { useProducts } from '@/app/context/ProductContext'
 
 const FeatureStrip = () => {
+
+    const { products } = useProducts()
+
     const featureStrip = [
         {
             title: 'Free Shipping',
@@ -22,6 +26,8 @@ const FeatureStrip = () => {
             desc: 'Not satisfied? Return your order within 7 days for a full refund. No questions asked.',
         },
     ]
+
+
     return (
         <>
             <main className='w-10/12 mx-auto'>
@@ -47,9 +53,9 @@ const FeatureStrip = () => {
                         src={'/featureStripSection.webp'}
                         alt='Feature Strip Section Photo'
                         fill
-                        loading='lazy' 
+                        loading='lazy'
                         sizes='1000px'
-                        className='object-cover hover:scale-105 ease-linear transition-all'/>
+                        className='object-cover hover:scale-105 ease-linear transition-all' />
                 </section>
             </main>
         </>

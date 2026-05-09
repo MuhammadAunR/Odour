@@ -4,70 +4,18 @@ import Loader from '@/components/LoaderUI'
 import ProductQuickView from '@/components/ProductQuickView'
 import { ChevronDown, LayoutGrid, LayoutList } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { useProducts } from '../context/ProductContext'
 
 const ShopPage = () => {
+
+    const { products, apiResponse, loading, itemsPerFilter,setQueryParams,queryParams } = useProducts()
 
     const [open, setOpen] = useState('')
     const [productView, setProductView] = useState('grid')
     const [currentPage, setCurrentPage] = useState(1)
-    const [products, setProducts] = useState([])
-    const [apiResponse, setApiResponse] = useState({})
-    const [itemsPerFilter, setItemsPerFilter] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [queryParams, setQueryParams] = useState({
-        page: 1,
-        limit: 12,
-        brand: '',
-        gender: '',
-        season: '',
-        concentration: '',
-        fragranceFamily: '',
-        search: '',
-        sort: 'id_asc'
-    })
     const [searchInput, setSearchInput] = useState('')
 
     const totalPages = apiResponse.totalPages
-
-    const buildUrl = React.useCallback(() => {
-        const cleanParams = Object.fromEntries(
-            Object.entries(queryParams).filter(([_, v]) => v !== '' && v !== null)
-        )
-        const params = new URLSearchParams(cleanParams)
-        return `/api/products?${params.toString()}`
-    }, [queryParams])
-
-    useEffect(() => {
-        setLoading(true)
-        async function getAllProducts() {
-            const res = await fetch(buildUrl())
-            const data = await res.json()
-            setProducts(data.products)
-            console.log("All Products", data)
-
-            setApiResponse(data)
-
-            const filterCountKeys = ['gender', 'brand', 'concentration', 'season', 'fragranceFamily']
-
-            const itemCountPerFilter = filterCountKeys
-                .filter(key => Array.isArray(data[key]))
-                .map(key => ({
-                    title: key === 'fragranceFamily' ? 'Fragrance Family' : key.charAt(0).toUpperCase() + key.slice(1),
-                    key: key,
-                    options: data[key].map(item => ({
-                        value: item._id,
-                        count: item.count || 0,
-                    }))
-                        .sort((a, b) => a.value.localeCompare(b.value))
-                }))
-            setItemsPerFilter(itemCountPerFilter)
-            setLoading(false)
-        }
-        getAllProducts()
-
-    }, [queryParams])
-
-
 
     const handleOpenFilterSection = (section) => {
         setOpen(prev => prev === section ? null : section)
@@ -126,7 +74,7 @@ const ShopPage = () => {
                 search: value,
                 page: 1,
             }))
-        }, 1000);
+        }, 500);
     }, [searchInput])
 
     return (

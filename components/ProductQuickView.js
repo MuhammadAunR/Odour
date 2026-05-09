@@ -1,12 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { usePopup } from '@/app/context/QuickPopupContext'
-import { ShoppingBag, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import useBlockYScroll from './BlockYScroll'
 import Image from 'next/image'
 import { useCart } from '@/app/context/CartContext'
-import { div } from 'motion/react-client'
 
 const ProductQuickView = () => {
 
@@ -37,7 +36,7 @@ const ProductQuickView = () => {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2, ease: 'easeIn' }}
                     onClick={togglePopup}
-                    className='w-full h-screen flex items-center justify-center bg-foreground/10 backdrop-blur-3xl fixed z-100'
+                    className='w-full h-screen flex items-center justify-center bg-foreground/10 backdrop-blur-3xl fixed z-100 overflow-y-auto py-5'
                 >
                     <motion.section
                         onClick={(e) => e.stopPropagation()}
@@ -50,7 +49,7 @@ const ProductQuickView = () => {
                             damping: 10,
                             mass: 0.8,
                         }}
-                        className='w-200 min-h-150 h-fit bg-surface border border-foreground/30 relative'>
+                        className='w-200 min-h-150 overflow-y-auto h-fit bg-surface border border-foreground/30 relative'>
 
                         <div className='flex items-center justify-between p-5'>
                             <h2 className='font-semibold text-2xl'>Quick Product Details</h2>
@@ -61,9 +60,14 @@ const ProductQuickView = () => {
                             </span>
                         </div>
 
-                        <div className='flex items-center justify-center gap-5 p-5'>
-                            <div className='relative w-100 h-110 overflow-hidden'>
-                                <Image src={quickViewProduct.imgSrc} fill alt={quickViewProduct.alt} className='object-cover' />
+                        <div className='flex items-center justify-center gap-5 p-5 max-md:flex-col w-full h-fit'>
+                            <div className='relative w-full sm:w-72 md:w-80 lg:w-96 aspect-3/4 overflow-hidden shrink-0'>
+                                <Image
+                                    src={quickViewProduct.imgSrc}
+                                    fill
+                                    alt={quickViewProduct.alt}
+                                    className='object-cover'
+                                />
                             </div>
                             <div className='flex flex-col justify-center gap-4'>
                                 <div>
@@ -116,18 +120,16 @@ const ProductQuickView = () => {
                                 <div className='w-full h-[.5px] bg-foreground/20'></div>
                                 <div className='flex items-center justify-center gap-2'>
                                     <button
-                                        className='flex-1 flex items-center justify-center gap-2 py-3 text-sm bg-foreground/5
-                                        hover:bg-muted hover:text-background transition-colors duration-500
-                                        border-r border-foreground/10'>
-                                        {/* <Search size={15} /> */}
+                                        className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground/5
+                                        hover:bg-foreground hover:text-background transition-colors duration-500
+                                        border-r border-foreground/10 cursor-pointer'>
                                         <span>See full details</span>
                                     </button>
 
                                     <button
                                         onClick={() => handleAddCartItems(quickViewProduct)}
-                                        className='flex-1 flex items-center justify-center gap-2 py-3 text-sm bg-foreground/5
-                                        hover:bg-muted hover:text-background transition-colors duration-500'>
-                                        <ShoppingBag size={15} />
+                                        className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground
+                                        hover:bg-foreground/90 cursor-pointer text-background transition-colors duration-500'>
                                         <span>Add to Cart</span>
                                     </button>
                                 </div>
