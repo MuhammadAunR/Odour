@@ -1,7 +1,7 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
 import { ShoppingCart, Trash, X } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { Button1 } from './ButtonUI'
@@ -22,8 +22,7 @@ const Cart = () => {
             </section>
 
             <aside
-                style={{ backgroundColor: 'var(--color-surface)' }}
-                className={`h-screen w-full max-w-100 fixed top-0 right-0 z-200 flex flex-col transition-all ease-linear ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                className={`h-screen w-full bg-surface max-w-100 fixed top-0 right-0 z-200 flex flex-col transition-all ease-linear ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}
             >
 
                 <div className='flex items-center justify-between px-5 py-6.5 border-b-2 border-accent shrink-0'>
@@ -48,7 +47,7 @@ const Cart = () => {
                         </motion.div>
                     )}
                     {cartItems.map(item => (
-                        <div key={item.id} className='flex items-center gap-3 px-5 py-3 mx-1 hover:bg-background/50 transition-all ease-linear bg-background relative group'>
+                        <div key={item.id} className='flex items-center gap-3 px-5 py-3 mx-1 hover:bg-foreground/5 transition-all ease-linear bg-background/50 relative group'>
                             <motion.span
                                 onClick={() => removeCartItem(item)}
                                 whileTap={{ scale: 0.95 }}

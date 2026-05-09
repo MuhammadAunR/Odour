@@ -2,13 +2,14 @@
 import ProductCard from '@/components/CardUI'
 import Loader from '@/components/LoaderUI'
 import ProductQuickView from '@/components/ProductQuickView'
-import { ChevronDown, LayoutGrid, LayoutList } from 'lucide-react'
+import { ChevronDown, Funnel, LayoutGrid, LayoutList } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useProducts } from '../context/ProductContext'
 
 const ShopPage = () => {
 
-    const { products, apiResponse, loading, itemsPerFilter,setQueryParams,queryParams } = useProducts()
+    const { products, apiResponse, loading, itemsPerFilter, setQueryParams, queryParams } = useProducts()
+    const { toggleFilterSide } = useProducts()
 
     const [open, setOpen] = useState('')
     const [productView, setProductView] = useState('grid')
@@ -90,19 +91,29 @@ const ShopPage = () => {
                         <span className="text-foreground font-semibold">{apiResponse.total}</span> products
                     </p>
 
-                    <div className="flex items-center gap-1 border border-foreground/20 rounded p-1">
+
+                    <div className='flex items-center justify-center gap-3'>
                         <button
-                            onClick={() => setProductView('grid')}
-                            className={`p-1 rounded transition-colors ${productView === 'grid' ? 'bg-foreground text-background' : 'text-foreground/40 hover:text-foreground'}`}
-                        >
-                            <LayoutGrid size={16} />
+                            onClick={toggleFilterSide}
+                            className='text-foreground/70 border border-foreground/20 px-3 py-1 hover:text-foreground transition-all ease-linear flex items-center justify-center gap-2'>
+                            <span><Funnel size={16} /></span>
+                            <span>Filters</span>
                         </button>
-                        <button
-                            onClick={() => setProductView('list')}
-                            className={`p-1 rounded transition-colors ${productView === 'list' ? 'bg-foreground text-background' : 'text-foreground/40 hover:text-foreground'}`}
-                        >
-                            <LayoutList size={16} />
-                        </button>
+
+                        <div className="flex items-center gap-1 border border-foreground/20 p-1">
+                            <button
+                                onClick={() => setProductView('grid')}
+                                className={`p-1 rounded transition-colors ${productView === 'grid' ? 'bg-foreground text-background' : 'text-foreground/40 hover:text-foreground'}`}
+                            >
+                                <LayoutGrid size={16} />
+                            </button>
+                            <button
+                                onClick={() => setProductView('list')}
+                                className={`p-1 rounded transition-colors ${productView === 'list' ? 'bg-foreground text-background' : 'text-foreground/40 hover:text-foreground'}`}
+                            >
+                                <LayoutList size={16} />
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -184,7 +195,7 @@ const ShopPage = () => {
 
                     <section className="flex-1 min-w-0 pb-5">
 
-                        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 relative'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 relative min-h-[50vh]'>
 
                             <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                                 {loading && products.length === 0 && <Loader />}
