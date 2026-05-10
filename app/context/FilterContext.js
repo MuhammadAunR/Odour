@@ -7,18 +7,17 @@ export const FilterProvider = createContext()
 export const useFilter = () => useContext(FilterProvider)
 
 const FilterContext = ({ children }) => {
+
     const [isFilterSideOpen, setIsFilterSideOpen] = useState(false)
 
     const toggleFilterSide = () => {
-        setIsCartOpen(!isFilterSideOpen)
+        setIsFilterSideOpen(!isFilterSideOpen)
     }
 
     return (
-        <>
-            <FilterProvider.Provider value={{toggleFilterSide,isFilterSideOpen}}>
-                {children}
-            </FilterProvider.Provider>
-        </>
+        <FilterProvider.Provider value={{ toggleFilterSide, isFilterSideOpen }}>
+            {children}
+        </FilterProvider.Provider>
     )
 }
 

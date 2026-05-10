@@ -9,6 +9,7 @@ import LenisWrapper from "@/components/LenisWrapper";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
 import FooterSection from "@/components/FooterSection";
+import Filter from "@/components/Filter";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }) {
           <LenisWrapper>
             <AppWrapper>
               <Cart />
+              <Filter />
               <NavSidebar />
               <Navbar />
               {children}

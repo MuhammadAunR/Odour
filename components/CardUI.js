@@ -13,7 +13,6 @@ const ProductCard = ({ product }) => {
     const [wishListed, setWishListed] = useState(false)
 
     const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
-    console.log(defaultPriceAndSize)
 
     return (
         <motion.div
@@ -21,9 +20,9 @@ const ProductCard = ({ product }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2, delay: product.id * 0.1 }}
             viewport={{ once: true }}
-            className='flex flex-col items-start border border-surface group/productCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit'>
+            className='flex flex-col items-start border border-surface group/productCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit w-fit'>
 
-            <div className='relative w-full aspect-3/4 overflow-hidden'>
+            <div className='relative w-77 h-100 overflow-hidden'>
                 <Image
                     src={product.imgSrc}
                     alt={product.alt}
