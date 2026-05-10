@@ -43,14 +43,17 @@ const Navbar = () => {
             <nav className='bg-foreground/5'>
                 <section className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
 
-                    <Link href={'/'} className=''>
-                        <h1 className='font-display font-bold text-4xl max-lg:hidden'>Odour</h1>
-                        <span className='lg:hidden'>
-                            <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
-                        </span>
+                    <span className='lg:hidden'>
+                        <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
+                    </span>
+
+                    <Link href={'/'} className='max-lg:hidden'>
+                        <h1 className='font-display font-bold text-4xl'>Odour</h1>
                     </Link>
 
-                    <h1 className='font-display font-bold text-4xl lg:hidden'>Odour</h1>
+                    <Link href={'/'} className='lg:hidden'>
+                        <h1 className='font-display font-bold text-4xl'>Odour</h1>
+                    </Link>
 
                     <ul className='flex items-center gap-3 max-lg:hidden'>
                         {navOptions.map((opt, i) => (
@@ -75,7 +78,7 @@ const Navbar = () => {
                             </span>
                             <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
                         </span>
-                        <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
+                        <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
                             <UserRound />
                         </span>
                     </div>
@@ -88,13 +91,17 @@ const Navbar = () => {
                 ${fixNavbar ? 'translate-y-0 scale-100' : '-translate-y-full scale-0'}
             `}>
                 <div className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
-                    <Link href={'/'} className=''>
-                        <h1 className='font-display font-bold text-4xl max-lg:hidden'>Odour</h1>
-                        <span className='lg:hidden'>
-                            <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
-                        </span>
+                    <span className='lg:hidden'>
+                        <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
+                    </span>
+
+                    <Link href={'/'} className='max-lg:hidden'>
+                        <h1 className='font-display font-bold text-4xl'>Odour</h1>
                     </Link>
-                    <h1 className='font-display font-bold text-4xl lg:hidden'>Odour</h1>
+
+                    <Link href={'/'} className='lg:hidden'>
+                        <h1 className='font-display font-bold text-4xl'>Odour</h1>
+                    </Link>
                     <ul className='flex items-center gap-3 max-lg:hidden'>
                         {navOptions.map((opt, i) => (
                             <Link onClick={() => handleActiveNavOption(opt.option)} href={opt.src} key={i} className='text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
@@ -118,7 +125,7 @@ const Navbar = () => {
                             </span>
                             <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
                         </span>
-                        <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer'>
+                        <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
                             <UserRound />
                         </span>
                     </div>
