@@ -9,8 +9,7 @@ import { useProducts } from '@/app/context/ProductContext'
 
 const Filter = () => {
     const { isFilterSideOpen, toggleFilterSide } = useFilter()
-    const { itemsPerFilter, setQueryParams, queryParams } = useProducts()
-    const [searchInput, setSearchInput] = useState('')
+    const { filters, setQueryParams, queryParams } = useProducts()
     const [open, setOpen] = useState('')
 
     useBlockYScroll(isFilterSideOpen)
@@ -30,17 +29,6 @@ const Filter = () => {
             }
         })
     }
-
-    useEffect(() => {
-        setTimeout(() => {
-            const value = searchInput.trim()
-            setQueryParams(prev => ({
-                ...prev,
-                search: value,
-                page: 1,
-            }))
-        }, 500);
-    }, [searchInput])
 
     return (
         <>
@@ -64,7 +52,7 @@ const Filter = () => {
 
                         <section className='flex flex-col h-150 overflow-y-scroll'>
 
-                            {itemsPerFilter.map((filter) => {
+                            {filters.map((filter) => {
                                 const isOpen = open === filter.title;
 
                                 return (
@@ -119,11 +107,12 @@ const Filter = () => {
 
                     </section>
 
-                    <div className='px-5 space-y-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 w-full'>
-                        <span onClick={() => { toggleFilterSide() }} className='flex flex-col items-end'>
-                            <span>
-                                <Button1 text={'Apply'} />
-                            </span>
+                    <div className='px-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 flex justify-between'>
+                        <span className=''>
+                            <Button1 text={'Reset'} />
+                        </span>
+                        <span onClick={() => { toggleFilterSide() }} className=''>
+                            <Button1 text={'Apply'} />
                         </span>
                     </div>
                 </aside>

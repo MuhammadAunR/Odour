@@ -1,9 +1,8 @@
 'use client'
-import { useCart } from '@/app/context/CartContext';
 import { useNavContext } from '@/app/context/NavbarContext';
 import { motion } from "framer-motion"
 import Link from 'next/link';
-import React, { useEffect } from 'react'
+import React from 'react'
 import { navOptions } from './Assets';
 import { UserRound } from 'lucide-react';
 import useBlockYScroll from './BlockYScroll';

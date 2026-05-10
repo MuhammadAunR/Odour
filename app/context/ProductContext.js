@@ -10,7 +10,7 @@ export const useProducts = () => useContext(ContextProvider)
 const ProductContext = ({ children }) => {
 
     const [apiResponse, setApiResponse] = useState({})
-    const [itemsPerFilter, setItemsPerFilter] = useState([])
+    const [filters, setFilters] = useState([])
     const [loading, setLoading] = useState(false)
     const [products, setProducts] = useState([])
     const [queryParams, setQueryParams] = useState({
@@ -43,9 +43,9 @@ const ProductContext = ({ children }) => {
             setApiResponse(data)
             setLoading(false)
 
-            const filterCountKeys = ['gender', 'brand', 'concentration', 'season', 'fragranceFamily']
+            const filterTypes = ['gender', 'brand', 'concentration', 'season', 'fragranceFamily']
 
-            const itemCountPerFilter = filterCountKeys
+            const filters = filterTypes
                 .filter(key => Array.isArray(data[key]))
                 .map(key => ({
                     title: key === 'fragranceFamily' ? 'Fragrance Family' : key.charAt(0).toUpperCase() + key.slice(1),
@@ -56,7 +56,7 @@ const ProductContext = ({ children }) => {
                     }))
                         .sort((a, b) => a.value.localeCompare(b.value))
                 }))
-            setItemsPerFilter(itemCountPerFilter)
+            setFilters(filters)
         }
 
         fetchAllProducts()
@@ -64,7 +64,7 @@ const ProductContext = ({ children }) => {
 
     return (
         <>
-            <ContextProvider.Provider value={{ products, loading, apiResponse, itemsPerFilter, queryParams, setQueryParams }}>
+            <ContextProvider.Provider value={{ products, loading, apiResponse, filters, queryParams, setQueryParams }}>
                 {children}
             </ContextProvider.Provider>
         </>

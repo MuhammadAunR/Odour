@@ -51,17 +51,16 @@ const ShopPage = () => {
         } else return
     }
 
-    const handleApplyFilter = (filterType, filterName) => {
-
-        setQueryParams(prev => {
-            const newValue = prev[filterType] === filterName ? '' : filterName
-            return {
+     useEffect(() => {
+        setTimeout(() => {
+            const value = searchInput.trim()
+            setQueryParams(prev => ({
                 ...prev,
-                [filterType]: newValue,
-                page: 1
-            }
-        })
-    }
+                search: value,
+                page: 1,
+            }))
+        }, 500);
+    }, [searchInput])
 
     useEffect(() => {
         setTimeout(() => {
