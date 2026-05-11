@@ -8,9 +8,7 @@ export async function GET(request) {
         const { searchParams } = new URL(request.url)
 
         const gender = searchParams.get('gender')
-        const brand = searchParams.get('brand')
         const fragranceFamily = searchParams.get('fragranceFamily')
-        const concentration = searchParams.get('concentration')
         const season = searchParams.get('season')
         const isOnSale = searchParams.get('isOnSale')
         const tags = searchParams.get('tags')
@@ -23,9 +21,7 @@ export async function GET(request) {
 
         const filter = {}
         if (gender) filter.gender = gender
-        if (brand) filter.brand = brand
         if (fragranceFamily) filter.fragranceFamily = fragranceFamily
-        if (concentration) filter.concentration = concentration
         if (season) filter.season = { $in: [season] }
         if (isOnSale) filter.isOnSale = isOnSale === 'true'
         if (tags) filter.tags = { $in: [tags] }
@@ -44,30 +40,16 @@ export async function GET(request) {
         const filterWithoutGender = { ...filter }
         delete filterWithoutGender.gender
 
-        const filterWithoutBrand = { ...filter }
-        delete filterWithoutBrand.brand
-
-        const filterWithoutConcentration = { ...filter }
-        delete filterWithoutConcentration.concentration
-
         const filterWithoutSeason = { ...filter }
         delete filterWithoutSeason.season
 
         const filterWithoutFragranceFamily = { ...filter }
         delete filterWithoutFragranceFamily.fragranceFamily
 
-        const [gender_count, brand_count, concentration_count, season_count, fragranceFamily_count] = await Promise.all([
+        const [gender_count, season_count, fragranceFamily_count] = await Promise.all([
             Product.aggregate([
                 { $match: filterWithoutGender },
                 { $group: { _id: "$gender", count: { $sum: 1 } } }
-            ]),
-            Product.aggregate([
-                { $match: filterWithoutBrand },
-                { $group: { _id: "$brand", count: { $sum: 1 } } }
-            ]),
-            Product.aggregate([
-                { $match: filterWithoutConcentration },
-                { $group: { _id: "$concentration", count: { $sum: 1 } } }
             ]),
             Product.aggregate([
                 { $match: filterWithoutSeason },
@@ -103,8 +85,6 @@ export async function GET(request) {
             totalPages: Math.ceil(total / limit),
             products,
             gender: gender_count,
-            brand: brand_count,
-            concentration: concentration_count,
             season: season_count,
             fragranceFamily: fragranceFamily_count,
         })

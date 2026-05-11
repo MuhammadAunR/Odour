@@ -2,15 +2,27 @@
 
 import { useFilter } from '@/app/context/FilterContext'
 import { ChevronDown, X } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import useBlockYScroll from './BlockYScroll'
 import { Button1 } from './ButtonUI'
 import { useProducts } from '@/app/context/ProductContext'
 
 const Filter = () => {
-    const { isFilterSideOpen, toggleFilterSide } = useFilter()
+    const { isFilterSideOpen, toggleFilterSide, setActiveFilterCount } = useFilter()
     const { filters, setQueryParams, queryParams } = useProducts()
+
+    const [draftParams, setDraftParams] = useState(queryParams)
     const [open, setOpen] = useState('')
+
+    const defaultParams = {
+        page: 1,
+        limit: 12,
+        gender: '',
+        season: '',
+        fragranceFamily: '',
+        search: '',
+        sort: 'id_asc'
+    }
 
     useBlockYScroll(isFilterSideOpen)
 
@@ -19,8 +31,8 @@ const Filter = () => {
     }
 
     const handleApplyFilter = (filterType, filterName) => {
-
-        setQueryParams(prev => {
+        setActiveFilterCount(prev => [...prev, filterName])
+        setDraftParams(prev => {
             const newValue = prev[filterType] === filterName ? '' : filterName
             return {
                 ...prev,
@@ -30,11 +42,31 @@ const Filter = () => {
         })
     }
 
+    // useEffect(() => {
+    //     if (isFilterSideOpen) {
+    //         setDraftParams(queryParams)
+    //         handleOpenFilterSection()
+    //     }
+    // }, [isFilterSideOpen])
+
+    const handleApply = () => {
+        setQueryParams(draftParams)
+        toggleFilterSide()
+    }
+
+    const handleReset = () => {
+        setDraftParams(defaultParams)
+        setQueryParams(defaultParams)
+        setActiveFilterCount([])
+        toggleFilterSide()
+    }
+
     return (
         <>
             <main className='w-full flex'>
 
-                <section onClick={toggleFilterSide} className={`bg-surface/50 backdrop-blur-lg h-screen fixed top-0 z-200 w-full ${isFilterSideOpen ? 'block' : 'hidden'}`}>
+                <section onClick={() => { toggleFilterSide() }}
+                    className={`bg-surface/50 backdrop-blur-lg h-screen fixed top-0 z-200 w-full ${isFilterSideOpen ? 'block' : 'hidden'}`}>
                 </section>
 
                 <aside
@@ -47,10 +79,10 @@ const Filter = () => {
                         </span>
                     </div>
 
-                    <section className="min-h-screen h-fit px-5 space-y-5 py-3">
+                    <section className="flex-1 overflow-hidden px-5 space-y-5 py-3">
 
 
-                        <section className='flex flex-col h-150 overflow-y-scroll'>
+                        <section className='flex flex-col flex-1 overflow-y-scroll'>
 
                             {filters.map((filter) => {
                                 const isOpen = open === filter.title;
@@ -81,9 +113,9 @@ const Filter = () => {
                                                             <input
                                                                 type="checkbox"
                                                                 checked={
-                                                                    Array.isArray(queryParams[filter.key])
-                                                                        ? queryParams[filter.key].includes(opt.value)
-                                                                        : queryParams[filter.key] === opt.value
+                                                                    Array.isArray(draftParams[filter.key])
+                                                                        ? draftParams[filter.key].includes(opt.value)
+                                                                        : draftParams[filter.key] === opt.value
                                                                 }
                                                                 onChange={() => handleApplyFilter(filter.key, opt.value)}
                                                             />
@@ -108,10 +140,10 @@ const Filter = () => {
                     </section>
 
                     <div className='px-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 flex justify-between'>
-                        <span className=''>
+                        <span onClick={handleReset} className=''>
                             <Button1 text={'Reset'} />
                         </span>
-                        <span onClick={() => { toggleFilterSide() }} className=''>
+                        <span onClick={handleApply} className=''>
                             <Button1 text={'Apply'} />
                         </span>
                     </div>

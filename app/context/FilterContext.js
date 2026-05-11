@@ -9,13 +9,14 @@ export const useFilter = () => useContext(FilterProvider)
 const FilterContext = ({ children }) => {
 
     const [isFilterSideOpen, setIsFilterSideOpen] = useState(false)
+    const [activeFilterCount, setActiveFilterCount] = useState([])
 
     const toggleFilterSide = () => {
         setIsFilterSideOpen(!isFilterSideOpen)
     }
 
     return (
-        <FilterProvider.Provider value={{ toggleFilterSide, isFilterSideOpen }}>
+        <FilterProvider.Provider value={{ toggleFilterSide, isFilterSideOpen,setActiveFilterCount,activeFilterCount }}>
             {children}
         </FilterProvider.Provider>
     )

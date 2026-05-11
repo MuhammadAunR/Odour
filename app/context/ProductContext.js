@@ -16,10 +16,8 @@ const ProductContext = ({ children }) => {
     const [queryParams, setQueryParams] = useState({
         page: 1,
         limit: 12,
-        brand: '',
         gender: '',
         season: '',
-        concentration: '',
         fragranceFamily: '',
         search: '',
         sort: 'id_asc'
@@ -38,12 +36,12 @@ const ProductContext = ({ children }) => {
         async function fetchAllProducts() {
             const res = await fetch(buildUrl())
             const data = await res.json()
-            console.log(data)
+            console.log('Raw data',data)
             setProducts(data.products)
             setApiResponse(data)
             setLoading(false)
 
-            const filterTypes = ['gender', 'brand', 'concentration', 'season', 'fragranceFamily']
+            const filterTypes = ['gender', 'season', 'fragranceFamily']
 
             const filters = filterTypes
                 .filter(key => Array.isArray(data[key]))

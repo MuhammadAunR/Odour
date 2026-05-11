@@ -10,7 +10,7 @@ import { useFilter } from '../context/FilterContext'
 const ShopPage = () => {
 
     const { products, apiResponse, loading, setQueryParams, queryParams } = useProducts()
-    const { toggleFilterSide } = useFilter()
+    const { toggleFilterSide, activeFilterCount } = useFilter()
 
     const [productView, setProductView] = useState('grid')
     const [currentPage, setCurrentPage] = useState(1)
@@ -51,7 +51,7 @@ const ShopPage = () => {
         } else return
     }
 
-     useEffect(() => {
+    useEffect(() => {
         setTimeout(() => {
             const value = searchInput.trim()
             setQueryParams(prev => ({
@@ -105,7 +105,11 @@ const ShopPage = () => {
                                 onClick={toggleFilterSide}
                                 className='text-foreground/70 border border-foreground/20 px-3 py-1 hover:text-foreground transition-all ease-linear flex items-center justify-center gap-2'>
                                 <span><Funnel size={16} /></span>
-                                <span>Filters</span>
+                                <span className='flex items-center gap-1'>{activeFilterCount.length != 0 ?
+                                    activeFilterCount.map(filter => {
+                                        return <span key={filter} className='text-xs bg-foreground/5 p-1 rounded-lg'>{filter}</span>
+                                    })
+                                    : 'Filter'}</span>
                             </button>
 
                             <div className="flex items-center gap-1 border border-foreground/20 p-1 max-sm:hidden">
