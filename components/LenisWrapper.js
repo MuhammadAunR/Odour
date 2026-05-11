@@ -15,6 +15,11 @@ const LenisWrapper = ({ children }) => {
 
     window.lenis = lenis;
 
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize(); 
+    });
+    resizeObserver.observe(document.body)
+
     let rafId;
 
     function raf(time) {
@@ -27,6 +32,7 @@ const LenisWrapper = ({ children }) => {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      resizeObserver.disconnect();
     };
   }, []);
 

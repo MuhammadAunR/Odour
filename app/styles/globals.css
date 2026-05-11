@@ -30,6 +30,10 @@ body {
   overflow-x: hidden;
 }
 
+html.lenis {
+  height: auto;
+}
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
