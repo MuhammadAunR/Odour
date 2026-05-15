@@ -88,7 +88,10 @@ const ProductCard = ({ product }) => {
 
 
             <div className='p-4 w-full'>
-                <h3 className='text-xl font-bold font-display'>{product.name}</h3>
+                <div className='flex items-center gap-2'>
+                    <h3 className='text-xl font-bold font-display'>{product.name}</h3>
+                    <span className='text-sm'>({defaultPriceAndSize.size})</span>
+                </div>
                 <p className='text-xs text-foreground/40 mb-1'>{product.brand}</p>
 
                 {product.isOnSale ? (
