@@ -16,32 +16,35 @@ const CartContext = ({ children }) => {
         setIsCartOpen(!isCartOpen)
     }
 
-    const handleAddCartItems = (i) => {
-        const ssp = i.sizes.find(s => s.isDefault) ?? i.sizes[0]
-        setSelectedPriceAndSize(ssp)
+    const handleAddCartItems = (i, selectedSize = null) => {
+
+        const ssp = selectedSize ?? i.sizes.find(s => s.isDefault) ?? i.sizes[0];
+
         setCartItems(prev => {
-            const exist = prev.find(item => item.id === i.id)
+            const exist = prev.find(item =>
+                item._id === i._id && item.selectedSize.size === ssp.size
+            );
 
             if (exist) {
                 return prev.map(item =>
-                    item.id === i.id
+                    item._id === i._id && item.selectedSize.size === ssp.size
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
-                )
+                );
             }
-            return [...prev, { ...i, quantity: 1, selectedSize: selectedPriceAndSize }]
+            return [...prev, { ...i, quantity: 1, selectedSize: ssp }]
         })
         toast.success('Added to cart')
     }
-
-    console.log(selectedPriceAndSize)
 
     const handleCheckout = () => {
         if (cartItems.length === 0) return
         const confirm = window.confirm('Continue Checkout')
         if (confirm) {
             setCartItems([])
-            const msg = cartItems.map(i => `${i.name} x${i.quantity}`).join('%0A')
+            const msg = cartItems.map(i =>
+                `${i.name} (${i.selectedSize.size}) x${i.quantity} - PKR ${(i.selectedSize.discountedPrice ?? i.selectedSize.price) * i.quantity}`
+            ).join('%0A')
             window.open(`https://wa.me/923286536520?text=Order:%0A${msg}`)
             toast.success('Payment Successful')
         } else {
@@ -50,40 +53,42 @@ const CartContext = ({ children }) => {
     }
 
     const handleItemInc = (i) => {
-        setCartItems(prev => {
-            const exist = prev.find(item => item.id === i.id)
-            if (exist) {
-                return prev.map(item =>
-                    item.id === i.id ? { ...item, quantity: item.quantity + 1 } : item
-                )
-            }
-            return prev
-        })
-    }
+        setCartItems(prev => prev.map(item =>
+            item._id === i._id && item.selectedSize.size === i.selectedSize.size
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+        ));
+    };
 
     const handleItemDec = (i) => {
         setCartItems(prev => {
-            const exist = prev.find(item => item.id === i.id)
-            if (exist) {
-                if (exist.quantity === 1) {
-                    return prev.filter(item => item.id !== i.id)
-                }
-                return prev.map(item =>
-                    item.id === i.id ? { ...item, quantity: item.quantity - 1 } : item
-                )
+            const exist = prev.find(item =>
+                item._id === i._id && item.selectedSize.size === i.selectedSize.size
+            );
+            if (!exist) return prev;
+            if (exist.quantity === 1) {
+                return prev.filter(item =>
+                    !(item._id === i._id && item.selectedSize.size === i.selectedSize.size)
+                );
             }
-            return prev
-        })
-    }
-
+            return prev.map(item =>
+                item._id === i._id && item.selectedSize.size === i.selectedSize.size
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            );
+        });
+    };
     const removeCartItem = (i) => {
-        setCartItems(prev => {
-            return prev.filter(item => item.id !== i.id)
-        })
-    }
+        setCartItems(prev =>
+            prev.filter(item =>
+                !(item._id === i._id && item.selectedSize.size === i.selectedSize.size)
+            )
+        );
+    };
 
     const handleSubTotal = cartItems.reduce((total, item) => {
-        return total + item.price * item.quantity;
+        const finalPrice = item.selectedSize.discountedPrice ?? item.selectedSize.price;
+        return total + finalPrice * item.quantity;
     }, 0)
 
     return (

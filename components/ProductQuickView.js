@@ -124,7 +124,7 @@ const ProductQuickView = () => {
                                     </button>
 
                                     <button
-                                        onClick={() => handleAddCartItems(quickViewProduct)}
+                                        onClick={() => { handleAddCartItems(quickViewProduct, selectedPriceAndSize), togglePopup() }}
                                         className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground
                                         hover:bg-foreground/90 cursor-pointer text-background transition-colors duration-500'>
                                         <span>Add to Cart</span>

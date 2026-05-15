@@ -9,10 +9,11 @@ import { usePopup } from '@/app/context/QuickPopupContext'
 const ProductCard = ({ product }) => {
 
     const { togglePopup, handleProduct } = usePopup()
-    const { handleAddCartItems } = useCart()
+    const { handleAddCartItems,setSelectedPriceAndSize } = useCart()
     const [wishListed, setWishListed] = useState(false)
 
     const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
+    
 
     return (
         <motion.div

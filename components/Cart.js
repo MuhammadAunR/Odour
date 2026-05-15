@@ -11,7 +11,7 @@ import useBlockYScroll from './BlockYScroll'
 
 const Cart = () => {
 
-    const { toggleCart, isCartOpen, cartItems, handleSubTotal, removeCartItem, handleItemDec, handleItemInc, handleCheckout } = useCart()
+    const { toggleCart, isCartOpen, cartItems, handleSubTotal, removeCartItem, handleItemDec, handleItemInc, handleCheckout, selectedPriceAndSize } = useCart()
 
     useBlockYScroll(isCartOpen)
 
@@ -39,15 +39,18 @@ const Cart = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                             viewport={{ once: false }}
-                            className='flex flex-col items-center justify-center h-full'
+                            className='flex flex-col gap-2 items-center justify-center h-full'
                         >
-                            <span><ShoppingCart size={70} color='grey' /></span>
+                            <span><ShoppingCart size={80} color='grey' /></span>
                             <span className='text-lg'>Your cart is empty</span>
-                            <Link href={'/shop'} onClick={toggleCart} className='text-xl underline cursor-pointer hover:text-blue-600 transition-colors'>Go to Shop</Link>
+                            <Link href={'/shop'} onClick={toggleCart} className=''>
+                                <Button1 text={'Go To Shop'}/>
+                            </Link>
                         </motion.div>
                     )}
-                    {cartItems.map(item => (
-                        <div key={item.id} className='flex items-center gap-3 px-5 py-3 mx-1 hover:bg-foreground/5 transition-all ease-linear bg-background/50 relative group'>
+                    {cartItems.map((item, index) => (
+                        <div key={index} className='flex items-center gap-3 px-5 py-3 mx-1 hover:bg-foreground/5 transition-all ease-linear bg-background/50 relative group'>
+                            {console.log(item)}
                             <motion.span
                                 onClick={() => removeCartItem(item)}
                                 whileTap={{ scale: 0.95 }}
@@ -67,16 +70,18 @@ const Cart = () => {
                             </div>
 
                             <div className='flex flex-col flex-1 min-w-0'>
-                                <h4 className='truncate'>{item.name}</h4>
-                                {/* <span className='text-sm text-gray-400'>{item.type}</span> */}
+                                <div className='flex items-center gap-2'>
+                                    <h3 className='truncate'>{item.name}</h3>
+                                    <span className='text-sm'>({item.selectedSize.size})</span>
+                                </div>
+                                <span className='text-sm text-gray-400'>{item.brand}</span>
                             </div>
 
                             <span className='text-sm font-semibold whitespace-nowrap gap-2 flex flex-col items-center justify-center'>
                                 {(() => {
-                                    const activeSize = item.sizes.find(s => s.isDefault) ?? item.sizes[0];
-                                    const displayPrice = activeSize.discountedPrice ?? activeSize.price;
+                                    const priceToDisplay = item.selectedSize.discountedPrice ?? item.selectedSize.price;
                                     return <span className='text-accent' >
-                                        <span className='text-[10px]'>PKR</span> {displayPrice * item.quantity
+                                        <span className='text-[10px]'>PKR</span> {priceToDisplay * item.quantity
                                         }
                                     </span>
                                 })()}
