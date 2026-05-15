@@ -10,12 +10,15 @@ const CartContext = ({ children }) => {
 
     const [isCartOpen, setIsCartOpen] = useState(false)
     const [cartItems, setCartItems] = useState([])
+    const [selectedPriceAndSize, setSelectedPriceAndSize] = useState(null)
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen)
     }
 
     const handleAddCartItems = (i) => {
+        const ssp = i.sizes.find(s => s.isDefault) ?? i.sizes[0]
+        setSelectedPriceAndSize(ssp)
         setCartItems(prev => {
             const exist = prev.find(item => item.id === i.id)
 
@@ -26,10 +29,12 @@ const CartContext = ({ children }) => {
                         : item
                 )
             }
-            return [...prev, { ...i, quantity: 1 }]
+            return [...prev, { ...i, quantity: 1, selectedSize: selectedPriceAndSize }]
         })
         toast.success('Added to cart')
     }
+
+    console.log(selectedPriceAndSize)
 
     const handleCheckout = () => {
         if (cartItems.length === 0) return
@@ -39,7 +44,7 @@ const CartContext = ({ children }) => {
             const msg = cartItems.map(i => `${i.name} x${i.quantity}`).join('%0A')
             window.open(`https://wa.me/923286536520?text=Order:%0A${msg}`)
             toast.success('Payment Successful')
-        }else{
+        } else {
             toast.info('Checkout cancelled')
         }
     }
@@ -84,7 +89,7 @@ const CartContext = ({ children }) => {
     return (
         <ContextProvider.Provider value={{
             isCartOpen, toggleCart, handleAddCartItems, cartItems, handleSubTotal, removeCartItem,
-            handleItemDec, handleItemInc, handleCheckout
+            handleItemDec, handleItemInc, handleCheckout, selectedPriceAndSize, setSelectedPriceAndSize
         }}>
             {children}
         </ContextProvider.Provider>

@@ -10,11 +10,8 @@ import { useCart } from '@/app/context/CartContext'
 const ProductQuickView = () => {
 
     const { togglePopup, isPopupOpen, quickViewProduct } = usePopup()
-    const { handleAddCartItems } = useCart()
-
+    const { handleAddCartItems, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
     useBlockYScroll(isPopupOpen)
-
-    const [selectedPriceAndSize, setSelectedPriceAndSize] = useState(null)
 
     useEffect(() => {
         if (!quickViewProduct) return
@@ -46,7 +43,7 @@ const ProductQuickView = () => {
                         transition={{
                             type: "spring",
                             stiffness: 300,
-                            damping: 10,
+                            damping: 15,
                             mass: 0.8,
                         }}
                         className='w-200 min-h-150 overflow-y-auto h-fit bg-surface border border-foreground/30 relative'>

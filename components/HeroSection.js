@@ -130,7 +130,7 @@ const HeroSection = () => {
                   alt={currentSlide.alt}
                   fill
                   sizes='(max-width: 768px) 90vw, 450px'
-                  loading='lazy'
+                  priority
                   className='object-cover'
                 />
               </div>

@@ -72,9 +72,14 @@ const Cart = () => {
                             </div>
 
                             <span className='text-sm font-semibold whitespace-nowrap gap-2 flex flex-col items-center justify-center'>
-                                <span className='text-accent'>
-                                    <span className='text-[10px]'>PKR</span> {item.price * item.quantity}
-                                </span>
+                                {(() => {
+                                    const activeSize = item.sizes.find(s => s.isDefault) ?? item.sizes[0];
+                                    const displayPrice = activeSize.discountedPrice ?? activeSize.price;
+                                    return <span className='text-accent' >
+                                        <span className='text-[10px]'>PKR</span> {displayPrice * item.quantity
+                                        }
+                                    </span>
+                                })()}
                                 <div className='flex'>
                                     <span onClick={() => handleItemDec(item)} className='border px-3 py-1 font-bold hover:bg-surface transition-colors ease-linear cursor-pointer'>-</span>
                                     <span className='border px-3 py-1 font-bold'>{item.quantity}</span>
@@ -101,7 +106,7 @@ const Cart = () => {
                 </div>
                 }
             </aside>
-        </main>
+        </main >
     )
 }
 

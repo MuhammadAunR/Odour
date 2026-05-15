@@ -97,7 +97,7 @@ const ShopPage = () => {
 
                         <p className="text-sm text-foreground/50">
                             Showing <span className="text-foreground font-semibold">{products.length}</span> of{' '}
-                            <span className="text-foreground font-semibold">{apiResponse.total}</span> products
+                            <span className="text-foreground font-semibold">{apiResponse.total || 0}</span> products
                         </p>
 
                         <div className='flex items-center justify-center gap-3'>
