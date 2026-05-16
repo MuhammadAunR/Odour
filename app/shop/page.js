@@ -9,7 +9,7 @@ import { useFilter } from '../context/FilterContext'
 
 const ShopPage = () => {
 
-    const { products, apiResponse, loading, setQueryParams, queryParams } = useProducts()
+    const { products, apiResponse, loading, setQueryParams } = useProducts()
     const { toggleFilterSide, activeFilterCount } = useFilter()
 
     const [productView, setProductView] = useState('grid')
@@ -139,8 +139,8 @@ const ShopPage = () => {
                                 {loading && products.length === 0 && <Loader />}
                             </span>
 
-                            {products.map(prod => (
-                                <ProductCard key={prod.id} product={prod} />
+                            {products.map((prod, index) => (
+                                <ProductCard key={prod.id} product={prod} index={index} />
                             ))}
                         </div>
 

@@ -1,5 +1,7 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
+import { useProducts } from '@/app/context/ProductContext'
+import ProductCard from '@/components/CardUI'
 import Loader from '@/components/LoaderUI'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
@@ -8,10 +10,14 @@ import React, { useEffect, useState } from 'react'
 const Product = ({ params }) => {
 
     const { handleAddCartItems, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
+    const { products } = useProducts()
+
     const { slug } = useParams(params)
+
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
     const [productQty, setProductQty] = useState(1)
+    const [relatedProducts, setRelatedProducts] = useState([])
 
     const seasonConfig = {
         Summer: { label: 'Summer', color: 'text-amber-500', bg: 'bg-amber-400/10', icon: '☀' },
@@ -26,7 +32,6 @@ const Product = ({ params }) => {
                 const res = await fetch(`/api/products/${slug}`)
                 if (!res.ok) throw new Error('Product not found')
                 const data = await res.json()
-                console.log(data)
                 setProduct(data)
             } catch (error) {
                 console.error(error)
@@ -43,7 +48,24 @@ const Product = ({ params }) => {
         setSelectedPriceAndSize(defaultSize)
     }, [product])
 
-    console.log(selectedPriceAndSize)
+    useEffect(() => {
+        if (!product || !products.length) return
+
+        const related = products
+            .filter(p => p._id !== product._id)
+            .map(p => {
+                let score = 0
+                if (p.gender === product.gender) score += 3
+                if (p.fragranceFamily === product.fragranceFamily) score += 2
+                if (p.season.some(s => product.season.includes(s))) score += 1
+                return { ...p, score }
+            })
+            .filter(p => p.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 4)
+
+        setRelatedProducts(related)
+    }, [product, products])
 
     const handleDefaultPriceAndSize = (size) => {
         setSelectedPriceAndSize(size)
@@ -57,7 +79,6 @@ const Product = ({ params }) => {
         if (productQty === 1) return
         setProductQty(prev => prev - 1)
     }
-
 
     if (loading) {
         return (
@@ -92,7 +113,7 @@ const Product = ({ params }) => {
                     w-1/2 min-h-150 h-fit'>
                         <div>
                             <div className='flex items-baseline gap-5'>
-                                <h3 className='text-4xl font-black font-serif tracking-wider'>{product.name}</h3>
+                                <h3 className='text-3xl md:text-5xl font-black font-serif tracking-wider'>{product.name}</h3>
                                 <span className='font-semibold uppercase'>For {product.gender}</span>
                             </div>
                             <h4 className='text-lg font-semibold'>{product.brand}</h4>
@@ -176,6 +197,28 @@ const Product = ({ params }) => {
                     </div>
                 </div>
 
+                <section>
+                    <div className='flex flex-col items-center gap-2 mb-10'>
+                        <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
+                            You May Also Like
+                        </span>
+                        <h2 className='text-5xl font-black font-serif tracking-wide'>
+                            Related Products
+                        </h2>
+                        <div className='flex items-center gap-3 mt-1'>
+                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
+                            <span className='text-foreground/30 text-xs'>✦</span>
+                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
+                        </div>
+                    </div>
+
+                    <div className='flex items-center justify-start gap-3 pb-10'>
+                        {relatedProducts.map((prod, index) => {
+                            return <ProductCard key={prod.id} product={prod} index={index} />
+                        })}
+                    </div>
+
+                </section>
             </main>
         </>
     )

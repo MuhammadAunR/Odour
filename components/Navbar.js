@@ -7,13 +7,15 @@ import HamburgerComp from './HamburgerComp'
 import { useNavContext } from '@/app/context/NavbarContext'
 import { navOptions } from './Assets'
 import { usePathname } from 'next/navigation'
+import { useProducts } from '@/app/context/ProductContext'
 
 const Navbar = () => {
 
     const [fixNavbar, setFixNavbar] = useState(false)
+    const [activeNav, setActiveNav] = useState('home')
+
     const { toggleCart, cartItems, handleSubTotal } = useCart()
     const { toggleNavbar, isOpen } = useNavContext()
-    const [activeNav, setActiveNav] = useState('home')
 
     const totalCartItem = cartItems.reduce((total, item) => total + item.quantity, 0)
     const pathname = usePathname()
