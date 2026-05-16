@@ -60,17 +60,6 @@ const ShopPage = () => {
         }, 500);
     }, [searchInput])
 
-    useEffect(() => {
-        setTimeout(() => {
-            const value = searchInput.trim()
-            setQueryParams(prev => ({
-                ...prev,
-                search: value,
-                page: 1,
-            }))
-        }, 500);
-    }, [searchInput])
-
     return (
         <>
             <ProductQuickView />
