@@ -1,8 +1,6 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
-import { useProducts } from '@/app/context/ProductContext'
 import Loader from '@/components/LoaderUI'
-import { tr } from 'motion/react-client'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -45,6 +43,8 @@ const Product = ({ params }) => {
         setSelectedPriceAndSize(defaultSize)
     }, [product])
 
+    console.log(selectedPriceAndSize)
+
     const handleDefaultPriceAndSize = (size) => {
         setSelectedPriceAndSize(size)
     }
@@ -57,6 +57,7 @@ const Product = ({ params }) => {
         if (productQty === 1) return
         setProductQty(prev => prev - 1)
     }
+
 
     if (loading) {
         return (
@@ -165,7 +166,10 @@ const Product = ({ params }) => {
                                 <span className='border px-7 py-3 font-bold'>{productQty}</span>
                                 <span onClick={() => handleProductQtyInc(product)} className='border px-5 py-3 font-bold hover:bg-foreground/10 transition-colors ease-linear cursor-pointer select-none'>+</span>
                             </div>
-                            <button onClick={() => handleAddCartItems(product, { qty: productQty })} className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground cursor-pointer text-background'>
+                            <button
+                                onClick={() => handleAddCartItems(
+                                    product, { selectedSize: selectedPriceAndSize, qty: productQty })}
+                                className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground cursor-pointer text-background'>
                                 <span>Add to Cart</span>
                             </button>
                         </div>
