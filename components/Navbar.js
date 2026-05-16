@@ -15,7 +15,9 @@ const Navbar = () => {
     const { toggleNavbar, isOpen } = useNavContext()
     const [activeNav, setActiveNav] = useState('home')
 
+    const totalCartItem = cartItems.reduce((total, item) => total + item.quantity, 0)
     const pathname = usePathname()
+
     useEffect(() => {
         const nav = pathname.slice(1) === '' ? 'home' : pathname.slice(1)
         setActiveNav(nav)
@@ -72,7 +74,7 @@ const Navbar = () => {
                                 <ShoppingBag />
                                 {cartItems.length > 0 &&
                                     <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
-                                        {cartItems.length}
+                                        {totalCartItem}
                                     </span>
                                 }
                             </span>
@@ -119,7 +121,7 @@ const Navbar = () => {
                                 <ShoppingBag />
                                 {cartItems.length > 0 &&
                                     <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
-                                        {cartItems.length}
+                                        {totalCartItem}
                                     </span>
                                 }
                             </span>
