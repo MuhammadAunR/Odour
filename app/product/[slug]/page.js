@@ -98,8 +98,9 @@ const Product = ({ params }) => {
         <>
             <main className='w-10/12 mx-auto'>
 
-                <div className='w-full min-h-screen h-fit flex items-center justify-center gap-10'>
-                    <div className='relative w-1/2 h-150 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)]'>
+                <div className='w-full min-h-[calc(100%-100px)] py-15 h-fit flex justify-center gap-3 lg:gap-5 max-lg:flex-col'>
+
+                    <div className='relative w-full lg:w-1/2 h-150 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)]'>
                         <Image
                             src={product.imgSrc}
                             fill
@@ -110,14 +111,14 @@ const Product = ({ params }) => {
                     </div>
 
                     <div className='flex flex-col justify-center gap-4 bg-surface/30 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)] p-5 
-                    w-1/2 min-h-150 h-fit'>
+                    lg:w-1/2 min-h-150 h-fit'>
                         <div>
                             <div className='flex items-baseline gap-5'>
-                                <h3 className='text-3xl md:text-5xl font-black font-serif tracking-wider'>{product.name}</h3>
-                                <span className='font-semibold uppercase'>For {product.gender}</span>
+                                <h3 className='text-3xl lg:text-4xl xl:text-5xl font-black font-serif tracking-wider'>{product.name}</h3>
+                                <span className='font-semibold uppercase max-lg:text-sm'>For {product.gender}</span>
                             </div>
-                            <h4 className='text-lg font-semibold'>{product.brand}</h4>
-                            <p className='text-muted'>{product.description}</p>
+                            <h4 className='md:text-lg font-semibold'>{product.brand}</h4>
+                            <p className='max-md:text-sm text-muted'>{product.description}</p>
                         </div>
 
                         <div className='w-full h-[.5px] bg-foreground/20'></div>
@@ -161,7 +162,24 @@ const Product = ({ params }) => {
 
                         <div className='w-full h-[.5px] bg-foreground/20'></div>
 
-                        <div className='font-semibold tracking-[0.2em] uppercase text-foreground/70'>{product.fragranceFamily}</div>
+                        <div className='flex items-center gap-3'>
+                            <span className='tracking-[0.2em] uppercase text-foreground/50'>Fragrance |</span>
+                            <span className='text-sm font-medium'>{product.fragranceFamily}</span>
+                        </div>
+
+                        {/* <div className='w-full h-[.5px] bg-foreground/20'></div>
+
+                        <div className='flex items-center gap-3'>
+                            <span className='tracking-[0.2em] uppercase text-foreground/50'>For |</span>
+                            <span className='text-sm font-medium'>{product.gender}</span>
+                        </div> */}
+
+                        <div className='w-full h-[.5px] bg-foreground/20'></div>
+
+                        <div className='flex items-center gap-3'>
+                            <span className='tracking-[0.2em] uppercase text-foreground/50'>Concentration |</span>
+                            <span className='text-sm font-medium'>{product.concentration}</span>
+                        </div>
 
                         <div className='w-full h-[.5px] bg-foreground/20'></div>
 
@@ -181,7 +199,7 @@ const Product = ({ params }) => {
 
                         <div className='w-full h-[.5px] bg-foreground/20'></div>
 
-                        <div className='flex items-center justify-center gap-2'>
+                        <div className='flex items-center justify-center gap-2 max-sm:flex-col'>
                             <div className='flex'>
                                 <span onClick={() => handleProductQtyDec(product)} className='border px-5 py-3 font-bold hover:bg-foreground/10 transition-colors ease-linear cursor-pointer select-none'>-</span>
                                 <span className='border px-7 py-3 font-bold'>{productQty}</span>
@@ -190,7 +208,7 @@ const Product = ({ params }) => {
                             <button
                                 onClick={() => handleAddCartItems(
                                     product, { selectedSize: selectedPriceAndSize, qty: productQty })}
-                                className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground cursor-pointer text-background'>
+                                className='flex-1 max-sm:w-full flex items-center justify-center gap-2 py-3 bg-foreground cursor-pointer text-background'>
                                 <span>Add to Cart</span>
                             </button>
                         </div>
@@ -198,11 +216,11 @@ const Product = ({ params }) => {
                 </div>
 
                 <section>
-                    <div className='flex flex-col items-center gap-2 mb-10'>
+                    <div className='flex flex-col items-center gap-2 my-10'>
                         <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
                             You May Also Like
                         </span>
-                        <h2 className='text-5xl font-black font-serif tracking-wide'>
+                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-wide'>
                             Related Products
                         </h2>
                         <div className='flex items-center gap-3 mt-1'>
@@ -212,7 +230,7 @@ const Product = ({ params }) => {
                         </div>
                     </div>
 
-                    <div className='flex items-center justify-start gap-3 pb-10'>
+                    <div className='flex items-center justify-start flex-wrap gap-2 pb-10'>
                         {relatedProducts.map((prod, index) => {
                             return <ProductCard key={prod.id} product={prod} index={index} />
                         })}
