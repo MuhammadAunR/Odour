@@ -77,8 +77,6 @@ const ShopPage = () => {
         <>
             <ProductQuickView />
             <main className='w-10/12 mx-auto relative'>
-
-
                 <div className="flex flex-col justify-end gap-5 py-4 border-b border-foreground/10">
 
                     <label htmlFor="search" className='flex items-center text-foreground/70'>

@@ -16,7 +16,7 @@ const CartContext = ({ children }) => {
         setIsCartOpen(!isCartOpen)
     }
 
-    const handleAddCartItems = (i, selectedSize = null) => {
+    const handleAddCartItems = (i, { selectedSize = null, qty = 1 } = {}) => {
 
         const ssp = selectedSize ?? i.sizes.find(s => s.isDefault) ?? i.sizes[0];
 
@@ -28,13 +28,14 @@ const CartContext = ({ children }) => {
             if (exist) {
                 return prev.map(item =>
                     item._id === i._id && item.selectedSize.size === ssp.size
-                        ? { ...item, quantity: item.quantity + 1 }
+                        ? { ...item, quantity: item.quantity + qty }
                         : item
                 );
             }
-            return [...prev, { ...i, quantity: 1, selectedSize: ssp }]
+            return [...prev, { ...i, quantity: qty, selectedSize: ssp }]
         })
         toast.success('Added to cart')
+        console.log(cartItems)
     }
 
     const handleCheckout = () => {

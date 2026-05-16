@@ -5,17 +5,21 @@ import React, { useEffect, useState } from 'react'
 import { motion } from "framer-motion"
 import { useCart } from '@/app/context/CartContext'
 import { usePopup } from '@/app/context/QuickPopupContext'
+import { useRouter } from 'next/navigation'
+
 
 const ProductCard = ({ product }) => {
 
+    const router = useRouter()
     const { togglePopup, handleProduct } = usePopup()
-    const { handleAddCartItems,setSelectedPriceAndSize } = useCart()
+    const { handleAddCartItems } = useCart()
     const [wishListed, setWishListed] = useState(false)
 
     const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
-    
+
 
     return (
+
         <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -25,6 +29,7 @@ const ProductCard = ({ product }) => {
 
             <div className='relative w-77 h-100 overflow-hidden'>
                 <Image
+                    onClick={() => router.push(`/product/${product.slug}`)}
                     src={product.imgSrc}
                     alt={product.alt}
                     fill
@@ -54,7 +59,7 @@ const ProductCard = ({ product }) => {
                 <button
                     onClick={() => setWishListed(!wishListed)}
                     className='absolute bottom-14 right-3 p-1.5 bg-background/80 backdrop-blur-sm rounded-full
-                        scale-0 group-hover/productCard:scale-100 transition-all duration-300'>
+                    scale-0 group-hover/productCard:scale-100 transition-all duration-300'>
                     <Heart
                         size={16}
                         className={wishListed ? 'fill-red-500 text-red-500' : 'text-foreground'}
@@ -68,18 +73,18 @@ const ProductCard = ({ product }) => {
                     flex items-center border-t border-foreground/10 bg-background/95 backdrop-blur-sm'>
 
                     <button
-                        onClick={() => { togglePopup(), handleProduct(product) }}
+                        onClick={() => { togglePopup(); handleProduct(product) }}
                         className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                            hover:bg-foreground hover:text-background transition-colors duration-500
-                            border-r border-foreground/10'>
+                        hover:bg-foreground hover:text-background transition-colors duration-500
+                        border-r border-foreground/10'>
                         <Search size={15} />
                         <span>Quick View</span>
                     </button>
 
                     <button
-                        onClick={() => handleAddCartItems(product)}
+                        onClick={() => { handleAddCartItems(product) }}
                         className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                            hover:bg-foreground hover:text-background transition-colors duration-500'>
+                        hover:bg-foreground hover:text-background transition-colors duration-500'>
                         <ShoppingBag size={15} />
                         <span>Add to Cart</span>
                     </button>
@@ -110,7 +115,6 @@ const ProductCard = ({ product }) => {
                     </span>
                 )}
             </div>
-
         </motion.div>
     )
 }

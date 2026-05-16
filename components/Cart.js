@@ -11,7 +11,7 @@ import useBlockYScroll from './BlockYScroll'
 
 const Cart = () => {
 
-    const { toggleCart, isCartOpen, cartItems, handleSubTotal, removeCartItem, handleItemDec, handleItemInc, handleCheckout, selectedPriceAndSize } = useCart()
+    const { toggleCart, isCartOpen, cartItems, handleSubTotal, removeCartItem, handleItemDec, handleItemInc, handleCheckout } = useCart()
 
     useBlockYScroll(isCartOpen)
 
@@ -44,13 +44,12 @@ const Cart = () => {
                             <span><ShoppingCart size={80} color='grey' /></span>
                             <span className='text-lg'>Your cart is empty</span>
                             <Link href={'/shop'} onClick={toggleCart} className=''>
-                                <Button1 text={'Go To Shop'}/>
+                                <Button1 text={'Go To Shop'} />
                             </Link>
                         </motion.div>
                     )}
                     {cartItems.map((item, index) => (
                         <div key={index} className='flex items-center gap-3 px-5 py-3 mx-1 hover:bg-foreground/5 transition-all ease-linear bg-background/50 relative group'>
-                            {console.log(item)}
                             <motion.span
                                 onClick={() => removeCartItem(item)}
                                 whileTap={{ scale: 0.95 }}

@@ -1,17 +1,19 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { usePopup } from '@/app/context/QuickPopupContext'
 import { X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import useBlockYScroll from './BlockYScroll'
 import Image from 'next/image'
 import { useCart } from '@/app/context/CartContext'
+import { useRouter } from 'next/navigation'
 
 const ProductQuickView = () => {
 
     const { togglePopup, isPopupOpen, quickViewProduct } = usePopup()
     const { handleAddCartItems, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
     useBlockYScroll(isPopupOpen)
+    const router = useRouter()
 
     useEffect(() => {
         if (!quickViewProduct) return
@@ -117,6 +119,7 @@ const ProductQuickView = () => {
                                 <div className='w-full h-[.5px] bg-foreground/20'></div>
                                 <div className='flex items-center justify-center gap-2'>
                                     <button
+                                        onClick={() => { router.push(`/product/${quickViewProduct.slug}`); togglePopup() }}
                                         className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground/5
                                         hover:bg-foreground hover:text-background transition-colors duration-500
                                         border-r border-foreground/10 cursor-pointer'>
