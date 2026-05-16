@@ -4,13 +4,11 @@ import Loader from '@/components/LoaderUI'
 import ProductQuickView from '@/components/ProductQuickView'
 import { Funnel, LayoutGrid, LayoutList, Search } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { useProducts } from '../context/ProductContext'
 import { useFilter } from '../context/FilterContext'
 
 const ShopPage = () => {
 
-    const { products, apiResponse, loading, setQueryParams } = useProducts()
-    const { toggleFilterSide, activeFilterCount } = useFilter()
+    const { toggleFilterSide, activeFilterCount, products, loading, setQueryParams, apiResponse } = useFilter()
 
     const [productView, setProductView] = useState('grid')
     const [currentPage, setCurrentPage] = useState(1)

@@ -5,11 +5,10 @@ import { ChevronDown, X } from 'lucide-react'
 import React, { useState } from 'react'
 import useBlockYScroll from './BlockYScroll'
 import { Button1 } from './ButtonUI'
-import { useProducts } from '@/app/context/ProductContext'
 
 const Filter = () => {
     const { isFilterSideOpen, toggleFilterSide, setActiveFilterCount } = useFilter()
-    const { filters, setQueryParams, queryParams } = useProducts()
+    const { filters, setQueryParams, queryParams } = useFilter()
 
     const [draftParams, setDraftParams] = useState(queryParams)
     const [open, setOpen] = useState('')
@@ -41,13 +40,6 @@ const Filter = () => {
             }
         })
     }
-
-    // useEffect(() => {
-    //     if (isFilterSideOpen) {
-    //         setDraftParams(queryParams)
-    //         handleOpenFilterSection()
-    //     }
-    // }, [isFilterSideOpen])
 
     const handleApply = () => {
         setQueryParams(draftParams)
