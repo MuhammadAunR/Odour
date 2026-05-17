@@ -20,12 +20,13 @@ const Navbar = () => {
     const pathname = usePathname()
     const router = useRouter()
 
-    const handleLoginSignupRouting = () => {
+    const handleAuthPageRouting = () => {
         router.push('/login')
     }
 
     useEffect(() => {
         const nav = pathname.slice(1) === '' ? 'home' : pathname.slice(1)
+        if (pathname.slice(1, 8) === 'product') return setActiveNav('shop')
         setActiveNav(nav)
     }, [pathname])
 
@@ -86,7 +87,7 @@ const Navbar = () => {
                             </span>
                             <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
                         </span>
-                        <span onClick={handleLoginSignupRouting} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
+                        <span onClick={handleAuthPageRouting} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
                             <UserRound />
                         </span>
                     </div>
@@ -133,7 +134,7 @@ const Navbar = () => {
                             </span>
                             <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
                         </span>
-                        <span className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
+                        <span onClick={handleAuthPageRouting} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
                             <UserRound />
                         </span>
                     </div>
