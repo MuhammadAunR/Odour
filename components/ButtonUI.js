@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { motion, AnimatePresence, scale } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const Button1 = ({ text }) => {
     const [hovered, setHovered] = useState(false)
