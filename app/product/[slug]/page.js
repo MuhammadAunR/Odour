@@ -3,9 +3,12 @@ import { useCart } from '@/app/context/CartContext'
 import { useProducts } from '@/app/context/ProductContext'
 import ProductCard from '@/components/CardUI'
 import Loader from '@/components/LoaderUI'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from "framer-motion"
+import { avatarColors, testimonials } from '@/components/Assets'
 
 const Product = ({ params }) => {
 
@@ -14,10 +17,13 @@ const Product = ({ params }) => {
 
     const { slug } = useParams(params)
 
+    const intervalRef = useRef(null)
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
     const [productQty, setProductQty] = useState(1)
     const [relatedProducts, setRelatedProducts] = useState([])
+    const [testimonialCount, setTestimonialCount] = useState(0)
+    const [stopTestimonialMovement, setStopTestimonialMovement] = useState(false)
 
     const seasonConfig = {
         Summer: { label: 'Summer', color: 'text-amber-500', bg: 'bg-amber-400/10', icon: '☀' },
@@ -79,6 +85,38 @@ const Product = ({ params }) => {
         if (productQty === 1) return
         setProductQty(prev => prev - 1)
     }
+
+    const handleForwardTestimonials = () => {
+        if (testimonialCount < testimonials.length - 1) {
+            const newCount = testimonialCount + 1
+            setTestimonialCount(newCount)
+        } else {
+            setTestimonialCount(0)
+        }
+    }
+    const handleBackwardTestimonials = () => {
+        if (testimonialCount > 0) {
+            const newCount = testimonialCount - 1
+            setTestimonialCount(newCount)
+        } else {
+            setTestimonialCount(4)
+        }
+    }
+
+    const handleTestimonialMovement = () => {
+        setStopTestimonialMovement(!stopTestimonialMovement)
+    }
+
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            setTestimonialCount(prev =>
+                prev < testimonials.length - 1 ? prev + 1 : 0
+            )
+        }, 3000)
+
+        return () => clearInterval(intervalRef.current)
+    }, [])
+
 
     if (loading) {
         return (
@@ -230,7 +268,7 @@ const Product = ({ params }) => {
                         </div>
                     </div>
 
-                    <div className='flex items-center justify-start flex-wrap gap-2 pb-10'>
+                    <div className='flex items-center justify-center flex-wrap gap-2 pb-10'>
                         {relatedProducts.map((prod, index) => {
                             return <ProductCard key={prod.id} product={prod} index={index} />
                         })}
@@ -251,6 +289,72 @@ const Product = ({ params }) => {
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
                             <span className='text-foreground/30 text-xs'>✦</span>
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
+                        </div>
+                    </div>
+
+                    <div className='flex flex-col gap-5 items-center justify-center pb-10'>
+                        <div
+                            onMouseEnter={() => clearInterval(intervalRef.current)}
+                            onMouseLeave={() => {
+                                intervalRef.current = setInterval(() => {
+                                    setTestimonialCount(prev =>
+                                        prev < testimonials.length - 1 ? prev + 1 : 0
+                                    )
+                                }, 3000)
+                            }}
+                            className='w-full md:w-150 p-7 bg-surface/50 shadow-[1px_1px_5px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center gap-5'>
+                            <AnimatePresence mode='wait'>
+                                <motion.p
+                                    key={`review-${testimonialCount}`}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className='text-muted font-semibold text-justify'>
+                                    "{testimonials[testimonialCount]?.review}"
+                                </motion.p>
+                            </AnimatePresence>
+
+                            <div className='flex items-center gap-3'>
+                                <AnimatePresence mode='wait'>
+                                    <motion.div
+                                        key={`avatar-${testimonialCount}`}
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.8 }}
+                                        transition={{ duration: 0.3, delay: 0.1 }}
+                                        className={`w-10 h-10 ${avatarColors[testimonialCount]} text-white flex items-center justify-center rounded-full`}>
+                                        {testimonials[testimonialCount]?.initials}
+                                    </motion.div>
+                                </AnimatePresence>
+
+                                <AnimatePresence mode='wait'>
+                                    <motion.span
+                                        key={`name-${testimonialCount}`}
+                                        initial={{ opacity: 0, x: 10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -10 }}
+                                        transition={{ duration: 0.3, delay: 0.15 }}
+                                        className='font-serif tracking-wider text-lg font-bold'>
+                                        {testimonials[testimonialCount]?.name}
+                                    </motion.span>
+                                </AnimatePresence>
+                            </div>
+                        </div>
+
+                        <div className='flex items-center justify-center gap-5'>
+                            <motion.div
+                                whileTap={{ scale: 0.95 }}
+                                onClick={handleBackwardTestimonials}
+                                className='bg-background p-2 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer '>
+                                <ChevronLeft size={18} />
+                            </motion.div>
+                            <motion.div
+                                whileTap={{ scale: 0.95 }}
+                                onClick={handleForwardTestimonials}
+                                className='bg-background p-2 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer '>
+                                <ChevronRight size={18} />
+                            </motion.div>
                         </div>
                     </div>
                 </section>
