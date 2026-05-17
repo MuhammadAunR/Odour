@@ -1,15 +1,14 @@
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
 import localFont from "next/font/local";
-import Navbar from "@/components/Navbar";
 import AppWrapper from "./context/AppWrapper";
 import Cart from "@/components/Cart";
 import NavSidebar from "@/components/NavSidebar";
 import LenisWrapper from "@/components/LenisWrapper";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
-import FooterSection from "@/components/FooterSection";
 import Filter from "@/components/Filter";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -48,9 +47,9 @@ export default function RootLayout({ children }) {
               <Cart />
               <Filter />
               <NavSidebar />
-              <Navbar />
-              {children}
-              <FooterSection />
+              <LayoutWrapper>
+                {children}
+              </LayoutWrapper>
             </AppWrapper>
           </LenisWrapper>
         </ReactToastContainer>
