@@ -8,7 +8,8 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from "framer-motion"
-import { avatarColors, testimonials } from '@/components/Assets'
+import { avatarColors, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/Assets'
+import CountUp from 'react-countup'
 
 const Product = ({ params }) => {
 
@@ -24,6 +25,7 @@ const Product = ({ params }) => {
     const [relatedProducts, setRelatedProducts] = useState([])
     const [testimonialCount, setTestimonialCount] = useState(0)
     const [stopTestimonialMovement, setStopTestimonialMovement] = useState(false)
+    const [stripMotion, setStripMotion] = useState(true)
 
     const seasonConfig = {
         Summer: { label: 'Summer', color: 'text-amber-500', bg: 'bg-amber-400/10', icon: '☀' },
@@ -138,7 +140,12 @@ const Product = ({ params }) => {
 
                 <div className='w-full min-h-[calc(100%-100px)] py-15 h-fit flex justify-center gap-3 lg:gap-5 max-lg:flex-col'>
 
-                    <div className='relative w-full lg:w-1/2 h-150 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)]'>
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: 0.3 }}
+                        className='relative w-full lg:w-1/2 h-150 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)]'>
                         <Image
                             src={product.imgSrc}
                             fill
@@ -146,9 +153,14 @@ const Product = ({ params }) => {
                             priority
                             alt={product.alt}
                             className='object-cover' />
-                    </div>
+                    </motion.div>
 
-                    <div className='flex flex-col justify-center gap-4 bg-surface/30 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)] p-5 
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: 0.3 }}
+                        className='flex flex-col justify-center gap-4 bg-surface/30 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)] p-5 
                     lg:w-1/2 min-h-150 h-fit'>
                         <div>
                             <div className='flex items-baseline gap-5'>
@@ -250,11 +262,11 @@ const Product = ({ params }) => {
                                 <span>Add to Cart</span>
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
                 <section>
-                    <div className='flex flex-col items-center gap-2 my-10'>
+                    <div className='flex flex-col items-center gap-2 py-10 mt-5'>
                         <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
                             You May Also Like
                         </span>
@@ -278,7 +290,7 @@ const Product = ({ params }) => {
 
 
                 <section>
-                    <div className='flex flex-col items-center gap-2 my-10'>
+                    <div className='flex flex-col items-center gap-2 py-10 mt-5'>
                         <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
                             What Our Clients Say
                         </span>
@@ -355,6 +367,80 @@ const Product = ({ params }) => {
                                 className='bg-background p-2 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer '>
                                 <ChevronRight size={18} />
                             </motion.div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className='py-10 my-20 border-t border-b border-foreground/10'>
+                    <div className='flex items-center justify-center gap-0'>
+                        {stats.map((stat, index) => (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.3, delay: index * 0.1 }}
+                                key={stat.label} className='flex flex-col items-center justify-center gap-1 px-16 border-r border-foreground/10 last:border-r-0'>
+                                <div className='flex items-baseline gap-0.5'>
+                                    <CountUp
+                                        end={stat.end}
+                                        duration={4}
+                                        className='text-5xl font-black font-serif tracking-wide'
+                                    />
+                                    <span className='text-4xl tracking-wide'>{stat.suffix}</span>
+                                </div>
+                                <span className='text-xs tracking-[0.2em] uppercase text-foreground/50'>
+                                    {stat.label}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <div className='flex flex-col items-center gap-2 py-10 mt-5'>
+                        <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
+                            The Odour Promise
+                        </span>
+                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
+                            Why Choose Us
+                        </h2>
+                        <div className='flex items-center gap-3 mt-1'>
+                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
+                            <span className='text-foreground/30 text-xs'>✦</span>
+                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
+                        </div>
+                    </div>
+
+                    <div className='flex items-center justify-center gap-2 flex-wrap pb-10'>
+                        {WhyChooseUsData.map(reason => {
+                            return <div
+                                key={reason.title}
+                                className='flex flex-col items-center justify-center gap-3 w-100 min-h-80 bg-radial from-background via-surface/50 to-surface p-5 hover:-translate-y-1 border border-transparent hover:border-foreground/60 transition-all ease-linear'>
+                                <span className='text-3xl'>{reason.icon}</span>
+                                <h3 className='text-3xl font-serif font-bold tracking-wider'>{reason.title}</h3>
+                                <p className='text-justify text-muted font-semibold'>{reason.description}</p>
+                            </div>
+                        })}
+                    </div>
+                </section>
+
+                <section>
+                    <div
+                        onMouseEnter={() => setStripMotion(false)}
+                        onMouseLeave={() => setStripMotion(true)}
+                        className='overflow-hidden border-t border-b border-foreground/10 py-4 my-20'>
+                        <div
+                            style={{
+                                animation: 'stripeMarquee 20s linear infinite',
+                                animationPlayState: stripMotion ? 'running' : 'paused'
+                            }}
+                            className='flex gap-10 w-max'>
+                            {[...stripeItems, ...stripeItems].map((item, index) => (
+                                <span key={index} className='flex items-center gap-10 tracking-[0.3em] uppercase text-foreground/70 whitespace-nowrap'>
+                                    {item}
+                                    <span className='text-foreground/20'>✦</span>
+                                </span>
+                            ))}
                         </div>
                     </div>
                 </section>

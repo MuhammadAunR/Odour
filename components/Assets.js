@@ -75,3 +75,48 @@ const testimonials = [
 export { testimonials }
 const avatarColors = ['bg-stone-700', 'bg-green-800', 'bg-blue-800', 'bg-red-700', 'bg-amber-900']
 export { avatarColors }
+
+const stats = [
+    { end: 500, suffix: '+', label: 'Fragrances' },
+    { end: 50, suffix: '+', label: 'Brands' },
+    { end: 1000, suffix: '+', label: 'Happy Clients' },
+    { end: 100, suffix: '%', label: 'Authentic' },
+]
+export { stats }
+
+const WhyChooseUsData = [
+    {
+        icon: '✦',
+        title: '100% Authentic',
+        description: 'Every fragrance is sourced directly from authorized distributors. No imitations, no compromises — only the genuine article.'
+    },
+    {
+        icon: '◈',
+        title: 'Luxury Packaging',
+        description: 'Each order is wrapped with care and elegance. Unboxing an Odour delivery is an experience in itself.'
+    },
+    {
+        icon: '◎',
+        title: 'Expert Curation',
+        description: 'Our collection is handpicked by fragrance connoisseurs. Only the finest, most distinguished scents make it to our shelves.'
+    },
+    {
+        icon: '⬡',
+        title: 'Fast Delivery',
+        description: 'Swift and secure delivery across Pakistan. Your fragrance arrives safely and on time, every time.'
+    },
+    {
+        icon: '◇',
+        title: 'Easy Returns',
+        description: 'Not satisfied? We offer a hassle-free return policy because your confidence in us matters more than the sale.'
+    },
+    {
+        icon: '❋',
+        title: 'Exclusive Collections',
+        description: 'Discover rare and limited edition fragrances unavailable anywhere else in Pakistan. Curated for the discerning few.'
+    },
+]
+export { WhyChooseUsData }
+
+const stripeItems = ['100% Authentic', 'Luxury Packaging', 'Expert Curation', 'Fast Delivery', 'Easy Returns', 'Exclusive Collections']
+export { stripeItems }
