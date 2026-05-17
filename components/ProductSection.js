@@ -20,7 +20,7 @@ const ProductSection = () => {
                     <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
                         Exclusively Curated
                     </span>
-                    <h3 className='text-4xl md:text-5xl font-bold font-serif tracking-wider'>
+                    <h3 className='text-4xl md:text-5xl font-bold font-serif tracking-widest'>
                         The Collection
                     </h3>
                     <div className='flex items-center gap-3'>

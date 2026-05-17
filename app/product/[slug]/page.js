@@ -114,7 +114,7 @@ const Product = ({ params }) => {
                     lg:w-1/2 min-h-150 h-fit'>
                         <div>
                             <div className='flex items-baseline gap-5'>
-                                <h3 className='text-3xl lg:text-4xl xl:text-5xl font-black font-serif tracking-wider'>{product.name}</h3>
+                                <h3 className='text-3xl lg:text-4xl xl:text-5xl font-black font-serif tracking-widest'>{product.name}</h3>
                                 <span className='font-semibold uppercase max-lg:text-sm'>For {product.gender}</span>
                             </div>
                             <h4 className='md:text-lg font-semibold'>{product.brand}</h4>
@@ -220,7 +220,7 @@ const Product = ({ params }) => {
                         <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
                             You May Also Like
                         </span>
-                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-wide'>
+                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
                             Related Products
                         </h2>
                         <div className='flex items-center gap-3 mt-1'>
@@ -236,6 +236,23 @@ const Product = ({ params }) => {
                         })}
                     </div>
 
+                </section>
+
+
+                <section>
+                    <div className='flex flex-col items-center gap-2 my-10'>
+                        <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
+                            What Our Clients Say
+                        </span>
+                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
+                            Testimonials
+                        </h2>
+                        <div className='flex items-center gap-3 mt-1'>
+                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
+                            <span className='text-foreground/30 text-xs'>✦</span>
+                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
+                        </div>
+                    </div>
                 </section>
             </main>
         </>

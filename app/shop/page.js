@@ -123,7 +123,7 @@ const ShopPage = () => {
                         <div className='flex flex-wrap justify-start items-center gap-3 relative min-h-[50vh]'>
 
                             <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-                                {loading && products.length === 0 && <Loader />}
+                                {loading && <Loader />}
                             </span>
 
                             {products.map((prod, index) => (

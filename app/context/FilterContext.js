@@ -65,7 +65,7 @@ const FilterContext = ({ children }) => {
     }
 
     return (
-        <FilterProvider.Provider value={{ toggleFilterSide, isFilterSideOpen, setActiveFilterCount, activeFilterCount, filters, queryParams, setQueryParams, loading, products,apiResponse }}>
+        <FilterProvider.Provider value={{ toggleFilterSide, isFilterSideOpen, setActiveFilterCount, activeFilterCount, filters, queryParams, setQueryParams, loading, products, apiResponse }}>
             {children}
         </FilterProvider.Provider>
     )
