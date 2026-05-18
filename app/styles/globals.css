@@ -57,6 +57,20 @@ html.lenis {
 }
 
 @keyframes stripeMarquee {
-  from {transform: translateX(0);}
-  to {transform: translateX(-50%);}
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+   @keyframes cardBeat {
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.01); }
+  28%  { transform: scale(1); }
+  42%  { transform: scale(1.01); }
+  70%  { transform: scale(1); }
+  100% { transform: scale(1); }
 }
