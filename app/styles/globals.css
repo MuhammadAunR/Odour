@@ -66,11 +66,18 @@ html.lenis {
   }
 }
 
-   @keyframes cardBeat {
+@keyframes cardBeat {
   0%   { transform: scale(1); }
   14%  { transform: scale(1.01); }
   28%  { transform: scale(1); }
   42%  { transform: scale(1.01); }
   70%  { transform: scale(1); }
   100% { transform: scale(1); }
+}
+
+@keyframes mainArrowRise {
+  0%   { transform: translateY(6px);  opacity: 0; }
+  30%  { transform: translateY(0px);  opacity: 1; }
+  70%  { transform: translateY(0px);  opacity: 1; }
+  100% { transform: translateY(-6px); opacity: 0; }
 }

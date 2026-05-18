@@ -1,30 +1,18 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight, ChevronUp, Diamond, Dot } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Diamond } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { heroSectionSlideData } from './Assets'
 import { Button1 } from './ButtonUI'
 import Link from 'next/link'
+import ScrollToTopBtn from './ScrollToTopBtn'
 
 const HeroSection = () => {
 
   const [imgCount, setImgCount] = useState(0)
-  const [yScroll, setYScroll] = useState(false)
 
   const currentSlide = heroSectionSlideData[imgCount]
-
-  useEffect(() => {
-    const handleYScroll = () => {
-      if (window.scrollY > 200) {
-        setYScroll(true)
-      } else {
-        setYScroll(false)
-      }
-    }
-    window.addEventListener('scroll', handleYScroll)
-    return () => window.removeEventListener('scroll', handleYScroll)
-  }, [])
 
   const handleForwardCarousel = () => {
     if (imgCount < heroSectionSlideData.length - 1) {
@@ -42,11 +30,6 @@ const HeroSection = () => {
     } else {
       setImgCount(4)
     }
-  }
-
-  const handleScrollToTop = () => {
-    window.lenis?.scrollTo(0, { immediate: true })
-    window.scrollTo(0, 0)
   }
 
   useEffect(() => {
@@ -68,12 +51,7 @@ const HeroSection = () => {
           })}
         </div>
 
-        {yScroll && <span
-          onClick={handleScrollToTop}
-          className='fixed bottom-7 right-7 z-90 bg-muted p-2 text-background'>
-          <ChevronUp />
-        </span>
-        }
+        <ScrollToTopBtn />
 
         <a href="https://wa.me/923286536520" target="_blank" className='fixed left-7 bottom-7 z-90 bg-green-600 text-background p-2 rounded-full'>
           <svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' width="32" height="32" viewBox="0 0 32 32">

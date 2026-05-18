@@ -10,6 +10,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from "framer-motion"
 import { avatarColors, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/Assets'
 import CountUp from 'react-countup'
+import ScrollToTopBtn from '@/components/ScrollToTopBtn'
 
 const Product = ({ params }) => {
 
@@ -136,7 +137,9 @@ const Product = ({ params }) => {
     }
     return (
         <>
-            <main className='w-10/12 mx-auto'>
+            <main className='w-10/12 mx-auto relative'>
+
+                <ScrollToTopBtn />
 
                 <div className='w-full min-h-[calc(100%-100px)] py-15 h-fit flex justify-center gap-3 lg:gap-5 max-lg:flex-col'>
 
@@ -412,7 +415,7 @@ const Product = ({ params }) => {
                     </div>
 
                     <div className='flex items-center justify-center gap-2 flex-wrap pb-10'>
-                        {WhyChooseUsData.map((reason,index) => {
+                        {WhyChooseUsData.map((reason, index) => {
                             return <div
                                 style={{
                                     animation: 'cardBeat 1.5s ease-in-out infinite',

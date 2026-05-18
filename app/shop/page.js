@@ -5,6 +5,7 @@ import ProductQuickView from '@/components/ProductQuickView'
 import { Funnel, LayoutGrid, LayoutList, Search } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useFilter } from '../context/FilterContext'
+import ScrollToTopBtn from '@/components/ScrollToTopBtn'
 
 const ShopPage = () => {
 
@@ -64,6 +65,7 @@ const ShopPage = () => {
         <>
             <ProductQuickView />
             <main className='w-10/12 mx-auto relative'>
+                <ScrollToTopBtn />
                 <div className="flex flex-col justify-end gap-5 py-4 border-b border-foreground/10">
 
                     <label htmlFor="search" className='flex items-center text-foreground/70'>
