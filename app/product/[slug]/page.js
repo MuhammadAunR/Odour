@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from "framer-motion"
-import { avatarColors, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/Assets'
+import { avatarColors, containerVariants, itemVariants, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/Assets'
 import CountUp from 'react-countup'
 import ScrollToTopBtn from '@/components/ScrollToTopBtn'
 
@@ -269,19 +269,34 @@ const Product = ({ params }) => {
                 </div>
 
                 <section>
-                    <div className='flex flex-col items-center gap-2 py-10 mt-5'>
-                        <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
-                            You May Also Like
-                        </span>
-                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
+                    <motion.div
+                        variants={containerVariants}
+                        initial='hidden'
+                        whileInView='visible'
+                        viewport={{ once: true, amount: 0.5 }}
+                        className='flex flex-col items-center gap-2 py-10 mt-5'>
+
+                        <motion.span
+                            variants={itemVariants}
+                            className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
+                            You Might Also Like
+                        </motion.span>
+
+                        <motion.h2
+                            variants={itemVariants}
+                            className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
                             Related Products
-                        </h2>
-                        <div className='flex items-center gap-3 mt-1'>
+                        </motion.h2>
+
+                        <motion.div
+                            variants={itemVariants}
+                            className='flex items-center gap-3 mt-1'>
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
                             <span className='text-foreground/30 text-xs'>✦</span>
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
-                        </div>
-                    </div>
+                        </motion.div>
+
+                    </motion.div>
 
                     <div className='flex items-center justify-center flex-wrap gap-2 pb-10'>
                         {relatedProducts.map((prod, index) => {
@@ -293,19 +308,34 @@ const Product = ({ params }) => {
 
 
                 <section>
-                    <div className='flex flex-col items-center gap-2 py-10 mt-5'>
-                        <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
+                    <motion.div
+                        variants={containerVariants}
+                        initial='hidden'
+                        whileInView='visible'
+                        viewport={{ once: true, amount: 0.5 }}
+                        className='flex flex-col items-center gap-2 py-10 mt-5'>
+
+                        <motion.span
+                            variants={itemVariants}
+                            className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
                             What Our Clients Say
-                        </span>
-                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
+                        </motion.span>
+
+                        <motion.h2
+                            variants={itemVariants}
+                            className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
                             Testimonials
-                        </h2>
-                        <div className='flex items-center gap-3 mt-1'>
+                        </motion.h2>
+
+                        <motion.div
+                            variants={itemVariants}
+                            className='flex items-center gap-3 mt-1'>
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
                             <span className='text-foreground/30 text-xs'>✦</span>
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
-                        </div>
-                    </div>
+                        </motion.div>
+
+                    </motion.div>
 
                     <div className='flex flex-col gap-5 items-center justify-center pb-10'>
                         <div
@@ -400,19 +430,34 @@ const Product = ({ params }) => {
                 </section>
 
                 <section>
-                    <div className='flex flex-col items-center gap-2 py-10 mt-5'>
-                        <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
+                    <motion.div
+                        variants={containerVariants}
+                        initial='hidden'
+                        whileInView='visible'
+                        viewport={{ once: true, amount: 0.5 }}
+                        className='flex flex-col items-center gap-2 py-10 mt-5'>
+
+                        <motion.span
+                            variants={itemVariants}
+                            className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
                             The Odour Promise
-                        </span>
-                        <h2 className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
+                        </motion.span>
+
+                        <motion.h2
+                            variants={itemVariants}
+                            className='text-4xl md:text-5xl font-black font-serif tracking-widest'>
                             Why Choose Us
-                        </h2>
-                        <div className='flex items-center gap-3 mt-1'>
+                        </motion.h2>
+
+                        <motion.div
+                            variants={itemVariants}
+                            className='flex items-center gap-3 mt-1'>
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
                             <span className='text-foreground/30 text-xs'>✦</span>
                             <div className='w-16 h-[0.5px] bg-foreground/30'></div>
-                        </div>
-                    </div>
+                        </motion.div>
+
+                    </motion.div>
 
                     <div className='flex items-center justify-center gap-2 flex-wrap pb-10'>
                         {WhyChooseUsData.map((reason, index) => {

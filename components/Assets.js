@@ -120,3 +120,19 @@ export { WhyChooseUsData }
 
 const stripeItems = ['100% Authentic', 'Luxury Packaging', 'Expert Curation', 'Fast Delivery', 'Easy Returns', 'Exclusive Collections']
 export { stripeItems }
+
+const containerVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.2
+        }
+    }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+}
+
+export { containerVariants, itemVariants }
