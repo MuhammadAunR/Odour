@@ -21,7 +21,7 @@ const Navbar = () => {
     const router = useRouter()
 
     const handleAuthPageRouting = () => {
-        router.push('/login')
+        router.push('/authpage')
     }
 
     useEffect(() => {

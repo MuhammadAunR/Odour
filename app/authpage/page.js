@@ -1,9 +1,22 @@
 'use client'
 import React, { useState } from 'react'
 import { Button1 } from '@/components/ButtonUI'
-import { Eye, EyeOff } from 'lucide-react'
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+
+const leftAnimationProps = {
+    initial: { opacity: 0, x: 20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 500 },
+    transition: { duration: 0.4, ease: 'easeInOut' }
+}
+const rightAnimationProps = {
+    initial: { opacity: 0, x: -20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -500 },
+    transition: { duration: 0.4, ease: 'easeInOut' }
+}
 
 const GoogleIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -39,18 +52,11 @@ const Divider = () => (
     </div>
 )
 
-const leftAnimationProps = {
-    initial: { opacity: 0, x: 20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 500 },
-    transition: { duration: 0.4, ease: 'easeInOut' }
-}
-const rightAnimationProps = {
-    initial: { opacity: 0, x: -20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -500 },
-    transition: { duration: 0.4, ease: 'easeInOut' }
-}
+const BackToHome = () => (
+    <Link href={'/'} className='absolute top-3 left-3 bg-muted/50 p-1 rounded-full hover:bg-foreground/20 transition-colors ease-linear'>
+        <ArrowLeft />
+    </Link>
+)
 
 const AuthPage = () => {
 
@@ -77,7 +83,9 @@ const AuthPage = () => {
                         <motion.div
                             key='signin-form'
                             {...leftAnimationProps}
-                            className='bg-surface w-10/12 lg:w-1/2 min-h-160 h-fit flex flex-col gap-5 items-center justify-center py-7 px-3'>
+                            className='bg-surface w-10/12 lg:w-1/2 min-h-160 h-fit flex flex-col gap-5 items-center justify-center py-7 px-3 relative'>
+
+                            <BackToHome />
 
                             <span onClick={toggleActiveAuthWay} className='lg:hidden'>
                                 <Button1 text={'Create Account'} />
@@ -119,7 +127,9 @@ const AuthPage = () => {
                         <motion.div
                             key='signup-form'
                             {...leftAnimationProps}
-                            className='bg-surface w-10/12 lg:w-1/2 min-h-160 h-fit flex flex-col gap-5 items-center justify-center py-7 px-3'>
+                            className='bg-surface w-10/12 lg:w-1/2 min-h-160 h-fit flex flex-col gap-5 items-center justify-center py-7 px-3 relative'>
+
+                            <BackToHome />
 
                             <span onClick={toggleActiveAuthWay} className='lg:hidden'>
                                 <Button1 text={'Sign In'} />

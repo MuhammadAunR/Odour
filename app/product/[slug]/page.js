@@ -419,7 +419,7 @@ const Product = ({ params }) => {
                                     animationDelay: `${index * 0.2}s`,
                                 }}
                                 key={reason.title}
-                                className='flex flex-col items-center justify-center gap-3 w-100 min-h-80 bg-radial from-background via-surface/50 to-surface p-5 hover:-translate-y-1 border border-transparent hover:border-foreground/60 transition-all ease-linear'>
+                                className='flex flex-col items-center justify-center gap-3 w-100 min-h-80 bg-radial from-background via-surface/50 to-surface p-5 border border-transparent hover:border-foreground/60 transition-all ease-linear'>
                                 <span className='text-3xl'>{reason.icon}</span>
                                 <h3 className='text-3xl font-serif font-bold tracking-wider'>{reason.title}</h3>
                                 <p className='text-justify text-muted font-semibold'>{reason.description}</p>

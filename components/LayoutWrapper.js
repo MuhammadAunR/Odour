@@ -4,7 +4,7 @@ import React from 'react'
 import Navbar from './Navbar'
 import FooterSection from './FooterSection'
 
-const hiddenRoutes = ['/login']
+const hiddenRoutes = ['/authpage']
 const LayoutWrapper = ({ children }) => {
     const pathName = usePathname()
     const hideLayout = hiddenRoutes.some(route => pathName.startsWith(route))
