@@ -53,8 +53,8 @@ const Divider = () => (
 )
 
 const BackToHome = () => (
-    <Link href={'/'} className='absolute top-3 left-3 bg-muted/50 p-1 rounded-full hover:bg-foreground/20 transition-colors ease-linear'>
-        <ArrowLeft />
+    <Link href={'/'} className='absolute top-3 left-3 font-semibold text-foreground/60 hover:text-foreground/80 transition-colors ease-linear'>
+        Back To Home
     </Link>
 )
 
