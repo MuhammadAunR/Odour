@@ -160,3 +160,12 @@ const processingSteps = [
     }
 ]
 export { processingSteps }
+
+const fragranceFamilies = [
+    { name: "Luxury Spice", image: "/luxury-extracted.webp" },
+    { name: "Citrus Burst", image: "/citrus-extracted.webp" },
+    { name: "Floral Essence", image: "/flower-extracted.webp" },
+    { name: "Wooden Bark", image: "/wooden-extracted.webp" },
+    { name: "Fresh Mint", image: "/mint-extracted.webp" },
+];
+export { fragranceFamilies }

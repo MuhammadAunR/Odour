@@ -1,12 +1,30 @@
 'use client'
 import React from 'react'
-import ProductCard from './CardUI'
 import Image from 'next/image'
 import { useProducts } from '@/app/context/ProductContext'
+import { fragranceFamilies } from './Assets'
+import { motion } from "framer-motion"
+import SectionHeader from './SectionHeader'
 
 const FeatureStrip = () => {
 
     const { products } = useProducts()
+
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    }
+
+    const item = {
+        hidden: { opacity: 0, y: 30 },
+        show: { opacity: 1, y: 0 }
+    }
+
 
     const featureStrip = [
         {
@@ -41,10 +59,33 @@ const FeatureStrip = () => {
                     })}
                 </section>
 
-                <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-20'>
-                    {products.slice(0, 4).map(prod => {
-                        return <ProductCard key={prod.id} product={prod} />
-                    })}
+                <section>
+                    <SectionHeader headerContent={{ subHeading: 'Discover Your Signature', mainHeading: 'Scent Families' }} />
+
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        className='py-7 flex items-center justify-center gap-3 flex-wrap mb-10'>
+                        {fragranceFamilies.map(family => {
+                            return <motion.div key={family.name} variants={item} className='relative w-60 h-80 overflow-hidden group'>
+                                <h4 className='relative z-10 bg-black/50 backdrop-blur-sm w-full p-2 transition-transform ease-linear text-white'>
+                                    {family.name}
+                                </h4>
+                                <div className="absolute inset-0">
+                                    <Image
+                                        src={family.image}
+                                        alt={family.name}
+                                        fill
+                                        sizes="240px"
+                                        priority
+                                        className='object-cover group-hover:scale-110 transition-transform ease-linear duration-300'
+                                    />
+                                </div>
+                            </motion.div>
+                        })}
+                    </motion.div>
                 </section>
 
                 <section className='relative h-80 w-full pb-20 overflow-hidden'>
