@@ -138,9 +138,7 @@ const Product = ({ params }) => {
     }
     return (
         <>
-            <main className='w-10/12 mx-auto relative'>
-
-                <ScrollToTopBtn />
+            <main className='w-10/12 mx-auto'>
 
                 <div className='w-full min-h-[calc(100%-100px)] py-15 h-fit flex justify-center gap-3 lg:gap-5 max-lg:flex-col'>
 

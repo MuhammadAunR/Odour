@@ -6,15 +6,13 @@ import Image from 'next/image'
 import SectionHeader from '@/components/SectionHeader'
 import { processingSteps } from '@/components/Assets'
 import Link from 'next/link'
-import { tr } from 'motion/react-client'
 
 
 const AboutPage = () => {
 
     return (
         <>
-            <main className='w-10/12 mx-auto relative'>
-                <ScrollToTopBtn />
+            <main className='w-10/12 mx-auto'>
                 <header className='min-h-100 h-fit my-10'>
 
                     <SectionHeader headerContent={{ subHeading: 'The Odour Story', mainHeading: 'About Us' }} />
@@ -106,7 +104,7 @@ const AboutPage = () => {
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 100, y: 0 }}
                             whileTap={{ scale: 0.97 }}
-                            transition={{ duration: 1, ease: 'easeInOut' }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
                             viewport={{ once: true }}
                             className='relative group/btn bg-foreground px-7 py-3 uppercase tracking-wider text-lg cursor-pointer border border-foreground'>
                             <span className='relative z-10 font-semibold text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Explore Our Collection</span>

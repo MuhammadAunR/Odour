@@ -9,6 +9,8 @@ import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
 import Filter from "@/components/Filter";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import WhatsappButton from "@/components/WhatsappButton";
+import ScrollToTopBtn from "@/components/ScrollToTopBtn";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -49,6 +51,8 @@ export default function RootLayout({ children }) {
               <Filter />
               <NavSidebar />
               <LayoutWrapper>
+                <WhatsappButton />
+                <ScrollToTopBtn />
                 {children}
               </LayoutWrapper>
             </AppWrapper>

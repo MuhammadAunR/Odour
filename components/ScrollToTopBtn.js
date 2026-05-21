@@ -8,7 +8,7 @@ const ScrollToTopBtn = () => {
 
     useEffect(() => {
         const handleYScroll = () => {
-            setYScroll(window.scrollY > 200)
+            setYScroll(window.scrollY > 500)
         }
         window.addEventListener('scroll', handleYScroll)
         return () => window.removeEventListener('scroll', handleYScroll)
