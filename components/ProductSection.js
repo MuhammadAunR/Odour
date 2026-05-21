@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import ProductCard from './CardUI'
 import { useProducts } from '@/app/context/ProductContext'
+import SectionHeader from './SectionHeader'
 
 const ProductSection = () => {
 
@@ -18,17 +19,7 @@ const ProductSection = () => {
 
                 <div className='flex flex-col items-center justify-center gap-7 pb-15'>
                     <div className='flex flex-col items-center gap-3'>
-                        <span className='text-xs font-semibold tracking-[0.3em] uppercase text-foreground/40'>
-                            Exclusively Curated
-                        </span>
-                        <h3 className='text-4xl md:text-5xl font-bold font-serif tracking-widest'>
-                            The Collection
-                        </h3>
-                        <div className='flex items-center gap-3'>
-                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
-                            <span className='text-foreground/30 text-xs'>✦</span>
-                            <div className='w-16 h-[0.5px] bg-foreground/30'></div>
-                        </div>
+                        <SectionHeader headerContent={{ subHeading: 'Exclusively Curated', mainHeading: 'The Collection' }} />
                         <p className='text-muted text-center max-w-lg tracking-wide leading-relaxed'>
                             Each fragrance is a carefully composed story — rare ingredients,
                             master craftsmanship, and the art of lasting impression.
@@ -52,13 +43,12 @@ const ProductSection = () => {
                 </section>
             </main>
 
-            <section className='mt-15'>
-                <div className="min-h-80 h-fit w-full bg-linear-to-b from-background to-surface">
+            <section className='mt-10'>
+                <div className="min-h-70 h-fit w-full bg-linear-to-b from-background to-surface border-b border-background">
                     <div className='mx-auto py-20 w-10/12 md:w-2xl flex flex-col items-center justify-center gap-5'>
                         <p className='text-xl text-center text-muted'>
                             Crafted for those who seek more than a scent — an identity, a memory, a second skin.
                             Every bottle holds a world. Every note tells a story only you can finish.
-                            — Odour
                         </p>
                         <h5 className='text-xl font-semibold font-display text-foreground'>
                             Odour
