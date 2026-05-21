@@ -9,7 +9,7 @@ const Button1 = ({ text }) => {
         <motion.button
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ scale: 0.97 }}
             className="relative overflow-hidden border border-foreground px-10 py-3 uppercase tracking-widest text-sm cursor-pointer"
         >
             <motion.span

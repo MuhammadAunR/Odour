@@ -19,7 +19,9 @@ const ProductSection = () => {
 
                 <div className='flex flex-col items-center justify-center gap-7 pb-15'>
                     <div className='flex flex-col items-center gap-3'>
+
                         <SectionHeader headerContent={{ subHeading: 'Exclusively Curated', mainHeading: 'The Collection' }} />
+                        
                         <p className='text-muted text-center max-w-lg tracking-wide leading-relaxed'>
                             Each fragrance is a carefully composed story — rare ingredients,
                             master craftsmanship, and the art of lasting impression.

@@ -136,3 +136,27 @@ const itemVariants = {
 }
 
 export { containerVariants, itemVariants }
+
+const processingSteps = [
+    {
+        step: "01",
+        title: "Inspiration",
+        description: "Every scent begins with a feeling — a memory, a place, an emotion we want to bottle forever."
+    },
+    {
+        step: "02",
+        title: "Formulation",
+        description: "Our perfumer hand-selects raw ingredients, layering top, heart, and base notes into a cohesive story."
+    },
+    {
+        step: "03",
+        title: "Testing",
+        description: "Each formula is worn, lived in, and refined over weeks until it feels like a second skin."
+    },
+    {
+        step: "04",
+        title: "Bottling",
+        description: "The final scent is sealed in our signature bottle — minimal, elegant, made to last."
+    }
+]
+export { processingSteps }
