@@ -51,10 +51,10 @@ const FeatureStrip = () => {
 
                 <section className='flex items-center justify-between gap-7 pt-15 flex-wrap'>
                     {featureStrip.map((feature, i) => {
-                        return <div key={i} className='flex flex-col items-start gap-3 w-70 p-5'>
+                        return <div key={i} className='flex flex-col items-start gap-3 md:w-70 p-5'>
                             <h3 className='text-xl font-semibold'>{feature.title}</h3>
                             <div className='bg-foreground h-1 w-1/5'></div>
-                            <p className='text-muted'>{feature.desc}</p>
+                            <p className='text-muted text-justify'>{feature.desc}</p>
                         </div>
                     })}
                 </section>

@@ -73,7 +73,7 @@ const HeroSection = () => {
                 {currentSlide.title}
               </h1>
 
-              <p className=''>{currentSlide.desc}</p>
+              <p className='text-justify text-muted'>{currentSlide.desc}</p>
 
               <Link href={'/shop'}>
                 <Button1 text={'Shop Now'} />
