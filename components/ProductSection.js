@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ProductCard from './CardUI'
 import { useProducts } from '@/app/context/ProductContext'
@@ -7,12 +7,25 @@ import SectionHeader from './SectionHeader'
 
 const ProductSection = () => {
 
-    const [activeFilter, setActiveFilter] = useState('New Arrivals')
+    const [activeFilter, setActiveFilter] = useState('bestseller')
+    const [availableTags, setAvailableTags] = useState([])
+    const [product, setProduct] = useState([])
     const { products } = useProducts()
+
+    useEffect(() => {
+        const tags = [...new Set(products.flatMap(prod => prod.tags))]
+        setAvailableTags(tags)
+        const filteredProducts = products.filter(prod => {
+            return prod.tags.includes(activeFilter)
+        })
+        setProduct(filteredProducts)
+    }, [products, activeFilter])
+
 
     const handleActiveFilter = (text) => {
         setActiveFilter(text)
     }
+
     return (
         <>
             <main className='w-10/12 mx-auto py-20'>
@@ -21,7 +34,7 @@ const ProductSection = () => {
                     <div className='flex flex-col items-center gap-3'>
 
                         <SectionHeader headerContent={{ subHeading: 'Exclusively Curated', mainHeading: 'The Collection' }} />
-                        
+
                         <p className='text-muted text-center max-w-lg tracking-wide leading-relaxed'>
                             Each fragrance is a carefully composed story — rare ingredients,
                             master craftsmanship, and the art of lasting impression.
@@ -29,17 +42,18 @@ const ProductSection = () => {
                     </div>
 
                     <div className='flex items-center justify-center gap-5 flex-wrap'>
-                        {['New Arrivals', 'Best Sellers', 'Trending Now'].map(btn => {
+                        {availableTags.map(tag => {
                             return <button
-                                key={btn}
-                                onClick={(e) => handleActiveFilter(e.target.innerText)}
-                                className={`px-5 py-3 transition-all ease-linear duration-300 ${activeFilter === btn ? 'bg-foreground text-background' : 'bg-surface text-foreground'} cursor-pointer`}>{btn}</button>
+                                key={tag}
+                                onClick={(e) => handleActiveFilter(tag)}
+                                className={`px-5 py-3 transition-all ease-linear duration-300 ${activeFilter === tag ? 'bg-foreground text-background' : 'bg-surface text-foreground'} cursor-pointer`}>
+                                {tag === 'bestseller' ? 'Best Seller' : 'Trending'}</button>
                         })}
                     </div>
                 </div>
 
                 <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 place-items-center'>
-                    {products.slice(2, 10).map(prod => {
+                    {product.slice(0, 4).map(prod => {
                         return <ProductCard key={prod.id} product={prod} />
                     })}
                 </section>
