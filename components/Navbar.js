@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ShoppingBag, UserRound } from 'lucide-react'
+import { Heart, ShoppingBag, UserRound } from 'lucide-react'
 import Link from 'next/link'
 import { useCart } from '@/app/context/CartContext'
 import HamburgerComp from './HamburgerComp'
@@ -76,6 +76,9 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <div className='flex items-center gap-5'>
+                        <Link href={'/wishlist'} title='Favorite Items'>
+                            <Heart />
+                        </Link>
                         <span className='flex items-center gap-2'>
                             <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative'>
                                 <ShoppingBag />
@@ -123,6 +126,9 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <div className='flex items-center gap-5'>
+                        <Link href={'/wishlist'} title='Favorite Items'>
+                            <Heart />
+                        </Link>
                         <span className='flex items-center gap-2'>
                             <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative'>
                                 <ShoppingBag />

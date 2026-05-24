@@ -4,7 +4,7 @@ import { ShoppingCart, Trash, X } from 'lucide-react'
 import React from 'react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
-import { Button1 } from './ButtonUI'
+import { PrimaryButton } from './UI/Buttons'
 import Link from 'next/link'
 import useBlockYScroll from './BlockYScroll'
 
@@ -44,7 +44,7 @@ const Cart = () => {
                             <span><ShoppingCart size={80} color='grey' /></span>
                             <span className='text-lg'>Your cart is empty</span>
                             <Link href={'/shop'} onClick={toggleCart} className=''>
-                                <Button1 text={'Go To Shop'} />
+                                <PrimaryButton text={'Go To Shop'} />
                             </Link>
                         </motion.div>
                     )}
@@ -104,7 +104,7 @@ const Cart = () => {
                     </div>
                     <span onClick={() => { toggleCart(), handleCheckout() }} className='flex flex-col items-end'>
                         <span>
-                            <Button1 text={'Check Out'} />
+                            <PrimaryButton text={'Check Out'} />
                         </span>
                     </span>
                 </div>

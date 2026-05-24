@@ -3,13 +3,9 @@
 :root {
 
   --background: #FAFAF8;
-  /* off-white — page bg */
   --foreground: #1C1A18;
-  /* near-black — headings, body */
   --surface: #E8E4DE;
-  /* warm greige — cards, hero bg */
   --muted: #8C8070;
-  /* taupe — secondary text, borders */
 }
 
 @theme {

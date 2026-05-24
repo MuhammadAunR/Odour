@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Diamond } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { heroSectionSlideData } from './Assets'
-import { Button1 } from './ButtonUI'
+import { PrimaryButton } from './UI/Buttons'
 import Link from 'next/link'
 
 const HeroSection = () => {
@@ -76,7 +76,7 @@ const HeroSection = () => {
               <p className='text-justify text-muted'>{currentSlide.desc}</p>
 
               <Link href={'/shop'}>
-                <Button1 text={'Shop Now'} />
+                <PrimaryButton text={'Shop Now'} />
               </Link>
 
             </motion.div>

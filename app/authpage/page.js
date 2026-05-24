@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import { Button1 } from '@/components/ButtonUI'
-import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
+import { SecondaryButton } from '@/components/UI/Buttons'
+import { Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -88,7 +88,7 @@ const AuthPage = () => {
                             <BackToHome />
 
                             <span onClick={toggleActiveAuthWay} className='lg:hidden'>
-                                <Button1 text={'Create Account'} />
+                                <SecondaryButton text={'Create Account'} />
                             </span>
 
                             <h1 className='font-black text-4xl font-serif tracking-wide'>Sign In</h1>
@@ -120,7 +120,7 @@ const AuthPage = () => {
                                 Forgot Password?
                             </h5>
 
-                            <Button1 text={'Sign In'} />
+                            <SecondaryButton text={'Sign In'} />
 
                         </motion.div>
                     ) : (
@@ -132,7 +132,7 @@ const AuthPage = () => {
                             <BackToHome />
 
                             <span onClick={toggleActiveAuthWay} className='lg:hidden'>
-                                <Button1 text={'Sign In'} />
+                                <SecondaryButton text={'Sign In'} />
                             </span>
 
                             <h1 className='font-black text-4xl font-serif tracking-wide'>Create Account</h1>
@@ -184,7 +184,7 @@ const AuthPage = () => {
                                 </span>
                             </p>
 
-                            <Button1 text={'Create Account'} />
+                            <SecondaryButton text={'Create Account'} />
 
                         </motion.div>
                     )}
@@ -206,7 +206,7 @@ const AuthPage = () => {
                                 Become a member and unlock access to our world of rare, handpicked fragrances crafted for the discerning few.
                             </p>
                             <span onClick={toggleActiveAuthWay}>
-                                <Button1 text={'Create Account'} />
+                                <SecondaryButton text={'Create Account'} />
                             </span>
                         </motion.div>
                     ) : (
@@ -224,7 +224,7 @@ const AuthPage = () => {
                                 Sign in to continue your journey through our curated world of rare and distinguished fragrances.
                             </p>
                             <span onClick={toggleActiveAuthWay}>
-                                <Button1 text={'Sign In'} />
+                                <SecondaryButton text={'Sign In'} />
                             </span>
                         </motion.div>
                     )}

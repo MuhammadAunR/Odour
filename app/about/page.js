@@ -1,11 +1,11 @@
 'use client'
 import React from 'react'
-import ScrollToTopBtn from '@/components/ScrollToTopBtn'
 import { motion } from "framer-motion"
 import Image from 'next/image'
 import SectionHeader from '@/components/SectionHeader'
 import { processingSteps } from '@/components/Assets'
 import Link from 'next/link'
+import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
 
 
 const AboutPage = () => {
@@ -100,16 +100,7 @@ const AboutPage = () => {
                     </section>
 
                     <Link href={'/shop'} className='flex items-center justify-center mt-20'>
-                        <motion.button
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 100, y: 0 }}
-                            whileTap={{ scale: 0.97 }}
-                            transition={{ duration: 0.3, ease: 'easeInOut' }}
-                            viewport={{ once: true }}
-                            className='relative group/btn bg-foreground px-7 py-3 uppercase tracking-wider text-lg cursor-pointer border border-foreground'>
-                            <span className='relative z-10 font-semibold text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Explore Our Collection</span>
-                            <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
-                        </motion.button>
+                        <SecondaryButton text={'Explore Our Collection'} />
                     </Link>
                 </section>
             </main >

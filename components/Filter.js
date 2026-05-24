@@ -4,7 +4,7 @@ import { useFilter } from '@/app/context/FilterContext'
 import { ChevronDown, X } from 'lucide-react'
 import React, { useState } from 'react'
 import useBlockYScroll from './BlockYScroll'
-import { Button1 } from './ButtonUI'
+import { SecondaryButton } from './UI/Buttons'
 
 const Filter = () => {
     const { isFilterSideOpen, toggleFilterSide, setActiveFilterCount } = useFilter()
@@ -133,10 +133,10 @@ const Filter = () => {
 
                     <div className='px-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 flex justify-between'>
                         <span onClick={handleReset} className=''>
-                            <Button1 text={'Reset'} />
+                            <SecondaryButton text={'Reset'} />
                         </span>
                         <span onClick={handleApply} className=''>
-                            <Button1 text={'Apply'} />
+                            <SecondaryButton text={'Apply'} />
                         </span>
                     </div>
                 </aside>
