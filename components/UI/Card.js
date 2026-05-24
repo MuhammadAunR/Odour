@@ -1,11 +1,12 @@
 'use client'
 import { Search, ShoppingBag, Heart } from 'lucide-react'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from "framer-motion"
 import { useCart } from '@/app/context/CartContext'
 import { usePopup } from '@/app/context/QuickPopupContext'
 import { useRouter } from 'next/navigation'
+import { useWishlist } from '@/app/context/WishlistContext'
 
 
 const ProductCard = ({ product, index }) => {
@@ -13,10 +14,9 @@ const ProductCard = ({ product, index }) => {
     const router = useRouter()
     const { togglePopup, handleProduct } = usePopup()
     const { handleAddCartItems } = useCart()
-    const [wishListed, setWishListed] = useState(false)
+    const { handleAddToWishList, wishListed } = useWishlist()
 
     const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
-
 
     return (
 
@@ -57,7 +57,7 @@ const ProductCard = ({ product, index }) => {
 
 
                 <button
-                    onClick={() => setWishListed(!wishListed)}
+                    onClick={() => handleAddToWishList(product)}
                     className='absolute bottom-14 right-3 p-1.5 bg-background/80 backdrop-blur-sm rounded-full
                     scale-0 group-hover/productCard:scale-100 transition-all duration-300'>
                     <Heart

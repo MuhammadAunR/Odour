@@ -41,7 +41,7 @@ const Cart = () => {
                             viewport={{ once: false }}
                             className='flex flex-col gap-2 items-center justify-center h-full'
                         >
-                            <span><ShoppingCart size={80} color='grey' /></span>
+                            <span className='opacity-50'><ShoppingCart size={80} color='grey'/></span>
                             <span className='text-lg'>Your cart is empty</span>
                             <Link href={'/shop'} onClick={toggleCart} className=''>
                                 <PrimaryButton text={'Go To Shop'} />

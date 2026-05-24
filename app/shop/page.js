@@ -1,5 +1,5 @@
 'use client'
-import ProductCard from '@/components/CardUI'
+import ProductCard from '@/components/UI/Card'
 import Loader from '@/components/LoaderUI'
 import ProductQuickView from '@/components/ProductQuickView'
 import { Funnel, LayoutGrid, LayoutList, Search } from 'lucide-react'

@@ -7,6 +7,7 @@ import HamburgerComp from './HamburgerComp'
 import { useNavContext } from '@/app/context/NavbarContext'
 import { navOptions } from './Assets'
 import { usePathname, useRouter } from 'next/navigation'
+import { useWishlist } from '@/app/context/WishlistContext'
 
 const Navbar = () => {
 
@@ -15,6 +16,7 @@ const Navbar = () => {
 
     const { toggleCart, cartItems, handleSubTotal } = useCart()
     const { toggleNavbar, isOpen } = useNavContext()
+    const { wishListItems } = useWishlist()
 
     const totalCartItem = cartItems.reduce((total, item) => total + item.quantity, 0)
     const pathname = usePathname()
@@ -76,8 +78,15 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <div className='flex items-center gap-5'>
-                        <Link href={'/wishlist'} title='Favorite Items'>
-                            <Heart />
+                        <Link href={'/wishlist'} title='Favorite Items' className='relative'>
+                            <span>
+                                <Heart />
+                            </span>
+                            {wishListItems.length > 0 &&
+                                <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
+                                    {totalCartItem}
+                                </span>
+                            }
                         </Link>
                         <span className='flex items-center gap-2'>
                             <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative'>

@@ -1,7 +1,7 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
 import { useProducts } from '@/app/context/ProductContext'
-import ProductCard from '@/components/CardUI'
+import ProductCard from '@/components/UI/Card'
 import Loader from '@/components/LoaderUI'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'

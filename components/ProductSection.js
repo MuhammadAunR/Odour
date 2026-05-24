@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
-import ProductCard from './CardUI'
+import ProductCard from './UI/Card'
 import { useProducts } from '@/app/context/ProductContext'
 import SectionHeader from './SectionHeader'
 

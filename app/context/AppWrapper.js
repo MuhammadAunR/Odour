@@ -4,6 +4,7 @@ import NavbarContext from './NavbarContext'
 import QuickPopupContext from './QuickPopupContext'
 import ProductContext from './ProductContext'
 import FilterContext from './FilterContext'
+import WishlistContext from './WishlistContext'
 
 const AppWrapper = ({ children }) => {
     return (
@@ -13,7 +14,9 @@ const AppWrapper = ({ children }) => {
                     <CartContext>
                         <NavbarContext>
                             <QuickPopupContext>
-                                {children}
+                                <WishlistContext>
+                                    {children}
+                                </WishlistContext>
                             </QuickPopupContext>
                         </NavbarContext>
                     </CartContext>
