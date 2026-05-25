@@ -1,14 +1,23 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { useWishlist } from '../context/WishlistContext'
 import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
 import ProductCard from '@/components/UI/Card'
 import { BookHeart } from 'lucide-react'
 import { motion } from "framer-motion"
 import Link from 'next/link'
+import { useProducts } from '../context/ProductContext'
 
 const WishlistPage = () => {
     const { wishListItems } = useWishlist()
+
+    const { products } = useProducts()
+
+
+    const wishListedProducts = products.filter(prod =>
+        wishListItems.includes(prod._id)
+    )
+
 
     return (
         <main className='min-h-screen w-10/12 mx-auto'>
@@ -42,12 +51,11 @@ const WishlistPage = () => {
             }
 
             <section>
-                {/* <div className='flex items-center justify-center gap-3 py-7 flex-wrap'>
-                    {wishListItems.map(id => {
-                        // return <ProductCard key={item.name} product={item} />
-                        <span key={id}>{id}</span>
+                <div className='flex items-center justify-center gap-3 py-7 flex-wrap'>
+                    {wishListedProducts.map(item => {
+                        return <ProductCard key={item.name} product={item} />
                     })}
-                </div> */}
+                </div>
             </section>
         </main>
     )
