@@ -1,19 +1,18 @@
 'use client'
 import { Search, ShoppingBag, Heart } from 'lucide-react'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React from 'react'
 import { motion } from "framer-motion"
 import { useCart } from '@/app/context/CartContext'
 import { usePopup } from '@/app/context/QuickPopupContext'
 import { useRouter } from 'next/navigation'
 import { useWishlist } from '@/app/context/WishlistContext'
 
-
 const ProductCard = ({ product, index }) => {
 
     const router = useRouter()
     const { togglePopup, handleProduct } = usePopup()
-    const { handleAddCartItems } = useCart()
+    const { handleAddCartItems, toggleCart } = useCart()
     const { toggleWishList, wishListItems } = useWishlist()
 
     const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
@@ -55,7 +54,6 @@ const ProductCard = ({ product, index }) => {
                     </span>
                 }
 
-
                 <button
                     onClick={() => { toggleWishList(product._id) }}
                     className='absolute bottom-14 right-3 p-1.5 bg-background/80 backdrop-blur-sm rounded-full
@@ -66,7 +64,6 @@ const ProductCard = ({ product, index }) => {
                     />
                 </button>
 
-
                 <div className='absolute bottom-0 left-0 right-0 
                     translate-y-full group-hover/productCard:translate-y-0
                     transition-transform duration-300 ease-in-out
@@ -74,19 +71,15 @@ const ProductCard = ({ product, index }) => {
 
                     <button
                         onClick={() => { togglePopup(); handleProduct(product) }}
-                        className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                        hover:bg-foreground hover:text-background transition-colors duration-500
-                        border-r border-foreground/10'>
-                        <Search size={15} />
-                        <span>Quick View</span>
+                        className='relative bg-background hover:bg-foreground/10 transition-colors ease-linear px-7 py-2 text-sm cursor-pointer border border-foreground flex-1 items-center justify-center max-md:hidden'>
+                        Quick View
                     </button>
 
                     <button
-                        onClick={() => { handleAddCartItems(product) }}
-                        className='flex-1 flex items-center justify-center gap-2 py-3 text-sm
-                        hover:bg-foreground hover:text-background transition-colors duration-500'>
-                        <ShoppingBag size={15} />
-                        <span>Add to Cart</span>
+                        onClick={() => { handleAddCartItems(product), toggleCart() }}
+                        className='relative group/btn bg-foreground px-7 py-2 text-sm cursor-pointer border border-foreground flex-1 items-center justify-center'>
+                        <span className='relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Add to Cart</span>
+                        <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
                     </button>
 
                 </div>

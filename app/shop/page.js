@@ -122,7 +122,7 @@ const ShopPage = () => {
 
                     <section className="flex-1 min-w-0 pb-5">
 
-                        <div className='flex flex-wrap justify-start items-center gap-3 relative min-h-[50vh]'>
+                        <div className='flex flex-wrap justify-center items-center gap-3 relative min-h-[50vh]'>
 
                             <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                                 {loading && <Loader />}
