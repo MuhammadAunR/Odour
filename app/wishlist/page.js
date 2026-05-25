@@ -9,6 +9,7 @@ import Link from 'next/link'
 
 const WishlistPage = () => {
     const { wishListItems } = useWishlist()
+
     return (
         <main className='min-h-screen w-10/12 mx-auto'>
             <header className='flex items-center justify-between gap-5 py-7 border-b border-foreground/30'>
@@ -29,10 +30,10 @@ const WishlistPage = () => {
                         transition={{ duration: 0.6 }}
                         viewport={{ once: false }}
                         className='flex flex-col gap-5 items-center justify-center mt-20'>
-                        <span className='text-red-300 opacity-50'>
+                        <span className='opacity-30'>
                             <BookHeart size={80} />
                         </span>
-                        <div className='font-semibold text-muted'>You Wishlist is empty.</div>
+                        <div className='font-semibold text-red-700'>You Wishlist is empty.</div>
                         <Link href={'shop'}>
                             <SecondaryButton text={'Explore Our Collection'} />
                         </Link>
@@ -41,11 +42,12 @@ const WishlistPage = () => {
             }
 
             <section>
-                <div className='flex items-center justify-center gap-3 py-7 flex-wrap'>
-                    {wishListItems.map(item => {
-                        return <ProductCard key={item.name} product={item} />
+                {/* <div className='flex items-center justify-center gap-3 py-7 flex-wrap'>
+                    {wishListItems.map(id => {
+                        // return <ProductCard key={item.name} product={item} />
+                        <span key={id}>{id}</span>
                     })}
-                </div>
+                </div> */}
             </section>
         </main>
     )

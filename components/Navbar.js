@@ -26,6 +26,13 @@ const Navbar = () => {
         router.push('/authpage')
     }
 
+    const formatPrice = (amount) => {
+        if (amount === 0) return '0.00'
+        if (amount >= 1000000) return `${(amount / 1000000).toFixed(1)}M`
+        if (amount >= 100000) return `${(amount / 1000).toFixed(0)}K`
+        return amount.toLocaleString('en-PK')
+    }
+
     useEffect(() => {
         const nav = pathname.slice(1) === '' ? 'home' : pathname.slice(1)
         if (pathname.slice(1, 8) === 'product') return setActiveNav('shop')
@@ -79,12 +86,12 @@ const Navbar = () => {
                     </ul>
                     <div className='flex items-center gap-5'>
                         <Link href={'/wishlist'} title='Favorite Items' className='relative'>
-                            <span>
-                                <Heart />
+                            <span className=''>
+                                <Heart className={`${wishListItems.length > 0 && 'text-[#993556]'} transition-all ease-linear`} />
                             </span>
                             {wishListItems.length > 0 &&
-                                <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
-                                    {totalCartItem}
+                                <span className='absolute w-5 h-5 rounded-full bg-[#993556] text-background text-xs -top-2 -left-2 flex items-center justify-center'>
+                                    {wishListItems.length > 9 ? '9+' : wishListItems.length}
                                 </span>
                             }
                         </Link>
@@ -93,11 +100,11 @@ const Navbar = () => {
                                 <ShoppingBag />
                                 {cartItems.length > 0 &&
                                     <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
-                                        {totalCartItem}
+                                        {cartItems.length > 9 ? '9+' : cartItems.length}
                                     </span>
                                 }
                             </span>
-                            <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
+                            <span className='max-md:hidden text-xs'>PKR {formatPrice(handleSubTotal)}</span>
                         </span>
                         <span onClick={handleAuthPageRouting} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
                             <UserRound />
@@ -135,19 +142,26 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <div className='flex items-center gap-5'>
-                        <Link href={'/wishlist'} title='Favorite Items'>
-                            <Heart />
+                        <Link href={'/wishlist'} title='Favorite Items' className='relative'>
+                            <span className=''>
+                                <Heart className={`${wishListItems.length > 0 && 'text-[#993556]'} transition-all ease-linear`} />
+                            </span>
+                            {wishListItems.length > 0 &&
+                                <span className='absolute w-5 h-5 rounded-full bg-[#993556] text-background text-xs -top-2 -left-2 flex items-center justify-center'>
+                                    {wishListItems.length > 9 ? '9+' : wishListItems.length}
+                                </span>
+                            }
                         </Link>
                         <span className='flex items-center gap-2'>
                             <span onClick={toggleCart} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative'>
                                 <ShoppingBag />
                                 {cartItems.length > 0 &&
                                     <span className='absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center'>
-                                        {totalCartItem}
+                                        {cartItems.length > 9 ? '9+' : cartItems.length}
                                     </span>
                                 }
                             </span>
-                            <span className='max-md:hidden text-xs'>PKR {handleSubTotal === 0 ? '0.00' : handleSubTotal}</span>
+                            <span className='max-md:hidden text-xs'>PKR {formatPrice(handleSubTotal)}</span>
                         </span>
                         <span onClick={handleAuthPageRouting} className='hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden'>
                             <UserRound />

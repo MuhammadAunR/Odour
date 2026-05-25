@@ -13,8 +13,9 @@ const ProductCard = ({ product, index }) => {
 
     const router = useRouter()
     const { togglePopup, handleProduct } = usePopup()
+    const [wishListed, setWishListed] = useState(false)
     const { handleAddCartItems } = useCart()
-    const { handleAddToWishList, wishListed } = useWishlist()
+    const { toggleWishList } = useWishlist()
 
     const defaultPriceAndSize = product?.sizes?.find(size => size.isDefault) || product?.sizes?.[0] || null
 
@@ -57,7 +58,7 @@ const ProductCard = ({ product, index }) => {
 
 
                 <button
-                    onClick={() => handleAddToWishList(product)}
+                    onClick={() => { toggleWishList(product._id), setWishListed(!wishListed) }}
                     className='absolute bottom-14 right-3 p-1.5 bg-background/80 backdrop-blur-sm rounded-full
                     scale-0 group-hover/productCard:scale-100 transition-all duration-300'>
                     <Heart
