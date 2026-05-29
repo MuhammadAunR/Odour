@@ -169,3 +169,12 @@ const fragranceFamilies = [
     { name: "Fresh Mint", image: "/mint-extracted.webp" },
 ];
 export { fragranceFamilies }
+
+const seasonConfig = {
+    Summer: { label: 'Summer', color: 'text-amber-500', bg: 'bg-amber-400/10', icon: '☀' },
+    Spring: { label: 'Spring', color: 'text-green-500', bg: 'bg-green-400/10', icon: '✿' },
+    Fall: { label: 'Fall', color: 'text-orange-600', bg: 'bg-orange-500/10', icon: '🍂' },
+    Winter: { label: 'Winter', color: 'text-blue-400', bg: 'bg-blue-300/10', icon: '❄' },
+}
+
+export { seasonConfig }

@@ -2,12 +2,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-const PrimaryButton = ({ text }) => {
+const PrimaryButton = ({ text, textSize = 'lg' }) => {
 
     return (
         <motion.button
             whileTap={{ scale: 0.97 }}
-            className='relative group/btn bg-foreground px-10 py-2 uppercase tracking-wider text-lg cursor-pointer border border-foreground'>
+            className={`relative group/btn bg-foreground px-10 py-2 uppercase tracking-wider text-${textSize} cursor-pointer border border-foreground`}>
             <span className='relative z-10 font-semibold text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>{text}</span>
             <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
         </motion.button>

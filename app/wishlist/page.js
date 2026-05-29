@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useWishlist } from '../context/WishlistContext'
 import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
-import ProductCard from '@/components/UI/Card'
+import ProductGridCard from '@/components/UI/Card'
 import { BookHeart } from 'lucide-react'
 import { motion } from "framer-motion"
 import Link from 'next/link'
@@ -26,9 +26,6 @@ const WishlistPage = () => {
                     <h1 className='text-4xl font-serif tracking-wider font-semibold'>My Wishlist</h1>
                     <span className='font-semibold text-muted'>Total Items: {wishListItems.length}</span>
                 </div>
-                <span>
-                    <PrimaryButton text={'Add all to Cart'} />
-                </span>
             </header>
 
             {(wishListItems.length === 0) &&
@@ -53,7 +50,7 @@ const WishlistPage = () => {
             <section>
                 <div className='flex items-center justify-center gap-3 py-7 flex-wrap'>
                     {wishListedProducts.map(item => {
-                        return <ProductCard key={item.name} product={item} />
+                        return <ProductGridCard key={item.name} product={item} />
                     })}
                 </div>
             </section>

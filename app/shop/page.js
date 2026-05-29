@@ -1,5 +1,5 @@
 'use client'
-import ProductCard from '@/components/UI/Card'
+import ProductGridCard, { ProductListCard } from '@/components/UI/Card'
 import Loader from '@/components/LoaderUI'
 import ProductQuickView from '@/components/ProductQuickView'
 import { Funnel, LayoutGrid, LayoutList, Search } from 'lucide-react'
@@ -129,7 +129,9 @@ const ShopPage = () => {
                             </span>
 
                             {products.map((prod, index) => (
-                                <ProductCard key={prod.id} product={prod} index={index} />
+                                productView === 'grid' ?
+                                    <ProductGridCard key={prod.id} product={prod} index={index} />
+                                    : <ProductListCard key={prod.id} product={prod} index={index} />
                             ))}
                         </div>
 

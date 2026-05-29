@@ -1,16 +1,15 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
 import { useProducts } from '@/app/context/ProductContext'
-import ProductCard from '@/components/UI/Card'
+import ProductGridCard from '@/components/UI/Card'
 import Loader from '@/components/LoaderUI'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from "framer-motion"
-import { avatarColors, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/Assets'
+import { avatarColors, seasonConfig, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/Assets'
 import CountUp from 'react-countup'
-import ScrollToTopBtn from '@/components/ScrollToTopBtn'
 import SectionHeader from '@/components/SectionHeader'
 
 const Product = ({ params }) => {
@@ -28,13 +27,6 @@ const Product = ({ params }) => {
     const [testimonialCount, setTestimonialCount] = useState(0)
     const [stopTestimonialMovement, setStopTestimonialMovement] = useState(false)
     const [stripMotion, setStripMotion] = useState(true)
-
-    const seasonConfig = {
-        Summer: { label: 'Summer', color: 'text-amber-500', bg: 'bg-amber-400/10', icon: '☀' },
-        Spring: { label: 'Spring', color: 'text-green-500', bg: 'bg-green-400/10', icon: '✿' },
-        Fall: { label: 'Fall', color: 'text-orange-600', bg: 'bg-orange-500/10', icon: '🍂' },
-        Winter: { label: 'Winter', color: 'text-blue-400', bg: 'bg-blue-300/10', icon: '❄' },
-    }
 
     useEffect(() => {
         async function fetchProductBySlug(slug) {
@@ -272,7 +264,7 @@ const Product = ({ params }) => {
 
                     <div className='flex items-center justify-center flex-wrap gap-2 pb-10'>
                         {relatedProducts.map((prod, index) => {
-                            return <ProductCard key={prod.id} product={prod} index={index} />
+                            return <ProductGridCard key={prod.id} product={prod} index={index} />
                         })}
                     </div>
 
