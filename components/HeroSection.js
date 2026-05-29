@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight, Diamond } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from "framer-motion"
 import { heroSectionSlideData } from './Assets'
@@ -13,24 +12,6 @@ const HeroSection = () => {
 
   const currentSlide = heroSectionSlideData[imgCount]
 
-  const handleForwardCarousel = () => {
-    if (imgCount < heroSectionSlideData.length - 1) {
-      const newCount = imgCount + 1
-      setImgCount(newCount)
-    } else {
-      setImgCount(0)
-    }
-  }
-
-  const handleBackwardCarousel = () => {
-    if (imgCount > 0) {
-      const newCount = imgCount - 1
-      setImgCount(newCount)
-    } else {
-      setImgCount(4)
-    }
-  }
-
   useEffect(() => {
     const interval = setInterval(() => {
       setImgCount(prev => (prev + 1) % heroSectionSlideData.length)
@@ -40,80 +21,52 @@ const HeroSection = () => {
   }, [])
   return (
     <>
-      <main className='bg-surface group relative'>
+      <main className='h-[calc(100vh-80px)] relative'>
 
-        <div className='flex items-center justify-center gap-2 absolute bottom-0 left-1/2 -translate-x-1/2 py-5'>
-          {heroSectionSlideData.map((slide, index) => {
-            return <span key={index} className={`${index === imgCount ? 'text-muted' : 'text-foreground transform rotate-45'} transition-all ease-linear duration-500`}>
-              <Diamond strokeWidth={3} size={14} />
-            </span>
-          })}
+        <div className='h-full w-full relative overflow-hidden'>
+          <Image
+            src={currentSlide.imgSrc}
+            alt={currentSlide.alt}
+            fill
+            sizes='100vw'
+            priority
+            className='object-cover blur-lg scale-110' />
+          <div className='absolute inset-0 bg-black opacity-60'></div>
+          <span className='absolute bottom-7 left-1/2 -translate-x-1/2 flex'>
+            {heroSectionSlideData.map((slide, index) => (
+              <span key={index} className=''>
+                <div className='h-3 w-7 border-2 border-background rounded-xs mx-1' />
+              </span>
+            ))}
+
+            <span
+              className='absolute top-0 left-1 h-full w-7 bg-background rounded-xs transition-transform duration-500 ease-in-out'
+              style={{ transform: `translateX(${imgCount * (28 + 8)}px)` }} />
+
+          </span>
         </div>
 
-        <section className='min-h-screen py-10 h-fit w-10/12 mx-auto flex items-center justify-between max-lg:flex-col max-lg:justify-center gap-10'>
+        <header className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+          <motion.div
+            key={imgCount}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className='flex flex-col items-center gap-5 px-10'>
 
-          <section className='flex items-center gap-5 relative'>
+            <h1 className='max-md:text-5xl max-lg:text-7xl 2xl:text-8xl font-bold font-serif tracking-wider text-background'>
+              {currentSlide.title}
+            </h1>
 
-            <motion.div
-              whileTap={{ scale: 0.95 }}
-              onClick={handleBackwardCarousel}
-              className='opacity-0 group-hover:opacity-100 absolute -left-25 bg-background p-3 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer max-md:hidden'>
-              <ChevronLeft />
-            </motion.div>
+            <p className='text-center text-surface'>{currentSlide.desc}</p>
 
-            <motion.div
-              key={imgCount}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className='lg:w-10/12 flex flex-col items-start gap-5'>
+            <Link href={'/shop'}>
+              <PrimaryButton text={'Shop Now'} />
+            </Link>
 
-              <h1 className='max-md:text-5xl max-lg:text-7xl 2xl:text-8xl font-bold font-serif tracking-wider'>
-                {currentSlide.title}
-              </h1>
-
-              <p className='text-justify text-muted'>{currentSlide.desc}</p>
-
-              <Link href={'/shop'}>
-                <PrimaryButton text={'Shop Now'} />
-              </Link>
-
-            </motion.div>
-
-          </section>
-
-          <section className='w-1/2 flex items-center gap-5 relative'>
-            <motion.div
-              key={imgCount}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className='relative w-full max-w-md aspect-4/5 self-center'
-            >
-              <div className='absolute top-4 left-4 w-full h-full bg-surface border border-muted/30' />
-              <div className='absolute inset-0 bottom-4 right-4'>
-                <Image
-                  src={currentSlide.imgSrc}
-                  alt={currentSlide.alt}
-                  fill
-                  sizes='(max-width: 768px) 90vw, 450px'
-                  priority
-                  className='object-cover'
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              whileTap={{ scale: 0.95 }}
-              onClick={handleForwardCarousel}
-              className='opacity-0 group-hover:opacity-100 absolute -right-25 bg-background p-3 rounded-full border-2 border-foreground/20 hover:bg-foreground hover:border-surface hover:text-background transition-all ease-linear duration-300 cursor-pointer max-md:hidden'>
-              <ChevronRight />
-            </motion.div>
-
-          </section>
-        </section>
+          </motion.div>
+        </header>
       </main>
     </>
   )
