@@ -89,7 +89,7 @@ const CartContext = ({ children }) => {
 
     const handleSubTotal = cartItems.reduce((total, item) => {
         const finalPrice = item.selectedSize.discountedPrice ?? item.selectedSize.price;
-        return total + finalPrice * item.quantity;
+        return (total + finalPrice * item.quantity).toLocaleString();
     }, 0)
 
     return (

@@ -49,7 +49,7 @@ const Cart = () => {
                         </motion.div>
                     )}
                     {cartItems.map((item, index) => (
-                        <div key={index} className='flex items-center gap-3 px-5 py-3 mx-1 hover:bg-foreground/5 transition-all ease-linear bg-background/50 relative group'>
+                        <div key={index} className='flex items-center gap-3 px-5 py-3 mx-1 hover:bg-background/70 transition-all ease-linear bg-background/50 relative group'>
                             <motion.span
                                 onClick={() => removeCartItem(item)}
                                 whileTap={{ scale: 0.95 }}
@@ -80,7 +80,7 @@ const Cart = () => {
                                 {(() => {
                                     const priceToDisplay = item.selectedSize.discountedPrice ?? item.selectedSize.price;
                                     return <span className='text-accent' >
-                                        <span className='text-[10px]'>PKR</span> {priceToDisplay * item.quantity
+                                        <span className='text-[10px]'>PKR</span> {(priceToDisplay * item.quantity).toLocaleString()
                                         }
                                     </span>
                                 })()}
