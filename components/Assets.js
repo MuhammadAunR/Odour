@@ -12,7 +12,7 @@ const heroSectionSlideData = [
         alt: 'Hero Section Image 1',
         title: 'Blanc Musk',
         desc: 'A delicate blend of clean skin accords and warm white musk that settles softly into the senses. Minimal yet deeply intimate, Blanc Musk feels effortless, airy, and timeless — the kind of scent that lingers quietly in memory long after you leave the room.',
-        theme:'light',
+        theme:'dark',
     },
     {
         imgSrc: '/heroSection-2.webp',
@@ -26,7 +26,7 @@ const heroSectionSlideData = [
         alt: 'Hero Section Image 3',
         title: 'Peau Douce',
         desc: 'Soft cashmere notes wrapped in velvety musk create a fragrance that feels like a second skin. Peau Douce is comforting, warm, and deeply personal — subtle enough for everyday wear yet memorable enough to leave a lasting emotional impression.',
-        theme:'light',
+        theme:'dark',
     },
     {
         imgSrc: '/heroSection-4.webp',
