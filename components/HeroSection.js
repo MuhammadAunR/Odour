@@ -23,15 +23,24 @@ const HeroSection = () => {
     <>
       <main className='h-[calc(100vh-80px)] relative'>
 
-        <div className='h-full w-full relative overflow-hidden'>
-          <Image
-            src={currentSlide.imgSrc}
-            alt={currentSlide.alt}
-            fill
-            sizes='100vw'
-            priority
-            className='object-cover blur-lg scale-110' />
-          <div className='absolute inset-0 bg-black opacity-60'></div>
+        <div
+          className='h-full w-full relative overflow-hidden'>
+          <motion.div
+            key={imgCount}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className='absolute inset-0'
+          >
+            <Image
+              src={currentSlide.imgSrc}
+              alt={currentSlide.alt}
+              fill
+              sizes='100vw'
+              priority
+              className='object-cover blur-sm scale-110' />
+          </motion.div>
+          <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.75)_100%)]'></div>
           <span className='absolute bottom-7 left-1/2 -translate-x-1/2 flex'>
             {heroSectionSlideData.map((slide, index) => (
               <span key={index} className=''>
@@ -49,17 +58,23 @@ const HeroSection = () => {
         <header className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
           <motion.div
             key={imgCount}
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className='flex flex-col items-center gap-5 px-10'>
+            className='flex flex-col items-center gap-5 bg-foreground/10 backdrop-blur-lg p-15'>
 
-            <h1 className='max-md:text-5xl max-lg:text-7xl 2xl:text-8xl font-bold font-serif tracking-wider text-background'>
+            <span className={`text-xs tracking-[0.4em] uppercase ${currentSlide.theme === 'dark' ? 'text-background' : 'text-foreground'}`}>
+              — Eau de Parfum —
+            </span>
+            <h1 className={`max-md:text-5xl max-lg:text-7xl 2xl:text-8xl font-bold font-serif tracking-widest 
+              ${currentSlide.theme === 'dark' ? 'text-background' : 'text-foreground'}`}>
               {currentSlide.title}
             </h1>
 
-            <p className='text-center text-surface'>{currentSlide.desc}</p>
+            <p className={`text-center ${currentSlide.theme === 'dark' ? 'text-background' : 'text-foreground'}`}>
+              {currentSlide.desc}
+            </p>
 
             <Link href={'/shop'}>
               <PrimaryButton text={'Shop Now'} />
