@@ -58,7 +58,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='bg-foreground/5'>
+            <nav className='bg-linear-to-b from-background via-background to-transparent relative z-100'>
                 <section className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
 
                     <span className='lg:hidden'>
@@ -87,7 +87,7 @@ const Navbar = () => {
                     <div className='flex items-center gap-5'>
                         <Link href={'/wishlist'} title='Favorite Items' className='relative'>
                             <span className=''>
-                                <Heart className={`${wishListItems.length > 0 && 'text-[#993556]'} transition-all ease-linear`} />
+                                <Heart className={`${wishListItems.length > 0 && 'text-[#993556]'} hover:text-muted transition-all ease-linear`} />
                             </span>
                             {wishListItems.length > 0 &&
                                 <span className='absolute w-5 h-5 rounded-full bg-[#993556] text-background text-xs -top-2 -left-2 flex items-center justify-center'>
@@ -115,7 +115,7 @@ const Navbar = () => {
 
             <nav className={`
                 fixed top-0 left-0 w-full z-50
-                bg-background/50 backdrop-blur-2xl transition-transform duration-500 ease-in-out border-b border-foreground
+                bg-background/50 backdrop-blur-2xl transition-transform duration-500 ease-in-out
                 ${fixNavbar ? 'translate-y-0 scale-100' : '-translate-y-full scale-0'}
             `}>
                 <div className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>

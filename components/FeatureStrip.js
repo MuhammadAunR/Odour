@@ -1,14 +1,12 @@
 'use client'
 import React from 'react'
 import Image from 'next/image'
-import { useProducts } from '@/app/context/ProductContext'
 import { fragranceFamilies } from './Assets'
 import { motion } from "framer-motion"
 import SectionHeader from './SectionHeader'
 
 const FeatureStrip = () => {
 
-    const { products } = useProducts()
 
     const container = {
         hidden: { opacity: 0 },
@@ -47,7 +45,7 @@ const FeatureStrip = () => {
 
     return (
         <>
-            <main className='w-10/12 mx-auto'>
+            <main className='w-10/12 mx-auto pt-100 mt-90'>
 
                 <section className='flex items-center justify-between gap-7 pt-15 flex-wrap'>
                     {featureStrip.map((feature, i) => {
