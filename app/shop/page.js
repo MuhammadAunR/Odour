@@ -135,23 +135,25 @@ const ShopPage = () => {
                             ))}
                         </div>
 
-                        <div className='flex items-center justify-center py-10 gap-3'>
-                            <span onClick={handelBackwardPagination} className='border border-foreground/30 px-4 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear'>Prev</span>
+                        {products.length > 0 &&
+                            <div className='flex items-center justify-center py-10 gap-3'>
+                                <span onClick={handelBackwardPagination} className='border border-foreground/30 px-4 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear'>Prev</span>
 
-                            <div className='flex gap-1'>
-                                {Array.from({ length: totalPages }, (_, i) => (
-                                    <span
-                                        key={i}
-                                        onClick={() => { handleCurrentPage(i + 1) }}
-                                        className={`border border-foreground/30 px-3 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear
+                                <div className='flex gap-1'>
+                                    {Array.from({ length: totalPages }, (_, i) => (
+                                        <span
+                                            key={i}
+                                            onClick={() => { handleCurrentPage(i + 1) }}
+                                            className={`border border-foreground/30 px-3 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear
                                         ${currentPage === (i + 1) ? 'bg-foreground/10' : 'bg-background'}`}
-                                    >
-                                        {i + 1}
-                                    </span>
-                                ))}
+                                        >
+                                            {i + 1}
+                                        </span>
+                                    ))}
+                                </div>
+                                <span onClick={handelForwardPagination} className='border border-foreground/30 px-4 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear'>Next</span>
                             </div>
-                            <span onClick={handelForwardPagination} className='border border-foreground/30 px-4 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear'>Next</span>
-                        </div>
+                        }
                     </section>
 
                 </div>
