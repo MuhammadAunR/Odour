@@ -115,7 +115,7 @@ const Navbar = () => {
 
             <nav className={`
                 fixed top-0 left-0 w-full z-50
-                bg-background/50 backdrop-blur-2xl transition-transform duration-500 ease-in-out
+                bg-linear-to-b from-background via-background to-transparent transition-transform duration-500 ease-in-out
                 ${fixNavbar ? 'translate-y-0 scale-100' : '-translate-y-full scale-0'}
             `}>
                 <div className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
