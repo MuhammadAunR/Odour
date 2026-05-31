@@ -29,6 +29,7 @@ const ProductGridCard = ({ product, index }) => {
             className='flex flex-col items-start border border-surface group/ProductGridCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit w-fit'>
 
             <div className='relative w-77 h-100 overflow-hidden'>
+
                 <Image
                     onClick={() => router.push(`/product/${product.slug}`)}
                     src={product.imgSrc}
@@ -36,9 +37,8 @@ const ProductGridCard = ({ product, index }) => {
                     fill
                     priority
                     sizes='(max-width: 768px) 50vw, 25vw'
-                    className='object-cover transition-transform duration-500 group-hover/ProductGridCard:scale-105'
+                    className='object-cover transition-transform duration-500'
                 />
-
 
                 <span className={`absolute top-2 left-2 px-2 py-1 text-xs font-medium
                     ${product.gender === 'Men'
@@ -56,21 +56,28 @@ const ProductGridCard = ({ product, index }) => {
                     </span>
                 }
 
-                <button
+                <motion.button
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, delay: 0.1, ease: 'linear' }}
+                    viewport={{ once: false, amount: 0 }}
                     onClick={() => { toggleWishList(product._id) }}
                     className='absolute bottom-14 right-3 p-1.5 bg-background/80 backdrop-blur-sm rounded-full
-                    scale-0 group-hover/ProductGridCard:scale-100 transition-all duration-300'>
+                    transition-all duration-300 cursor-pointer'>
                     <Heart
                         size={16}
                         className={wishListItems?.includes(product._id) ? 'fill-red-500 text-red-600' : 'text-foreground'}
                     />
-                </button>
+                </motion.button>
 
-                <div className='absolute bottom-0 left-0 right-0 
-                    translate-y-full group-hover/ProductGridCard:translate-y-0
-                    transition-transform duration-300 ease-in-out
-                    flex items-center border-t border-foreground/10 bg-background/95 backdrop-blur-sm'>
-
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, delay: 0.1, ease: 'linear' }}
+                    viewport={{ once: false, amount: 0 }}
+                    className='absolute bottom-0 left-0 right-0 flex items-center border-t border-foreground/10 
+                    bg-background/95 backdrop-blur-sm'
+                >
                     <button
                         onClick={() => { togglePopup(); handleProduct(product) }}
                         className='relative bg-background hover:bg-foreground/10 transition-colors ease-linear px-7 py-2 text-sm cursor-pointer border border-foreground flex-1 items-center justify-center max-md:hidden'>
@@ -78,13 +85,12 @@ const ProductGridCard = ({ product, index }) => {
                     </button>
 
                     <button
-                        onClick={() => { handleAddCartItems(product), toggleCart() }}
+                        onClick={() => { handleAddCartItems(product); toggleCart() }}
                         className='relative group/btn bg-foreground px-7 py-2 text-sm cursor-pointer border border-foreground flex-1 items-center justify-center'>
                         <span className='relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Add to Cart</span>
                         <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
                     </button>
-
-                </div>
+                </motion.div>
             </div>
 
 
