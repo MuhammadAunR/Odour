@@ -9,24 +9,24 @@ const FooterSection = () => {
             links: [
                 { label: 'New Arrivals', href: '/' },
                 { label: 'Best Sellers', href: '/' },
-                { label: 'Collections', href: '/' },
+                { label: 'Collections', href: '/shop' },
                 { label: 'Gift Sets', href: '/' },
             ]
         },
         {
             title: 'Account',
             links: [
-                { label: 'My Account', href: '/' },
+                { label: 'My Account', href: '/authpage' },
                 { label: 'Order History', href: '/' },
-                { label: 'Wishlist', href: '/' },
+                { label: 'Wishlist', href: '/wishlist' },
                 { label: 'Track Order', href: '/' },
             ]
         },
         {
             title: 'Company',
             links: [
-                { label: 'About Us', href: '/' },
-                { label: 'Contact Us', href: '/' },
+                { label: 'About Us', href: '/about' },
+                { label: 'Contact Us', href: '/contact' },
                 { label: 'Privacy Policy', href: '/' },
                 { label: 'Return Policy', href: '/' },
             ]
