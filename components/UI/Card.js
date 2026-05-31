@@ -80,16 +80,16 @@ const ProductGridCard = ({ product, index }) => {
                 >
                     <button
                         onClick={() => { togglePopup(); handleProduct(product) }}
-                        className='relative bg-background hover:bg-foreground/10 transition-colors ease-linear px-7 py-2 text-sm cursor-pointer border border-foreground flex-1 items-center justify-center max-md:hidden'>
+                        className='relative bg-background hover:bg-foreground/5 transition-colors ease-linear px-7 py-2 text-sm cursor-pointer border border-foreground/20 flex-1 items-center justify-center max-md:hidden'>
                         Quick View
                     </button>
 
-                    <button
-                        onClick={() => { handleAddCartItems(product); toggleCart() }}
-                        className='relative group/btn bg-foreground px-7 py-2 text-sm cursor-pointer border border-foreground flex-1 items-center justify-center'>
-                        <span className='relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Add to Cart</span>
-                        <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
-                    </button>
+                        <button
+                            onClick={() => { handleAddCartItems(product); toggleCart() }}
+                            className='relative group/btn bg-foreground px-7 py-2 text-sm cursor-pointer flex-1 items-center justify-center border border-foreground/20'>
+                            <span className='relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Add to Cart</span>
+                            <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
+                        </button>
                 </motion.div>
             </div>
 

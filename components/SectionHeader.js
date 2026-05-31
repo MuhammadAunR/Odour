@@ -11,7 +11,7 @@ const SectionHeader = ({headerContent}) => {
             initial='hidden'
             whileInView='visible'
             viewport={{ once: true, amount: 0.5 }}
-            className='flex flex-col items-center gap-3 py-10'>
+            className='flex flex-col items-center gap-3 py-5'>
 
             <motion.span
                 variants={itemVariants}

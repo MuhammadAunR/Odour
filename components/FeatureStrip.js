@@ -45,14 +45,14 @@ const FeatureStrip = () => {
 
     return (
         <>
-            <main className='w-10/12 mx-auto pt-100 mt-90'>
+            <main className='w-10/12 mx-auto pt-90 mt-90'>
 
                 <section className='flex items-center justify-between gap-7 pt-15 flex-wrap'>
                     {featureStrip.map((feature, i) => {
                         return <div key={i} className='flex flex-col items-start gap-3 md:w-70 p-5'>
                             <h3 className='text-xl font-semibold'>{feature.title}</h3>
                             <div className='bg-foreground h-1 w-1/5'></div>
-                            <p className='text-muted text-justify'>{feature.desc}</p>
+                            <p className='text-muted text-left'>{feature.desc}</p>
                         </div>
                     })}
                 </section>
@@ -67,7 +67,7 @@ const FeatureStrip = () => {
                         viewport={{ once: true }}
                         className='py-7 flex items-center justify-center gap-3 flex-wrap mb-10'>
                         {fragranceFamilies.map(family => {
-                            return <motion.div key={family.name} variants={item} className='relative w-60 h-80 overflow-hidden group'>
+                            return <motion.div key={family.name} variants={item} className='relative w-full h-100 md:w-60 md:h-80 overflow-hidden group'>
                                 <h4 className='relative z-10 bg-black/50 backdrop-blur-sm w-full p-2 transition-transform ease-linear text-white'>
                                     {family.name}
                                 </h4>
@@ -86,16 +86,16 @@ const FeatureStrip = () => {
                     </motion.div>
                 </section>
 
-                <section className='relative h-80 w-full pb-20 overflow-hidden'>
-                    <Image
-                        src={'/featureStripSection.webp'}
-                        alt='Feature Strip Section Photo'
-                        fill
-                        loading='lazy'
-                        sizes='1000px'
-                        className='object-cover hover:scale-105 ease-linear transition-all' />
-                </section>
             </main>
+            <section className='relative h-80 w-full overflow-hidden'>
+                <Image
+                    src={'/featureStripSection.webp'}
+                    alt='Feature Strip Section Photo'
+                    fill
+                    loading='lazy'
+                    sizes='1000px'
+                    className='object-cover hover:scale-105 ease-linear transition-all' />
+            </section>
         </>
     )
 }

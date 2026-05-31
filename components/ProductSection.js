@@ -28,14 +28,14 @@ const ProductSection = () => {
 
     return (
         <>
-            <main className='w-10/12 mx-auto py-20'>
+            <main className='w-10/12 mx-auto py-15'>
 
                 <div className='flex flex-col items-center justify-center gap-7 pb-15'>
                     <div className='flex flex-col items-center gap-3'>
 
                         <SectionHeader headerContent={{ subHeading: 'Exclusively Curated', mainHeading: 'The Collection' }} />
 
-                        <p className='text-muted text-center max-w-lg tracking-wide leading-relaxed'>
+                        <p className='text-muted text-center max-w-xl tracking-wide leading-relaxed'>
                             Each fragrance is a carefully composed story — rare ingredients,
                             master craftsmanship, and the art of lasting impression.
                         </p>
@@ -59,9 +59,9 @@ const ProductSection = () => {
                 </section>
             </main>
 
-            <section className='mt-10'>
+            <section>
                 <div className="min-h-70 h-fit w-full bg-linear-to-b from-background to-surface border-b border-background">
-                    <div className='mx-auto py-20 w-10/12 md:w-2xl flex flex-col items-center justify-center gap-5'>
+                    <div className='mx-auto py-15 w-10/12 md:w-2xl flex flex-col items-center justify-center gap-5'>
                         <p className='text-xl text-center text-muted'>
                             Crafted for those who seek more than a scent — an identity, a memory, a second skin.
                             Every bottle holds a world. Every note tells a story only you can finish.

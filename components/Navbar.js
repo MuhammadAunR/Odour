@@ -142,7 +142,7 @@ const Navbar = () => {
                         ))}
                     </ul>
                     <div className='flex items-center gap-5'>
-                        <Link href={'/wishlist'} title='Favorite Items' className='relative'>
+                        <Link href={'/wishlist'} title='Favorite Items' className='relative hover:text-muted'>
                             <span className=''>
                                 <Heart className={`${wishListItems.length > 0 && 'text-[#993556]'} transition-all ease-linear`} />
                             </span>
