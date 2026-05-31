@@ -38,7 +38,7 @@ const HeroSection = () => {
               fill
               sizes='100vw'
               priority
-              className='object-cover' />
+              className='object-cover max-md:blur-md max-md:scale-110' />
           </motion.div>
           <div className='absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background'></div>
           <span className='absolute bottom-7 mt-10 left-1/2 -translate-x-1/2 flex'>
