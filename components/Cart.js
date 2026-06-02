@@ -12,8 +12,8 @@ import useBlockYScroll from './BlockYScroll'
 const Cart = () => {
 
     const { toggleCart, isCartOpen, cartItems, handleSubTotal, removeCartItem, handleItemDec, handleItemInc, handleCheckout } = useCart()
-
     useBlockYScroll(isCartOpen)
+    const finalPriceFormat = handleSubTotal
 
     return (
         <main className='w-full flex'>
@@ -41,7 +41,7 @@ const Cart = () => {
                             viewport={{ once: false }}
                             className='flex flex-col gap-2 items-center justify-center h-full'
                         >
-                            <span className='opacity-50'><ShoppingCart size={80} color='grey'/></span>
+                            <span className='opacity-50'><ShoppingCart size={80} color='grey' /></span>
                             <span className='text-lg'>Your cart is empty</span>
                             <Link href={'/shop'} onClick={toggleCart} className=''>
                                 <PrimaryButton text={'Go To Shop'} />
@@ -99,7 +99,8 @@ const Cart = () => {
                     <div className='flex items-center justify-between'>
                         <h3 className='text-2xl font-semibold'>Subtotal</h3>
                         <span className='text-red-500 text-xl font-semibold'>
-                            <span className='text-xs'>PKR</span> {handleSubTotal}
+                            <span className='text-xs'>PKR</span> {finalPriceFormat.toLocaleString()}
+
                         </span>
                     </div>
                     <span onClick={() => { toggleCart(), handleCheckout() }} className='flex flex-col items-end'>

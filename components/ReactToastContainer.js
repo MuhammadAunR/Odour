@@ -13,7 +13,7 @@ const ReactToastContainer = ({ children }) => {
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
-                pauseOnHover
+                pauseOnHover={false}
                 theme="dark"
                 transition={Slide}
             />
