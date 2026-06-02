@@ -59,7 +59,7 @@ const Navbar = () => {
     return (
         <>
             <nav className='bg-linear-to-b from-background via-background to-transparent relative z-100'>
-                <section className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
+                <section className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between py-4 h-20'>
 
                     <span className='lg:hidden'>
                         <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
@@ -118,7 +118,7 @@ const Navbar = () => {
                 bg-linear-to-b from-background via-background to-transparent transition-transform duration-500 ease-in-out
                 ${fixNavbar ? 'translate-y-0 scale-100' : '-translate-y-full scale-0'}
             `}>
-                <div className='w-10/12 mx-auto flex items-center justify-between py-4 h-20'>
+                <div className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between py-4 h-20'>
                     <span className='lg:hidden'>
                         <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
                     </span>
