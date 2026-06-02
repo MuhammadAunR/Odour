@@ -26,6 +26,18 @@ const ShopPage = () => {
         window.scrollTo(0, 0)
     }
 
+    useEffect(() => {
+        function handleProductView() {
+            if (window.innerWidth <= 1025) {
+                setProductView('grid')
+            }
+        }
+        handleProductView()
+        window.addEventListener('resize', handleProductView)
+        return () => window.removeEventListener('resize', handleProductView)
+    }, [])
+
+
     const handelForwardPagination = () => {
         if (currentPage < totalPages) {
             const page = currentPage + 1
@@ -99,7 +111,7 @@ const ShopPage = () => {
                                     : 'Filter'}</span>
                             </button>
 
-                            <div className="flex items-center gap-1 border border-foreground/20 p-1 max-sm:hidden">
+                            <div className="flex items-center gap-1 border border-foreground/20 p-1 max-lg:hidden">
                                 <button
                                     onClick={() => setProductView('grid')}
                                     className={`p-1 rounded transition-colors ${productView === 'grid' ? 'bg-foreground text-background' : 'text-foreground/40 hover:text-foreground'}`}

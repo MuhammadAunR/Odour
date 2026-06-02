@@ -84,12 +84,12 @@ const ProductGridCard = ({ product, index }) => {
                         Quick View
                     </button>
 
-                        <button
-                            onClick={() => { handleAddCartItems(product); toggleCart() }}
-                            className='relative group/btn bg-foreground px-7 py-2 text-sm cursor-pointer flex-1 items-center justify-center border border-foreground/20'>
-                            <span className='relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Add to Cart</span>
-                            <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
-                        </button>
+                    <button
+                        onClick={() => { handleAddCartItems(product); toggleCart() }}
+                        className='relative group/btn bg-foreground px-7 py-2 text-sm cursor-pointer flex-1 items-center justify-center border border-foreground/20'>
+                        <span className='relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Add to Cart</span>
+                        <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
+                    </button>
                 </motion.div>
             </div>
 
@@ -103,7 +103,7 @@ const ProductGridCard = ({ product, index }) => {
 
                 {product.isOnSale ? (
                     <div className='flex items-baseline gap-2'>
-                        <span className='text-sm text-foreground/40 line-through'>
+                        <span className='text-xs text-foreground/40 line-through'>
                             PKR {defaultPriceAndSize.price.toLocaleString()}
                         </span>
                         <span className='font-bold text-red-600'>
@@ -144,6 +144,7 @@ const ProductListCard = ({ product, index }) => {
                         alt={product.name}
                         fill
                         priority
+                        sizes='1000px'
                         className='object-cover group-hover/ProductListCard:scale-105 transition-all ease-linear duration-500' />
                 </div>
                 <div className='flex items-center justify-between w-full p-5'>
@@ -155,7 +156,7 @@ const ProductListCard = ({ product, index }) => {
                                 <span className='font-semibold'>({defaultPriceAndSize.size})</span>
                             </div>
                             <h3 className='font-semibold'>{product.brand}</h3>
-                            <p className='text-muted'>{product.description}</p>
+                            <p className='text-muted max-w-lg'>{product.description}</p>
                         </div>
 
                         <div className='flex flex-col gap-3 items-start'>
@@ -207,7 +208,7 @@ const ProductListCard = ({ product, index }) => {
                                 PKR {defaultPriceAndSize.price.toLocaleString()}
                             </span>
                         )}
-                        <div className='flex items-center justify-center gap-2'>
+                        <div className='flex items-end justify-end gap-2 flex-wrap-reverse'>
                             <button
                                 onClick={(e) => { e.stopPropagation(), toggleWishList(product._id) }}
                                 className='border border-foreground/30 p-1.5 cursor-pointer'>
