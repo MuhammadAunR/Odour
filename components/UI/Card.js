@@ -170,11 +170,6 @@ const ProductListCard = ({ product, index }) => {
                                     }`}>
                                     {product.gender}
                                 </span>
-                                {product.isOnSale &&
-                                    <span className='px-2 py-1 text-xs font-semibold bg-red-500 text-white'>
-                                        -{Math.round(((defaultPriceAndSize.price - defaultPriceAndSize.discountedPrice) / defaultPriceAndSize.price) * 100)}%
-                                    </span>
-                                }
                             </div>
                             <div className='flex items-center gap-2'>
                                 {product.season.map((sea) => {
@@ -195,7 +190,10 @@ const ProductListCard = ({ product, index }) => {
                     <div className="actionSection flex flex-col gap-3 items-end">
                         {product.isOnSale ? (
                             <div className='flex flex-col items-end'>
-                                <span className='text-foreground/40 line-through'>
+                                <span className='px-2 py-1 text-xs font-semibold bg-red-500 text-white'>
+                                    -{Math.round(((defaultPriceAndSize.price - defaultPriceAndSize.discountedPrice) / defaultPriceAndSize.price) * 100)}%
+                                </span>
+                                <span className='text-foreground/40 line-through text-sm'>
                                     PKR {defaultPriceAndSize.price.toLocaleString()}
                                 </span>
                                 <span className='font-bold text-red-600 text-xl'>
