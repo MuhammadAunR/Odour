@@ -24,7 +24,7 @@ const ScrollToTopBtn = () => {
         <motion.button
             whileTap={{ scale: 0.8 }}
             onClick={handleScrollToTop}
-            className='fixed bottom-6 right-6 z-50 w-10 h-10 flex items-center justify-center bg-foreground cursor-pointer'>
+            className='fixed bottom-7 right-7 z-50 w-10 h-10 flex items-center justify-center bg-foreground cursor-pointer'>
             <span
                 style={{ animation: 'mainArrowRise 1.2s ease-in-out infinite' }}
                 className='absolute text-background'>
