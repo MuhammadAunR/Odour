@@ -35,7 +35,7 @@ const FooterSection = () => {
     return (
         <main className='bg-surface w-full'>
 
-            <section className='w-10/12 mx-auto'>
+            <section className='w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative'>
 
                 <div className='w-full py-16 grid grid-cols-1 lg:grid-cols-2 gap-16'>
 
@@ -81,7 +81,7 @@ const FooterSection = () => {
                 </div>
             </section>
 
-            <section className='border-t border-background py-5'>
+            <section className='border-t border-background py-5 w-full max-w-7xl px-5 lg:px-0'>
                 <section className='w-10/12 mx-auto flex items-center gap-5 justify-between max-md:flex-col max-md:'>
                     <div className='flex items-center justify-center gap-5'>
                         <span className='hover:text-muted cursor-pointer transition-colors ease-linear'>

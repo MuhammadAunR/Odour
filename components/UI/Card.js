@@ -26,9 +26,9 @@ const ProductGridCard = ({ product, index }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className='flex flex-col items-start border border-surface group/ProductGridCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit w-fit'>
+            className='flex flex-col items-center border border-surface group/ProductGridCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit w-fit'>
 
-            <div className='relative w-77 h-100 overflow-hidden'>
+            <div className='relative w-75 h-75 overflow-hidden'>
 
                 <Image
                     onClick={() => router.push(`/product/${product.slug}`)}
@@ -37,7 +37,7 @@ const ProductGridCard = ({ product, index }) => {
                     fill
                     priority
                     sizes='(max-width: 768px) 50vw, 25vw'
-                    className='object-cover transition-transform duration-500'
+                    className='object-cover transition-transform duration-500 hover:scale-105'
                 />
 
                 <span className={`absolute top-2 left-2 px-2 py-1 text-xs font-medium
@@ -57,13 +57,8 @@ const ProductGridCard = ({ product, index }) => {
                 }
 
                 <motion.button
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2, delay: 0.1, ease: 'linear' }}
-                    viewport={{ once: false, amount: 0 }}
                     onClick={() => { toggleWishList(product._id) }}
-                    className='absolute bottom-14 right-3 p-1.5 bg-background/80 backdrop-blur-sm rounded-full
-                    transition-all duration-300 cursor-pointer'>
+                    className='absolute bottom-3 md:-bottom-10 right-3 md:group-hover/ProductGridCard:bottom-12 p-1.5 bg-background/80 backdrop-blur-sm rounded-full transition-all duration-300 cursor-pointer'>
                     <Heart
                         size={16}
                         className={wishListItems?.includes(product._id) ? 'fill-red-500 text-red-600' : 'text-foreground'}
@@ -71,22 +66,18 @@ const ProductGridCard = ({ product, index }) => {
                 </motion.button>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2, delay: 0.1, ease: 'linear' }}
-                    viewport={{ once: false, amount: 0 }}
-                    className='absolute bottom-0 left-0 right-0 flex items-center border-t border-foreground/10 
-                    bg-background/95 backdrop-blur-sm'
+                    className='absolute -bottom-10 group-hover/ProductGridCard:bottom-0 left-0 right-0 flex items-center border-t border-foreground/10 transition-all ease-linear
+                    bg-background/95 backdrop-blur-sm max-md:hidden'
                 >
                     <button
                         onClick={() => { togglePopup(); handleProduct(product) }}
-                        className='relative bg-background hover:bg-foreground/5 transition-colors ease-linear px-7 py-2 text-sm cursor-pointer border border-foreground/20 flex-1 items-center justify-center max-md:hidden'>
+                        className='relative bg-background hover:bg-foreground/5 transition-colors ease-linear px-7 py-2 text-xs cursor-pointer border border-foreground/20 flex-1 items-center justify-center max-md:hidden'>
                         Quick View
                     </button>
 
                     <button
                         onClick={() => { handleAddCartItems(product); toggleCart() }}
-                        className='relative group/btn bg-foreground px-7 py-2 text-sm cursor-pointer flex-1 items-center justify-center border border-foreground/20'>
+                        className='relative group/btn bg-foreground px-7 py-2 text-xs cursor-pointer flex-1 items-center justify-center border border-foreground/20'>
                         <span className='relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>Add to Cart</span>
                         <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
                     </button>
@@ -96,22 +87,22 @@ const ProductGridCard = ({ product, index }) => {
 
             <div className='p-4 w-full'>
                 <div className='flex items-center gap-2'>
-                    <h3 className='text-xl font-bold font-display'>{product.name}</h3>
-                    <span className='text-sm'>({defaultPriceAndSize.size})</span>
+                    <h3 className='md:text-xl font-bold font-display'>{product.name}</h3>
+                    <span className='text-sm max-md:hidden'>({defaultPriceAndSize.size})</span>
                 </div>
                 <p className='text-xs text-foreground/40 mb-1'>{product.brand}</p>
 
                 {product.isOnSale ? (
                     <div className='flex items-baseline gap-2'>
-                        <span className='text-xs text-foreground/40 line-through'>
+                        <span className='max-md:text-[10px] text-xs text-foreground/40 line-through'>
                             PKR {defaultPriceAndSize.price.toLocaleString()}
                         </span>
-                        <span className='font-bold text-red-600'>
+                        <span className='font-bold text-red-600 max-md:text-sm'>
                             PKR {defaultPriceAndSize.discountedPrice.toLocaleString()}
                         </span>
                     </div>
                 ) : (
-                    <span className='font-bold text-foreground'>
+                    <span className='max-md:text-sm font-bold text-foreground'>
                         PKR {defaultPriceAndSize.price.toLocaleString()}
                     </span>
                 )}

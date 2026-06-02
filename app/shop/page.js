@@ -76,7 +76,7 @@ const ShopPage = () => {
     return (
         <>
             <ProductQuickView />
-            <main className='w-10/12 mx-auto relative'>
+            <main className='w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative'>
                 <ScrollToTopBtn />
                 <div className="flex flex-col justify-end gap-5 py-4 border-b border-foreground/10">
 
@@ -134,7 +134,7 @@ const ShopPage = () => {
 
                     <section className="flex-1 min-w-0 pb-5">
 
-                        <div className='flex flex-wrap justify-center items-center gap-3 relative min-h-[50vh]'>
+                        <div className='flex flex-wrap justify-center items-center gap-2 relative min-h-[50vh]'>
 
                             <span className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                                 {loading && <Loader />}
