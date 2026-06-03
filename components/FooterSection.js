@@ -81,8 +81,8 @@ const FooterSection = () => {
                 </div>
             </section>
 
-            <section className='border-t border-background py-5 w-full max-w-7xl px-5 lg:px-0'>
-                <section className='w-10/12 mx-auto flex items-center gap-5 justify-between max-md:flex-col max-md:'>
+            <section className='border-t border-background py-5 w-full'>
+                <section className='lg:w-10/12 mx-auto w-full max-w-7xl flex items-center gap-5 justify-between max-md:flex-col max-md:'>
                     <div className='flex items-center justify-center gap-5'>
                         <span className='hover:text-muted cursor-pointer transition-colors ease-linear'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' width="32" height="32" viewBox="0 0 32 32">
