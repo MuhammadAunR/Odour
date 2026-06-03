@@ -11,7 +11,7 @@ const FilterContext = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState([]);
   const [activeFilterCount, setActiveFilterCount] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [queryParams, setQueryParams] = useState({
     page: 1,
     limit: 12,
