@@ -124,7 +124,7 @@ const Navbar = () => {
                 <ShoppingBag />
                 {cartItems.length > 0 && (
                   <span className="absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center">
-                    {cartItems.length > 9 ? "9+" : cartItems.length}
+                    {totalCartItem > 9 ? "9+" : totalCartItem}
                   </span>
                 )}
               </span>
@@ -210,7 +210,7 @@ const Navbar = () => {
                 <ShoppingBag />
                 {cartItems.length > 0 && (
                   <span className="absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center">
-                    {cartItems.length > 9 ? "9+" : cartItems.length}
+                    {totalCartItem > 9 ? "9+" : totalCartItem}
                   </span>
                 )}
               </span>
