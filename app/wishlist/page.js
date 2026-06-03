@@ -20,7 +20,7 @@ const WishlistPage = () => {
 
 
     return (
-        <main className='min-h-screen w-10/12 mx-auto'>
+        <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full'>
             <header className='flex items-center justify-between gap-5 py-7 border-b border-foreground/30'>
                 <div className='flex flex-col gap-2'>
                     <h1 className='text-4xl font-serif tracking-wider font-semibold'>My Wishlist</h1>
@@ -35,7 +35,7 @@ const WishlistPage = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: false }}
-                        className='flex flex-col gap-5 items-center justify-center mt-20'>
+                        className='flex flex-col gap-5 items-center justify-center my-20'>
                         <span className='opacity-30'>
                             <BookHeart size={80} />
                         </span>
