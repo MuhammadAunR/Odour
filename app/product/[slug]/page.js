@@ -293,7 +293,7 @@ const Product = ({ params }) => {
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.3 }}
                                     className='text-muted font-semibold text-justify'>
-                                    "{testimonials[testimonialCount]?.review}"
+                                    {`"${testimonials[testimonialCount]?.review}"`}
                                 </motion.p>
                             </AnimatePresence>
 

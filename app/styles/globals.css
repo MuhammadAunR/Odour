@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
 :root {
-
-  --background: #FAFAF8;
-  --foreground: #1C1A18;
-  --surface: #E8E4DE;
-  --muted: #8C8070;
+  --background: #fafaf8;
+  --foreground: #1c1a18;
+  --surface: #e8e4de;
+  --muted: #8c8070;
 }
 
 @theme {
@@ -43,12 +42,12 @@ html.lenis {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #8C8070;
+  background-color: #8c8070;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #1C1A18;
+  background-color: #1c1a18;
 }
 
 @keyframes stripeMarquee {
@@ -106,5 +105,19 @@ html.lenis {
   100% {
     transform: translateY(-6px);
     opacity: 0;
+  }
+}
+
+@keyframes whatsappButtonAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
