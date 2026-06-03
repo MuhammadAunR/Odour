@@ -21,6 +21,7 @@ const Navbar = () => {
     (total, item) => total + item.quantity,
     0,
   );
+
   const pathname = usePathname();
   const router = useRouter();
 
@@ -37,6 +38,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const nav = pathname.slice(1) === "" ? "home" : pathname.slice(1);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (pathname.slice(1, 8) === "product") return setActiveNav("shop");
     setActiveNav(nav);
   }, [pathname]);
@@ -78,7 +80,7 @@ const Navbar = () => {
           <ul className="flex items-center gap-3 max-lg:hidden">
             {navOptions.map((opt, i) => (
               <Link
-                onClick={() => handleActiveNavOption(opt.option)}
+                onClick={() => handleActiveNavOption(opt.option.toLowerCase())}
                 href={opt.src}
                 key={i}
                 className="text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden"
