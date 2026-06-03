@@ -12,7 +12,7 @@ const AboutPage = () => {
 
     return (
         <>
-            <main className='w-10/12 mx-auto'>
+            <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 w-full max-w-7xl'>
                 <header className='min-h-100 h-fit my-10'>
 
                     <SectionHeader headerContent={{ subHeading: 'The Odour Story', mainHeading: 'About Us' }} />
@@ -40,7 +40,7 @@ const AboutPage = () => {
                             className='lg:w-1/2 flex flex-col gap-7 max-lg:pt-7 max-lg:pb-20'>
                             <div className='flex flex-col gap-3'>
                                 <h2 className='font-bold text-3xl md:text-5xl'>WELCOME TO <span className='font-display font-bold text-muted'>ODOUR</span></h2>
-                                <p>Odour was born from a simple belief — that fragrance is not just a scent, it's a feeling, a memory, a statement. We craft perfumes that speak before you do.
+                                <p>Odour was born from a simple belief — that fragrance is not just a scent, its a feeling, a memory, a statement. We craft perfumes that speak before you do.
                                 </p>
                             </div>
                             <div className='flex flex-col gap-3'>
@@ -105,8 +105,8 @@ const AboutPage = () => {
                 </section>
             </main >
 
-            <section className=''>
-                <div className="min-h-80 h-fit w-full bg-linear-to-b from-background to-surface border-b border-background">
+            <section className='bg-linear-to-b from-background to-surface border-b border-background w-full'>
+                <div className="min-h-80 h-fit w-full max-w-7xl px-5 lg:px-0 mx-auto">
                     <div className='mx-auto py-20 w-10/12 md:w-3xl flex flex-col items-center justify-center gap-6'>
                         <p className='text-xs uppercase tracking-widest text-muted'>Our Mission</p>
                         <h2 className='text-3xl md:text-4xl text-center font-serif tracking-widest font-semibold text-foreground leading-snug'>
