@@ -41,7 +41,7 @@ const ContactPage = () => {
         window.open(mailtoLink)
     }
     return (
-        <main className='w-10/12 mx-auto'>
+        <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 w-full max-w-7xl'>
 
             <SectionHeader headerContent={{ subHeading: 'Get In Touch', mainHeading: 'Contact Us' }} />
 
@@ -54,10 +54,10 @@ const ContactPage = () => {
                     transition={{ duration: 0.3, delay: 0.3 }}
                     className='lg:w-1/2 w-full'>
                     <div className='flex flex-col gap-3 mb-8'>
-                        <h3 className='text-4xl tracking-wider font-serif font-bold text-foreground'>Let's Talk</h3>
+                        <h3 className='text-4xl tracking-wider font-serif font-bold text-foreground'>Let us Talk</h3>
                         <p className='text-muted leading-relaxed'>
                             Have a question about a scent, an order, or just want to say hello?
-                            We'd love to hear from you.
+                            We would love to hear from you.
                         </p>
                     </div>
                     <div className='w-full h-[0.5px] bg-muted opacity-40 mb-8' />
