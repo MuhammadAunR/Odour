@@ -38,7 +38,7 @@ const ProductSection = () => {
                     </div>
                 </div>
 
-                <section className='flex items-center justify-center gap-4 w-full'>
+                <section className='flex items-center justify-center gap-4 w-full flex-wrap'>
                     {filteredProducts.slice(0, 4).map(prod => (
                         <ProductGridCard key={prod.id} product={prod} />
                     ))}

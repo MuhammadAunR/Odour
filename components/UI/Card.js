@@ -27,7 +27,7 @@ const ProductGridCard = ({ product, index }) => {
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.1, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="flex flex-col items-center border border-surface group/ProductGridCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit w-fit"
+      className="flex flex-col items-center group/ProductGridCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit w-fit"
     >
       <div className="relative w-75 h-75 overflow-hidden">
         <Image
@@ -42,13 +42,12 @@ const ProductGridCard = ({ product, index }) => {
 
         <span
           className={`absolute top-2 left-2 px-2 py-1 text-xs font-medium
-                    ${
-                      product.gender === "Men"
-                        ? "bg-blue-950 text-background"
-                        : product.gender === "Women"
-                          ? "bg-pink-900 text-background"
-                          : "bg-foreground text-background"
-                    }`}
+                    ${product.gender === "Men"
+              ? "bg-blue-950 text-background"
+              : product.gender === "Women"
+                ? "bg-pink-900 text-background"
+                : "bg-foreground text-background"
+            }`}
         >
           {product.gender}
         </span>
@@ -60,7 +59,7 @@ const ProductGridCard = ({ product, index }) => {
               ((defaultPriceAndSize.price -
                 defaultPriceAndSize.discountedPrice) /
                 defaultPriceAndSize.price) *
-                100,
+              100,
             )}
             %
           </span>
@@ -111,10 +110,10 @@ const ProductGridCard = ({ product, index }) => {
         </motion.div>
       </div>
 
-      <div className="p-4 w-full">
+      <div className="p-4 w-full space-y-1">
         <div className="flex items-center gap-2">
           <h3 className="md:text-xl font-bold font-display">{product.name}</h3>
-          <span className="text-sm max-md:hidden">
+          <span className="text-xs text-foreground max-md:hidden">
             ({defaultPriceAndSize.size})
           </span>
         </div>
@@ -189,12 +188,11 @@ const ProductListCard = ({ product, index }) => {
               <div className="flex items-center justify-center gap-2">
                 <span
                   className={`px-2 py-1 text-xs font-medium
-                    ${
-                      product.gender === "Men"
-                        ? "bg-blue-950 text-background"
-                        : product.gender === "Women"
-                          ? "bg-pink-900 text-background"
-                          : "bg-foreground text-background"
+                    ${product.gender === "Men"
+                      ? "bg-blue-950 text-background"
+                      : product.gender === "Women"
+                        ? "bg-pink-900 text-background"
+                        : "bg-foreground text-background"
                     }`}
                 >
                   {product.gender}
@@ -225,7 +223,7 @@ const ProductListCard = ({ product, index }) => {
                     ((defaultPriceAndSize.price -
                       defaultPriceAndSize.discountedPrice) /
                       defaultPriceAndSize.price) *
-                      100,
+                    100,
                   )}
                   %
                 </span>
