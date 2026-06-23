@@ -157,7 +157,7 @@ const ProductListCard = ({ product, index }) => {
         transition={{ duration: 0.2, delay: 0.1 }}
         viewport={{ once: true }}
         onClick={() => router.push(`/product/${product.slug}`)}
-        className="flex items-center justify-start w-full border border-surface group/ProductListCard hover:bg-foreground/5 hover:shadow-xl transition-all ease-in-out duration-500"
+        className="flex items-center justify-start w-full group/ProductListCard hover:bg-foreground/5 hover:shadow-xl transition-all ease-in-out duration-500"
       >
         <div className="w-90 h-80 relative overflow-hidden">
           <Image
