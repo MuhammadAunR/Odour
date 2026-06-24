@@ -42,8 +42,8 @@ const FeatureStrip = () => {
 
   return (
     <>
-      <main className="w-full px-5 max-w-7xl lg:px-0 lg:w-10/12 lg:mx-auto pt-90 mt-90">
-        <section className="flex items-center justify-between gap-7 pt-15 flex-wrap">
+      <main className="w-full px-5 max-w-7xl lg:px-0 lg:w-10/12 lg:mx-auto pt-90 mt-25 md:mt-60">
+        <section className="flex items-center justify-between gap-x-7 pt-15 flex-wrap">
           {featureStrip.map((feature, i) => {
             return (
               <div
