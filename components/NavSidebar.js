@@ -30,9 +30,9 @@ const NavSidebar = () => {
     return (
 
 
-        <section className={`fixed top-20 z-100 h-[calc(100%-80px)] bg-surface w-full text-white transition-all ease-linear ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col items-center justify-between`}>
+        <section className={`fixed top-20 flex items-start px-5 z-100 h-[calc(100%-80px)] bg-surface w-full text-white transition-all ease-linear ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col items-center justify-between`}>
 
-            <ul className='flex flex-col items-center gap-5 justify-center pt-15'>
+            <ul className='flex flex-col items-start gap-5 justify-center pt-15'>
                 {navOptions.map((opt, i) => (
                     <MotionLink
                         initial={{ opacity: 0, x: -30 }}
