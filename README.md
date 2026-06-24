@@ -17,6 +17,9 @@ A modern and elegant perfume e-commerce website built with Next.js and Tailwind 
 
 - Next.js
 - React
+- Framer Motion
+- Lenis
+- Node.js
 - JavaScript
 - Tailwind CSS
 - React Icons
