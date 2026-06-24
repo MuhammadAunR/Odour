@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import ProductGridCard from './UI/Card'
 import { useProducts } from '@/app/context/ProductContext'
 import SectionHeader from './SectionHeader'
+import { motion } from 'motion/react'
 
 const ProductSection = () => {
 
@@ -47,7 +48,12 @@ const ProductSection = () => {
 
             <section className='w-full bg-linear-to-b from-background to-surface border-b border-background'>
                 <div className="min-h-70 h-fit max-w-7xl mx-auto lg:px-0 px-5">
-                    <div className='mx-auto py-15 w-full px-5 max-w-2xl flex flex-col items-center justify-center gap-5'>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.90, delay: 0.2 }}
+                        viewport={{ once: true }}
+                        className='mx-auto py-15 w-full px-5 max-w-2xl flex flex-col items-center justify-center gap-5'>
                         <p className='md:text-xl text-center text-muted'>
                             Crafted for those who seek more than a scent — an identity, a memory, a second skin.
                             Every bottle holds a world. Every note tells a story only you can finish.
@@ -55,7 +61,7 @@ const ProductSection = () => {
                         <h5 className='text-xl font-semibold font-display text-foreground'>
                             Odour
                         </h5>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
         </>
