@@ -23,8 +23,8 @@ const ProductGridCard = ({ product, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.70 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.1, delay: index * 0.1 }}
       viewport={{ once: true }}
       className="flex flex-col items-center group/ProductGridCard hover:shadow-xl transition-shadow ease-in-out duration-500 h-fit w-fit"
@@ -152,8 +152,8 @@ const ProductListCard = ({ product, index }) => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-        whileInView={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: 0.1 }}
         viewport={{ once: true }}
         onClick={() => router.push(`/product/${product.slug}`)}
