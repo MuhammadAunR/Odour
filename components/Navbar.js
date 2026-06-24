@@ -61,7 +61,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`${isOpen ? "bg-white" : "bg-white"} relative z-100 flex flex-col py-3 gap-2`}>
+      <nav className={`${isOpen ? 'bg-surface' : 'bg-white'} relative z-100 flex flex-col py-3 gap-2`}>
 
         <section className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between">
           <span className="lg:hidden">
@@ -69,11 +69,11 @@ const Navbar = () => {
           </span>
 
           <Link href={"/"} className="max-lg:hidden">
-            <h1 className="font-display font-bold text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
           </Link>
 
           <Link href={"/"} className="lg:hidden">
-            <h1 className="font-display font-bold text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
           </Link>
 
           <div className="flex items-center gap-5 h-14 px-5">
@@ -148,7 +148,7 @@ const Navbar = () => {
         className={`
                 fixed top-0 left-0 w-full z-50 py-3 space-y-2
                 transition-transform duration-500 ease-in-out shadow-[2px_2px_5px_rgba(0,0,0,0.3)]
-                ${isOpen ? "bg-white" : "bg-white"}
+                ${isOpen ? 'bg-surface' : 'bg-white'}
                 ${fixNavbar ? "translate-y-0" : "-translate-y-full"}
             `}
       >
@@ -158,11 +158,11 @@ const Navbar = () => {
           </span>
 
           <Link href={"/"} className="max-lg:hidden">
-            <h1 className="font-display font-bold text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
           </Link>
 
           <Link href={"/"} className="lg:hidden">
-            <h1 className="font-display font-bold text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
           </Link>
 
           <div className="flex items-center gap-5 h-14 px-5">
