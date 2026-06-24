@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import ProductGridCard from './UI/Card'
+import ProductGridCard, { ProductCardSkeleton } from './UI/Card'
 import { useProducts } from '@/app/context/ProductContext'
 import SectionHeader from './SectionHeader'
 import { motion } from 'motion/react'
@@ -39,9 +39,16 @@ const ProductSection = () => {
                     </div>
                 </div>
 
+                {filteredProducts.length === 0 &&
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <ProductCardSkeleton key={i} />
+                        ))}
+                    </div>
+                }
                 <section className='flex items-center justify-center gap-4 w-full flex-wrap'>
-                    {filteredProducts.slice(0, 4).map(prod => (
-                        <ProductGridCard key={prod.id} product={prod} />
+                    {filteredProducts.slice(0, 4).map((prod, index) => (
+                        <ProductGridCard key={prod.id} product={prod} index={index} />
                     ))}
                 </section>
             </main>
