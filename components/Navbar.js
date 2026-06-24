@@ -61,52 +61,30 @@ const Navbar = () => {
 
   return (
     <>
-      <nav
-        className={`${isOpen ? "bg-white" : "bg-linear-to-b from-background via-background to-transparent"} relative z-100`}
-      >
-        <section className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between py-4 h-20">
+      <nav className={`${isOpen ? "bg-white" : "bg-white"} relative z-100 flex flex-col py-3 gap-2`}>
+
+        <section className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between">
           <span className="lg:hidden">
             <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
           </span>
 
           <Link href={"/"} className="max-lg:hidden">
-            <h1 className="font-display font-bold text-4xl">Odour</h1>
+            <h1 className="font-display font-bold text-5xl">Odour</h1>
           </Link>
 
           <Link href={"/"} className="lg:hidden">
-            <h1 className="font-display font-bold text-4xl">Odour</h1>
+            <h1 className="font-display font-bold text-5xl">Odour</h1>
           </Link>
 
-          <ul className="flex items-center gap-3 max-lg:hidden">
-            {navOptions.map((opt, i) => (
-              <Link
-                onClick={() => handleActiveNavOption(opt.option.toLowerCase())}
-                href={opt.src}
-                key={i}
-                className="text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden"
-              >
-                <li
-                  className={`transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? "" : "group-hover/navOption:translate-y-10 group-hover/navOption:scale-0"}`}
-                >
-                  {opt.option}
-                </li>
-                <span
-                  className={`absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 cursor-pointer
-                            ${activeNav === opt.option.toLowerCase() ? "translate-y-0  scale-100" : "translate-y-12  scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0"}`}
-                >
-                  {opt.option}
-                </span>
-              </Link>
-            ))}
-          </ul>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 h-14 px-5">
             <Link
               href={"/wishlist"}
               title="Favorite Items"
               className="relative"
             >
-              <span className="">
+              <span>
                 <Heart
+                  strokeWidth={1}
                   className={`${wishListItems.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
                 />
               </span>
@@ -118,10 +96,11 @@ const Navbar = () => {
             </Link>
             <span className="flex items-center gap-2">
               <span
+                title="Cart Items"
                 onClick={toggleCart}
                 className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative"
               >
-                <ShoppingBag />
+                <ShoppingBag strokeWidth={1} />
                 {cartItems.length > 0 && (
                   <span className="absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center">
                     {totalCartItem > 9 ? "9+" : totalCartItem}
@@ -133,67 +112,69 @@ const Navbar = () => {
               </span>
             </span>
             <span
+              title="Accounts"
               onClick={handleAuthPageRouting}
               className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden"
             >
-              <UserRound />
+              <UserRound strokeWidth={1} />
             </span>
           </div>
         </section>
+
+        <section className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between">
+          <ul className="flex items-center gap-12 max-lg:hidden">
+            {navOptions.map((opt, i) => (
+              <Link
+                onClick={() => handleActiveNavOption(opt.option.toLowerCase())}
+                href={opt.src}
+                key={i}
+                className="relative group/navOption"
+              >
+                <li
+                  className={`text-xl tracking-wider font-bold uppercase text-foreground/80`}
+                >
+                  {opt.option}
+                </li>
+                <span className={`absolute top-0 left-1/2 -translate-x-1/2 bg-foreground/80 h-[1.5px] group-hover/navOption:w-full transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? 'w-full' : 'w-0'}`}></span>
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-foreground/80 h-[1.5px] group-hover/navOption:w-full transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? 'w-full' : 'w-0'}`}></span>
+              </Link>
+            ))}
+          </ul>
+        </section>
+
       </nav>
 
       <nav
         className={`
-                fixed top-0 left-0 w-full z-50
-                transition-transform duration-500 ease-in-out
-                ${isOpen ? "bg-white" : "bg-linear-to-b from-background via-background to-transparent"}
-                ${fixNavbar ? "translate-y-0 scale-100" : "-translate-y-full scale-0"}
+                fixed top-0 left-0 w-full z-50 py-3 space-y-2
+                transition-transform duration-500 ease-in-out shadow-[2px_2px_5px_rgba(0,0,0,0.3)]
+                ${isOpen ? "bg-white" : "bg-white"}
+                ${fixNavbar ? "translate-y-0" : "-translate-y-full"}
             `}
       >
-        <div className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between py-4 h-20">
+        <section className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between">
           <span className="lg:hidden">
             <HamburgerComp isOpen={isOpen} onClick={toggleNavbar} />
           </span>
 
           <Link href={"/"} className="max-lg:hidden">
-            <h1 className="font-display font-bold text-4xl">Odour</h1>
+            <h1 className="font-display font-bold text-5xl">Odour</h1>
           </Link>
 
           <Link href={"/"} className="lg:hidden">
-            <h1 className="font-display font-bold text-4xl">Odour</h1>
+            <h1 className="font-display font-bold text-5xl">Odour</h1>
           </Link>
-          <ul className="flex items-center gap-3 max-lg:hidden">
-            {navOptions.map((opt, i) => (
-              <Link
-                onClick={() => handleActiveNavOption(opt.option)}
-                href={opt.src}
-                key={i}
-                className="text-lg w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden"
-              >
-                <li
-                  className={`transition-all ease-linear duration-300
-                                     ${activeNav === opt.option.toLowerCase() ? "" : "group-hover/navOption:translate-y-10 group-hover/navOption:scale-0"}`}
-                >
-                  {opt.option}
-                </li>
-                <span
-                  className={`absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 cursor-pointer
-                            ${activeNav === opt.option.toLowerCase() ? "translate-y-0  scale-100" : "translate-y-12  scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0"}`}
-                >
-                  {opt.option}
-                </span>
-              </Link>
-            ))}
-          </ul>
-          <div className="flex items-center gap-5">
+
+          <div className="flex items-center gap-5 h-14 px-5">
             <Link
               href={"/wishlist"}
               title="Favorite Items"
-              className="relative hover:text-muted"
+              className="relative"
             >
-              <span className="">
+              <span>
                 <Heart
-                  className={`${wishListItems.length > 0 && "text-[#993556]"} transition-all ease-linear`}
+                  strokeWidth={1}
+                  className={`${wishListItems.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
                 />
               </span>
               {wishListItems.length > 0 && (
@@ -204,10 +185,11 @@ const Navbar = () => {
             </Link>
             <span className="flex items-center gap-2">
               <span
+                title="Cart Items"
                 onClick={toggleCart}
                 className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative"
               >
-                <ShoppingBag />
+                <ShoppingBag strokeWidth={1} />
                 {cartItems.length > 0 && (
                   <span className="absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center">
                     {totalCartItem > 9 ? "9+" : totalCartItem}
@@ -219,13 +201,36 @@ const Navbar = () => {
               </span>
             </span>
             <span
+              title="Accounts"
               onClick={handleAuthPageRouting}
               className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden"
             >
-              <UserRound />
+              <UserRound strokeWidth={1} />
             </span>
           </div>
-        </div>
+        </section>
+
+        <section className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between">
+          <ul className="flex items-center gap-12 max-lg:hidden">
+            {navOptions.map((opt, i) => (
+              <Link
+                onClick={() => handleActiveNavOption(opt.option.toLowerCase())}
+                href={opt.src}
+                key={i}
+                className="relative group/navOption"
+              >
+                <li
+                  className={`text-xl tracking-wider font-bold uppercase text-foreground/80`}
+                >
+                  {opt.option}
+                </li>
+                <span className={`absolute top-0 left-1/2 -translate-x-1/2 bg-foreground/80 h-[1.5px] group-hover/navOption:w-full transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? 'w-full' : 'w-0'}`}></span>
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-foreground/80 h-[1.5px] group-hover/navOption:w-full transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? 'w-full' : 'w-0'}`}></span>
+              </Link>
+            ))}
+          </ul>
+        </section>
+
       </nav>
     </>
   );
