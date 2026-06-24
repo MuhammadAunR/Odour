@@ -43,17 +43,21 @@ const FeatureStrip = () => {
   return (
     <>
       <main className="w-full px-5 max-w-7xl lg:px-0 lg:w-10/12 lg:mx-auto pt-90 mt-25 md:mt-60">
-        <section className="flex items-center justify-between gap-x-7 pt-15 flex-wrap">
+        <section className="flex items-center justify-between gap-x-7 py-15 flex-wrap">
           {featureStrip.map((feature, i) => {
             return (
-              <div
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2, delay: i * 0.1 }}
+                viewport={{ once: true }}
                 key={i}
                 className="flex flex-col items-start gap-3 md:w-70 p-5"
               >
                 <h3 className="text-xl font-semibold">{feature.title}</h3>
                 <div className="bg-foreground h-1 w-1/5"></div>
                 <p className="text-muted text-left">{feature.desc}</p>
-              </div>
+              </motion.div>
             );
           })}
         </section>
@@ -71,7 +75,7 @@ const FeatureStrip = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="py-7 flex items-center justify-center gap-3 flex-wrap mb-10"
+            className="py-7 flex items-center justify-center gap-3 flex-wrap"
           >
             {fragranceFamilies.map((family) => {
               return (
@@ -99,17 +103,6 @@ const FeatureStrip = () => {
           </motion.div>
         </section>
       </main>
-
-      <section className="relative h-80 w-full overflow-hidden max-w-7xl mx-auto">
-        <Image
-          src={"/featureStripSection.webp"}
-          alt="Feature Strip Section Photo"
-          fill
-          loading="lazy"
-          sizes="1000px"
-          className="object-cover hover:scale-105 ease-linear transition-all"
-        />
-      </section>
     </>
   );
 };
