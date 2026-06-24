@@ -15,7 +15,7 @@ const NavbarContext = ({ children }) => {
 
     return (
         <>
-            <NavContext.Provider value={{ isOpen, toggleNavbar }}>
+            <NavContext.Provider value={{ isOpen, toggleNavbar,setIsOpen }}>
                 {children}
             </NavContext.Provider>
         </>

@@ -2,7 +2,7 @@
 import { useNavContext } from '@/app/context/NavbarContext';
 import { motion } from "framer-motion"
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { navOptions } from './Assets';
 import { UserRound } from 'lucide-react';
 import useBlockYScroll from './BlockYScroll';
@@ -10,30 +10,41 @@ import useBlockYScroll from './BlockYScroll';
 
 const NavSidebar = () => {
 
-    const { isOpen, toggleNavbar } = useNavContext()
+    const { isOpen, toggleNavbar, setIsOpen } = useNavContext()
 
     const MotionLink = motion.create(Link);
+
+    useEffect(() => {
+        function autoCloseSidebarNav() {
+            if (window.innerWidth > 1024) {
+                setIsOpen(false)
+            }
+        }
+        window.addEventListener('resize', autoCloseSidebarNav)
+        return () => window.removeEventListener('resize', autoCloseSidebarNav)
+    }, [])
+
 
     useBlockYScroll(isOpen)
 
     return (
 
 
-        <section className={`fixed top-20 z-100 h-[calc(100%-80px)] bg-surface w-full text-white transition-all ease-linear $ ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col items-center justify-between`}>
+        <section className={`fixed top-20 z-100 h-[calc(100%-80px)] bg-surface w-full text-white transition-all ease-linear ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col items-center justify-between`}>
 
-            <ul className='flex flex-col items-center justify-center pt-7'>
+            <ul className='flex flex-col items-center gap-5 justify-center pt-15'>
                 {navOptions.map((opt, i) => (
                     <MotionLink
-                        initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                        initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.1 }}
+                        transition={{ duration: i * 0.15, ease: 'linear' }}
                         viewport={{ once: false }}
                         href={opt.src}
                         key={i}
-                        onClick={toggleNavbar}
-                        className='text-xl w-25 h-14 flex items-center justify-center transition-all ease-linear duration-300 relative group/navOption overflow-hidden'>
-                        <li className='text-foreground group-hover/navOption:translate-y-10 group-hover/navOption:scale-0 transition-all ease-linear duration-300'>{opt.option}</li>
-                        <span className='text-xl absolute bg-foreground text-background w-20 px-2 h-10 flex items-center justify-center rounded-3xl transition-all ease-linear duration-300 translate-y-12 scale-0 group-hover/navOption:scale-100 group-hover/navOption:translate-y-0 cursor-pointer'>{opt.option}</span>
+                        onClick={toggleNavbar}>
+                        <li className={`text-2xl tracking-wider font-bold uppercase text-foreground/80`}>
+                            {opt.option}
+                        </li>
                     </MotionLink>
                 ))}
             </ul>
