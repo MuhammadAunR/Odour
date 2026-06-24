@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { PrimaryButton } from "./UI/Buttons";
+import Link from "next/link";
 
 
 const HeroSection = () => {
@@ -48,7 +49,11 @@ const HeroSection = () => {
             crafted to leave a lasting
             impression wherever you go.
           </p>
-          <PrimaryButton text={'Explore collection'} />
+
+          <Link href={'/shop'}>
+            <PrimaryButton text={'Explore collection'} />
+          </Link>
+
         </motion.header>
       </main>
     </>
