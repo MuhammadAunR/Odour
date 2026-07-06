@@ -127,6 +127,21 @@ const Cart = () => {
         </section>
 
         {cartItems.length > 0 && (
+          <section className="py-2 w-full border-t-2 overflow-hidden">
+            <div className="relative group w-fit left-1/2 -translate-x-1/2">
+              <Link
+                href={'/cart'}
+                onClick={toggleCart}
+                className="font-semibold text-lg transition-colors ease-linear duration-300 group-hover:text-muted"
+              >
+                View Full Cart
+              </Link>
+              <span className="absolute w-full h-0.5 bg-foreground left-0 bottom-0 group-hover:-bottom-10 group-hover:scale-0 transition-all ease-linear duration-300"></span>
+            </div>
+          </section>
+        )}
+
+        {cartItems.length > 0 && (
           <div className="px-5 space-y-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 w-full">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl font-semibold">Subtotal</h3>
