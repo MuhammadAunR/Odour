@@ -13,11 +13,11 @@ const Navbar = () => {
   const [fixNavbar, setFixNavbar] = useState(false);
   const [activeNav, setActiveNav] = useState("home");
 
-  const { toggleCart, cartItems, handleSubTotal } = useCart();
+  const { toggleCart, cartItemInLS, handleSubTotal } = useCart();
   const { toggleNavbar, isOpen } = useNavContext();
   const { wishListItems } = useWishlist();
 
-  const totalCartItem = cartItems.reduce(
+  const totalCartItem = cartItemInLS.reduce(
     (total, item) => total + item.quantity,
     0,
   );
@@ -101,7 +101,7 @@ const Navbar = () => {
                 className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative"
               >
                 <ShoppingBag strokeWidth={1} />
-                {cartItems.length > 0 && (
+                {cartItemInLS.length > 0 && (
                   <span className="absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center">
                     {totalCartItem > 9 ? "9+" : totalCartItem}
                   </span>
@@ -190,7 +190,7 @@ const Navbar = () => {
                 className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative"
               >
                 <ShoppingBag strokeWidth={1} />
-                {cartItems.length > 0 && (
+                {cartItemInLS.length > 0 && (
                   <span className="absolute w-5 h-5 rounded-full bg-foreground text-background text-xs -top-2 -left-2 flex items-center justify-center">
                     {totalCartItem > 9 ? "9+" : totalCartItem}
                   </span>

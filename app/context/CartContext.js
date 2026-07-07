@@ -31,12 +31,17 @@ const CartContext = ({ children }) => {
   console.log('CartContext => ', cartItems)
 
   const addCartItemIdToLS = (prod, { selectedSize = null, qty = 1 } = {}) => {
-    const selectedProductSize = selectedSize ?? prod.sizes.find((s) => s.isDefault) ?? prod.sizes[0]
-    setCartItemInLS(prev =>
-      prev.includes(prod._id)
-        ? prev
-        : [...prev, prod._id]
-    )
+    const ssop = selectedSize ?? prod.sizes.find((s) => s.isDefault) ?? prod.sizes[0]
+    setCartItemInLS((prev) => {
+      const exist = prev.find((item) => item._id === prod._id && item.selectedSize.size === ssop.size)
+      if (exist) {
+        return prev.map(
+          (item) => item._id === prod._id && item.selectedSize.size === ssop.size
+            ? { ...item, quantity: item.quantity + qty } : item)
+      }
+      return [...prev, { ...prod, quantity: qty, selectedSize: ssop }]
+    })
+    toast.success('Added to LS & Cart')
   }
 
 

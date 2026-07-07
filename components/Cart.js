@@ -7,13 +7,14 @@ import { motion } from "framer-motion";
 import { PrimaryButton } from "./UI/Buttons";
 import Link from "next/link";
 import useBlockYScroll from "./BlockYScroll";
-import { useProducts } from "@/app/context/ProductContext";
+
 
 const Cart = () => {
   const {
     toggleCart,
     isCartOpen,
     cartItems,
+    cartItemInLS,
     handleSubTotal,
     removeCartItem,
     handleItemDec,
@@ -22,12 +23,6 @@ const Cart = () => {
   } = useCart();
 
   useBlockYScroll(isCartOpen);
-
-  const { products } = useProducts();
-
-  const cartProducts = products.filter((prod) => {
-    return cartItems.includes(prod._id)
-  })
 
   const finalPriceFormat = handleSubTotal;
 
@@ -52,7 +47,7 @@ const Cart = () => {
         </div>
 
         <section className="flex-1 overflow-y-auto py-5 space-y-1">
-          {cartItems.length === 0 && (
+          {cartItemInLS.length === 0 && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -70,7 +65,7 @@ const Cart = () => {
             </motion.div>
           )}
           
-          {cartItems.map((item, index) => (
+          {cartItemInLS.map((item, index) => (
             <div
               key={index}
               className="flex items-center gap-3 px-5 py-3 mx-1 hover:bg-background/70 transition-all ease-linear bg-background/50 relative group"
@@ -136,7 +131,7 @@ const Cart = () => {
           ))}
         </section>
 
-        {cartItems.length > 0 && (
+        {cartItemInLS.length > 0 && (
           <section className="py-2 w-full border-t-2 overflow-hidden">
             <div className="relative group w-fit left-1/2 -translate-x-1/2">
               <Link
@@ -151,7 +146,7 @@ const Cart = () => {
           </section>
         )}
 
-        {cartItems.length > 0 && (
+        {cartItemInLS.length > 0 && (
           <div className="px-5 space-y-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 w-full">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl font-semibold">Subtotal</h3>
