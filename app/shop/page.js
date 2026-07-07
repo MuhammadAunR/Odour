@@ -7,7 +7,6 @@ import ProductQuickView from "@/components/ProductQuickView";
 import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useFilter } from "../context/FilterContext";
-import ScrollToTopBtn from "@/components/ScrollToTopBtn";
 import { motion } from "framer-motion";
 
 const ShopPage = () => {
@@ -74,7 +73,7 @@ const ShopPage = () => {
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
-      return; 
+      return;
     }
     const timeout = setTimeout(() => {
       setQueryParams((prev) => ({
@@ -90,7 +89,6 @@ const ShopPage = () => {
     <>
       <ProductQuickView />
       <main className="w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative">
-        <ScrollToTopBtn />
         <div className="flex flex-col justify-end gap-5 py-4 border-b border-foreground/10">
           <label
             htmlFor="search"
@@ -134,15 +132,15 @@ const ShopPage = () => {
                 <span className="flex items-center gap-1">
                   {activeFilterCount.length != 0
                     ? activeFilterCount.map((filter) => {
-                        return (
-                          <span
-                            key={filter}
-                            className="text-xs bg-foreground/5 p-1 rounded-lg"
-                          >
-                            {filter}
-                          </span>
-                        );
-                      })
+                      return (
+                        <span
+                          key={filter}
+                          className="text-xs bg-foreground/5 p-1 rounded-lg"
+                        >
+                          {filter}
+                        </span>
+                      );
+                    })
                     : "Filter"}
                 </span>
               </button>

@@ -91,7 +91,7 @@ export async function GET(request) {
     });
   } catch (error) {
     return Response.json(
-      { message: "Failed to get products" },
+      { message: "Failed to get products",error },
       { status: 404 },
     );
   }

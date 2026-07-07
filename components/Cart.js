@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { PrimaryButton } from "./UI/Buttons";
 import Link from "next/link";
 import useBlockYScroll from "./BlockYScroll";
+import { useProducts } from "@/app/context/ProductContext";
 
 const Cart = () => {
   const {
@@ -19,7 +20,15 @@ const Cart = () => {
     handleItemInc,
     handleCheckout,
   } = useCart();
+
   useBlockYScroll(isCartOpen);
+
+  const { products } = useProducts();
+
+  const cartProducts = products.filter((prod) => {
+    return cartItems.includes(prod._id)
+  })
+
   const finalPriceFormat = handleSubTotal;
 
   return (
@@ -60,6 +69,7 @@ const Cart = () => {
               </Link>
             </motion.div>
           )}
+          
           {cartItems.map((item, index) => (
             <div
               key={index}

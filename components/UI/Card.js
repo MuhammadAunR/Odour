@@ -13,7 +13,7 @@ import { seasonConfig } from "../Assets";
 const ProductGridCard = ({ product, index }) => {
   const router = useRouter();
   const { togglePopup, handleProduct } = usePopup();
-  const { handleAddCartItems, toggleCart } = useCart();
+  const { handleAddCartItems, toggleCart, addCartItemIdToLS } = useCart();
   const { toggleWishList, wishListItems } = useWishlist();
 
   const defaultPriceAndSize =
@@ -98,6 +98,7 @@ const ProductGridCard = ({ product, index }) => {
           <button
             onClick={() => {
               handleAddCartItems(product);
+              addCartItemIdToLS(product);
               toggleCart();
             }}
             className="relative group/btn bg-foreground px-7 py-2 text-xs cursor-pointer flex-1 items-center justify-center border border-foreground/20"
@@ -263,10 +264,10 @@ const ProductListCard = ({ product, index }) => {
               </button>
 
               <span
-                onClick={(e) => {
-                  (e.stopPropagation(),
-                    handleAddCartItems(product),
-                    toggleCart());
+                onClick={() => {
+                  handleAddCartItems(product);
+                  addCartItemIdToLS(product._id);
+                  toggleCart();
                 }}
               >
                 <PrimaryButton text={"Add to Cart"} textSize="sm" />

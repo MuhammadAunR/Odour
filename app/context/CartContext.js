@@ -1,6 +1,7 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useProducts } from "./ProductContext";
 
 export const ContextProvider = createContext();
 export const useCart = () => useContext(ContextProvider);
@@ -8,11 +9,36 @@ export const useCart = () => useContext(ContextProvider);
 const CartContext = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [cartItemInLS, setCartItemInLS] = useState([])
   const [selectedPriceAndSize, setSelectedPriceAndSize] = useState(null);
+  const { products } = useProducts()
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
+
+  useEffect(() => {
+    const stored = localStorage.getItem("cartItemInLS")
+    if (stored) {
+      setCartItemInLS(JSON.parse(stored))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("cartItemInLS", JSON.stringify(cartItemInLS))
+  }, [cartItemInLS])
+
+  console.log('CartContext => ', cartItems)
+
+  const addCartItemIdToLS = (prod, { selectedSize = null, qty = 1 } = {}) => {
+    const selectedProductSize = selectedSize ?? prod.sizes.find((s) => s.isDefault) ?? prod.sizes[0]
+    setCartItemInLS(prev =>
+      prev.includes(prod._id)
+        ? prev
+        : [...prev, prod._id]
+    )
+  }
+
 
   const handleAddCartItems = (i, { selectedSize = null, qty = 1 } = {}) => {
     const ssp = selectedSize ?? i.sizes.find((s) => s.isDefault) ?? i.sizes[0];
@@ -32,7 +58,6 @@ const CartContext = ({ children }) => {
       return [...prev, { ...i, quantity: qty, selectedSize: ssp }];
     });
     toast.success("Added to cart");
-    console.log(cartItems);
   };
 
   const handleCheckout = () => {
@@ -110,6 +135,7 @@ const CartContext = ({ children }) => {
         toggleCart,
         handleAddCartItems,
         cartItems,
+        cartItemInLS,
         handleSubTotal,
         removeCartItem,
         handleItemDec,
@@ -117,6 +143,7 @@ const CartContext = ({ children }) => {
         handleCheckout,
         selectedPriceAndSize,
         setSelectedPriceAndSize,
+        addCartItemIdToLS,
       }}
     >
       {children}

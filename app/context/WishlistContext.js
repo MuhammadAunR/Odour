@@ -6,7 +6,6 @@ export const ContextProvider = createContext();
 export const useWishlist = () => useContext(ContextProvider);
 
 import React from "react";
-
 import { toast } from "react-toastify";
 
 const WishlistContext = ({ children }) => {

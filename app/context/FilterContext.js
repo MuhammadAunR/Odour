@@ -35,7 +35,7 @@ const FilterContext = ({ children }) => {
     async function fetchAllProducts() {
       const res = await fetch(apiUrl);
       const data = await res.json();
-      console.log("Raw data", data);
+      console.log("Raw data from FilterContext", data);
       setProducts(data.products);
       setApiResponse(data);
       setLoading(false);

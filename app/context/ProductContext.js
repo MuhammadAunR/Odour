@@ -1,5 +1,4 @@
 "use client";
-import { filter } from "motion/react-client";
 import React, { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 
@@ -17,7 +16,7 @@ const ProductContext = ({ children }) => {
       try {
         const res = await fetch("/api/products?limit=12");
         const data = await res.json();
-        console.log("Raw data", data);
+        console.log("Raw data from ProductContext", data);
         setProducts(data.products);
         setApiResponse(data);
         setLoading(false)
