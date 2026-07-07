@@ -45,25 +45,25 @@ const CartContext = ({ children }) => {
   }
 
 
-  const handleAddCartItems = (i, { selectedSize = null, qty = 1 } = {}) => {
-    const ssp = selectedSize ?? i.sizes.find((s) => s.isDefault) ?? i.sizes[0];
+  // const handleAddCartItems = (i, { selectedSize = null, qty = 1 } = {}) => {
+  //   const ssp = selectedSize ?? i.sizes.find((s) => s.isDefault) ?? i.sizes[0];
 
-    setCartItems((prev) => {
-      const exist = prev.find(
-        (item) => item._id === i._id && item.selectedSize.size === ssp.size,
-      );
+  //   setCartItems((prev) => {
+  //     const exist = prev.find(
+  //       (item) => item._id === i._id && item.selectedSize.size === ssp.size,
+  //     );
 
-      if (exist) {
-        return prev.map((item) =>
-          item._id === i._id && item.selectedSize.size === ssp.size
-            ? { ...item, quantity: item.quantity + qty }
-            : item,
-        );
-      }
-      return [...prev, { ...i, quantity: qty, selectedSize: ssp }];
-    });
-    toast.success("Added to cart");
-  };
+  //     if (exist) {
+  //       return prev.map((item) =>
+  //         item._id === i._id && item.selectedSize.size === ssp.size
+  //           ? { ...item, quantity: item.quantity + qty }
+  //           : item,
+  //       );
+  //     }
+  //     return [...prev, { ...i, quantity: qty, selectedSize: ssp }];
+  //   });
+  //   toast.success("Added to cart");
+  // };
 
   const handleCheckout = () => {
     if (cartItems.length === 0) return;
@@ -138,7 +138,6 @@ const CartContext = ({ children }) => {
       value={{
         isCartOpen,
         toggleCart,
-        handleAddCartItems,
         cartItems,
         cartItemInLS,
         handleSubTotal,

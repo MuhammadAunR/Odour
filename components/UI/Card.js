@@ -13,7 +13,7 @@ import { seasonConfig } from "../Assets";
 const ProductGridCard = ({ product, index }) => {
   const router = useRouter();
   const { togglePopup, handleProduct } = usePopup();
-  const { handleAddCartItems, toggleCart, addCartItemIdToLS } = useCart();
+  const { cartItemInLS, toggleCart, addCartItemIdToLS } = useCart();
   const { toggleWishList, wishListItems } = useWishlist();
 
   const defaultPriceAndSize =
@@ -97,7 +97,7 @@ const ProductGridCard = ({ product, index }) => {
 
           <button
             onClick={() => {
-              handleAddCartItems(product);
+              cartItemInLS(product);
               addCartItemIdToLS(product);
               toggleCart();
             }}
@@ -143,7 +143,7 @@ export default ProductGridCard;
 
 const ProductListCard = ({ product, index }) => {
   const router = useRouter();
-  const { handleAddCartItems, toggleCart } = useCart();
+  const { cartItemInLS, toggleCart } = useCart();
   const { toggleWishList, wishListItems } = useWishlist();
   const defaultPriceAndSize =
     product?.sizes?.find((size) => size.isDefault) ||
@@ -265,7 +265,7 @@ const ProductListCard = ({ product, index }) => {
 
               <span
                 onClick={() => {
-                  handleAddCartItems(product);
+                  cartItemInLS(product);
                   addCartItemIdToLS(product._id);
                   toggleCart();
                 }}

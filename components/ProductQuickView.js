@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 const ProductQuickView = () => {
 
     const { togglePopup, isPopupOpen, quickViewProduct } = usePopup()
-    const { handleAddCartItems, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
+    const { cartItemInLS, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
     useBlockYScroll(isPopupOpen)
     const router = useRouter()
 
@@ -127,7 +127,7 @@ const ProductQuickView = () => {
                                     </button>
 
                                     <button
-                                        onClick={() => { handleAddCartItems(quickViewProduct, selectedPriceAndSize), togglePopup() }}
+                                        onClick={() => { cartItemInLS(quickViewProduct, selectedPriceAndSize), togglePopup() }}
                                         className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground
                                         hover:bg-foreground/90 cursor-pointer text-background transition-colors duration-500'>
                                         <span>Add to Cart</span>

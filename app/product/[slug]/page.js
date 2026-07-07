@@ -14,7 +14,7 @@ import SectionHeader from '@/components/SectionHeader'
 
 const Product = ({ params }) => {
 
-    const { handleAddCartItems, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
+    const { cartItemInLS, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
     const { products } = useProducts()
 
     const { slug } = useParams(params)
@@ -250,7 +250,7 @@ const Product = ({ params }) => {
                                 <span onClick={() => handleProductQtyInc(product)} className='border px-5 py-3 font-bold hover:bg-foreground/10 transition-colors ease-linear cursor-pointer select-none'>+</span>
                             </div>
                             <button
-                                onClick={() => handleAddCartItems(
+                                onClick={() => cartItemInLS(
                                     product, { selectedSize: selectedPriceAndSize, qty: productQty })}
                                 className='flex-1 max-sm:w-full flex items-center justify-center gap-2 py-3 bg-foreground cursor-pointer text-background'>
                                 <span>Add to Cart</span>
