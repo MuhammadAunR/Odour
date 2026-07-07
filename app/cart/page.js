@@ -4,7 +4,6 @@ import { PrimaryButton, SecondaryButton } from "@/components/UI/Buttons";
 import { BookHeart, Trash } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useProducts } from "../context/ProductContext";
 import { useCart } from "../context/CartContext";
 import Image from "next/image";
 
@@ -18,14 +17,7 @@ const CartPage = () => {
         handleCheckout,
     } = useCart();
 
-    const { products } = useProducts();
     const finalPriceFormat = handleSubTotal;
-
-    const cartProducts = products.filter((prod) =>
-        cartItemInLS.includes(prod._id),
-    );
-
-    console.log('Products from Cart page => ', cartProducts)
 
     return (
         <main className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full">
@@ -36,9 +28,12 @@ const CartPage = () => {
                         My Cart
                     </h1>
                     <span className="font-semibold text-muted">
-                        Total Items: {cartProducts.length}
+                        Total Items: {cartItemInLS.length}
                     </span>
                 </div>
+                <Link href={'/shop'} className="underline underline-offset-2 text-muted hover:text-foreground transition-colors ease-linear cursor-pointer">
+                    Continue shopping
+                </Link>
             </header>
 
             {cartItemInLS.length === 0 && (
@@ -64,8 +59,8 @@ const CartPage = () => {
             )}
 
             <section>
-                <div className="flex flex-col gap-3 py-10 flex-wrap min-h-[70vh]">
-                    {cartProducts.map((item, index) => {
+                <div className="flex flex-col gap-3 py-10 flex-wrap">
+                    {cartItemInLS.map((item, index) => {
                         return <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -88,25 +83,13 @@ const CartPage = () => {
                                 <div className="flex flex-col flex-1 min-w-0">
                                     <div className="flex items-center gap-2">
                                         <h3 className="text-2xl tracking-wider font-serif font-bold">{item.name}</h3>
-                                        {/* <span className="text-sm">({item.selectedSize.size})</span> */}
+                                        <span className="text-sm">({item.selectedSize.size})</span>
                                     </div>
                                     <span className="text-sm text-gray-400">{item.brand}</span>
                                 </div>
                             </div>
 
                             <span className="text-sm font-semibold whitespace-nowrap gap-2 flex flex-col items-center justify-center">
-                                {/* {(() => {
-                                    const priceToDisplay =
-                                        item.selectedSize.discountedPrice ??
-                                        item.selectedSize.price;
-                                    return (
-                                        <span className="text-accent">
-                                            <span className="text-[10px]">PKR</span>{" "}
-                                            {(priceToDisplay * item.quantity).toLocaleString()}
-                                        </span>
-                                    );
-                                })()} */}
-
                                 <div className="flex items-center justify-center gap-5">
                                     <motion.span
                                         onClick={() => removeCartItem(item)}
@@ -134,17 +117,19 @@ const CartPage = () => {
                                         </span>
                                     </div>
                                     <div className="h-10 w-px bg-muted"></div>
-                                    {/* {(() => {
+                                    {(() => {
                                         const priceToDisplay =
                                             item.selectedSize.discountedPrice ??
                                             item.selectedSize.price;
                                         return (
                                             <span className="text-accent">
-                                                <span className="text-[10px]">PKR</span>{" "}
-                                                {(priceToDisplay * item.quantity).toLocaleString()}
+                                                <span className="text-[10px] lg:text-xs">PKR</span>{" "}
+                                                <span className="lg:text-lg">
+                                                    {(priceToDisplay * item.quantity).toLocaleString()}
+                                                </span>
                                             </span>
                                         );
-                                    })()} */}
+                                    })()}
                                 </div>
                             </span>
                         </motion.div>
