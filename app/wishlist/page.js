@@ -13,6 +13,7 @@ const WishlistPage = () => {
 
   const { products } = useProducts();
 
+  console.log(products)
   const wishListedProducts = products.filter((prod) =>
     wishListItems.includes(prod._id),
   );
