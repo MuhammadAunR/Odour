@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { PrimaryButton, SecondaryButton } from "@/components/UI/Buttons";
-import { BookHeart, Trash } from "lucide-react";
+import { BookHeart, Heart, Trash } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import Image from "next/image";
+import { useWishlist } from "../context/WishlistContext";
 
 const CartPage = () => {
     const {
@@ -16,6 +17,7 @@ const CartPage = () => {
         handleItemInc,
         handleCheckout,
     } = useCart();
+    const { toggleWishList, wishListItems } = useWishlist();
 
     const finalPriceFormat = handleSubTotal;
 
@@ -31,9 +33,11 @@ const CartPage = () => {
                         Total Items: {cartItemInLS.length}
                     </span>
                 </div>
-                <Link href={'/shop'} className="underline underline-offset-2 text-muted hover:text-foreground transition-colors ease-linear cursor-pointer">
-                    Continue shopping
-                </Link>
+                {cartItemInLS.length > 0 &&
+                    <Link href={'/shop'} className="underline underline-offset-2 text-muted hover:text-foreground transition-colors ease-linear cursor-pointer">
+                        Continue shopping
+                    </Link>
+                }
             </header>
 
             {cartItemInLS.length === 0 && (
@@ -91,12 +95,29 @@ const CartPage = () => {
 
                             <span className="text-sm font-semibold whitespace-nowrap gap-2 flex flex-col items-center justify-center">
                                 <div className="flex items-center justify-center gap-5">
+                                    <motion.button
+                                        onClick={() => {
+                                            toggleWishList(item._id);
+                                        }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="transition-all duration-300 cursor-pointer"
+                                    >
+                                        <Heart
+                                            size={22}
+                                            strokeWidth={1}
+                                            className={
+                                                wishListItems?.includes(item._id)
+                                                    ? "fill-red-500 text-red-500"
+                                                    : "text-red-500"
+                                            }
+                                        />
+                                    </motion.button>
                                     <motion.span
                                         onClick={() => removeCartItem(item)}
                                         whileTap={{ scale: 0.95 }}
                                         className="cursor-pointer"
                                     >
-                                        <Trash size={24} strokeWidth={1} color="red" />
+                                        <Trash size={24} strokeWidth={1} className="text-red-500" />
                                     </motion.span>
 
                                     <div className="flex">
