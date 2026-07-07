@@ -66,11 +66,11 @@ const CartContext = ({ children }) => {
   // };
 
   const handleCheckout = () => {
-    if (cartItems.length === 0) return;
+    if (cartItemInLS.length === 0) return;
     const confirm = window.confirm("Continue Checkout");
     if (confirm) {
       setCartItems([]);
-      const msg = cartItems
+      const msg = cartItemInLS
         .map(
           (i) =>
             `${i.name} (${i.selectedSize.size}) x${i.quantity} - PKR ${(i.selectedSize.discountedPrice ?? i.selectedSize.price) * i.quantity}`,
@@ -84,7 +84,7 @@ const CartContext = ({ children }) => {
   };
 
   const handleItemInc = (i) => {
-    setCartItems((prev) =>
+    setCartItemInLS((prev) =>
       prev.map((item) =>
         item._id === i._id && item.selectedSize.size === i.selectedSize.size
           ? { ...item, quantity: item.quantity + 1 }
@@ -94,7 +94,7 @@ const CartContext = ({ children }) => {
   };
 
   const handleItemDec = (i) => {
-    setCartItems((prev) => {
+    setCartItemInLS((prev) => {
       const exist = prev.find(
         (item) =>
           item._id === i._id && item.selectedSize.size === i.selectedSize.size,
@@ -117,7 +117,7 @@ const CartContext = ({ children }) => {
     });
   };
   const removeCartItem = (i) => {
-    setCartItems((prev) =>
+    setCartItemInLS((prev) =>
       prev.filter(
         (item) =>
           !(
@@ -127,7 +127,7 @@ const CartContext = ({ children }) => {
     );
   };
 
-  const handleSubTotal = cartItems.reduce((total, item) => {
+  const handleSubTotal = cartItemInLS.reduce((total, item) => {
     const finalPrice =
       item.selectedSize.discountedPrice ?? item.selectedSize.price;
     return total + finalPrice * item.quantity;
@@ -138,7 +138,6 @@ const CartContext = ({ children }) => {
       value={{
         isCartOpen,
         toggleCart,
-        cartItems,
         cartItemInLS,
         handleSubTotal,
         removeCartItem,
