@@ -82,8 +82,7 @@ const ProductGridCard = ({ product, index }) => {
         </motion.button>
 
         <motion.div
-          className="absolute -bottom-10 group-hover/ProductGridCard:bottom-0 left-0 right-0 flex items-center border-t border-foreground/10 transition-all ease-linear
-                    bg-background/95 backdrop-blur-sm max-md:hidden"
+          className="absolute -bottom-10 group-hover/ProductGridCard:bottom-0 left-0 right-0 flex items-center border-t border-foreground/10 bg-background transition-all ease-linear max-md:hidden"
         >
           <button
             onClick={() => {
@@ -113,9 +112,6 @@ const ProductGridCard = ({ product, index }) => {
       <div className="p-4 w-full space-y-1">
         <div className="flex items-center gap-2">
           <h3 className="md:text-xl font-bold font-display">{product.name}</h3>
-          <span className="text-xs text-foreground max-md:hidden">
-            ({defaultPriceAndSize.size})
-          </span>
         </div>
         <p className="text-xs text-foreground/40 mb-1">{product.brand}</p>
 
