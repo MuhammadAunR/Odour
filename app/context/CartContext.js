@@ -11,7 +11,6 @@ const CartContext = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [cartItemInLS, setCartItemInLS] = useState([])
   const [selectedPriceAndSize, setSelectedPriceAndSize] = useState(null);
-  const { products } = useProducts()
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
