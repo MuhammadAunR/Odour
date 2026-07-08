@@ -74,7 +74,7 @@ const ProductGridCard = ({ product, index }) => {
           <Heart
             size={16}
             className={
-              wishListProducts?.includes(product)
+              wishListProducts?.some(item => item._id === product._id)
                 ? "fill-red-500 text-red-500"
                 : "text-foreground"
             }
