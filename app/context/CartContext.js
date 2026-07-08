@@ -28,8 +28,6 @@ const CartContext = ({ children }) => {
     localStorage.setItem("cartItemInLS", JSON.stringify(cartItemInLS))
   }, [cartItemInLS])
 
-  console.log('CartContext => ', cartItems)
-
   const addCartItemIdToLS = (prod, { selectedSize = null, qty = 1 } = {}) => {
     const ssop = selectedSize ?? prod.sizes.find((s) => s.isDefault) ?? prod.sizes[0]
     setCartItemInLS((prev) => {

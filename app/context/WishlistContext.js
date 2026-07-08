@@ -9,33 +9,37 @@ import React from "react";
 import { toast } from "react-toastify";
 
 const WishlistContext = ({ children }) => {
-  const [wishListItems, setWishListItems] = useState([]);
+  const [wishListProducts, setWishListProducts] = useState([])
+
 
   useEffect(() => {
-    const stored = localStorage.getItem("wishListedProductIds");
-    if (stored) setWishListItems(JSON.parse(stored));
+    const stored = localStorage.getItem("wishListedProducts");
+    if (stored) setWishListProducts(JSON.parse(stored));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("wishListedProductIds", JSON.stringify(wishListItems));
-  }, [wishListItems]);
+    localStorage.setItem("wishListedProducts", JSON.stringify(wishListProducts));
+  }, [wishListProducts]);
 
-  const toggleWishList = (prodId) => {
-    setWishListItems((prev) =>
-      prev.includes(prodId)
-        ? prev.filter((id) => id !== prodId)
-        : [...prev, prodId],
+  const handleWishListItemsInLS = (prod) => {
+    const exists = wishListProducts.some(
+      item => item._id === prod._id
     );
 
-    toast.success(
-      wishListItems.includes(prodId)
-        ? "Removed from Wishlist"
-        : "Added to Wishlist",
-    );
+    if (exists) {
+      toast.success("Removed from wishlist");
+      setWishListProducts(prev =>
+        prev.filter(item => item._id !== prod._id)
+      );
+    } else {
+      toast.success("Added to wishlist");
+      setWishListProducts(prev => [...prev, prod]);
+    }
   };
+
   return (
     <>
-      <ContextProvider.Provider value={{ toggleWishList, wishListItems }}>
+      <ContextProvider.Provider value={{ handleWishListItemsInLS, wishListProducts, wishListProducts }}>
         {children}
       </ContextProvider.Provider>
     </>

@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const { toggleCart, cartItemInLS, handleSubTotal } = useCart();
   const { toggleNavbar, isOpen } = useNavContext();
-  const { wishListItems } = useWishlist();
+  const { wishListProducts } = useWishlist();
 
   const totalCartItem = cartItemInLS.reduce(
     (total, item) => total + item.quantity,
@@ -85,12 +85,12 @@ const Navbar = () => {
               <span>
                 <Heart
                   strokeWidth={1}
-                  className={`${wishListItems.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
+                  className={`${wishListProducts.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
                 />
               </span>
-              {wishListItems.length > 0 && (
+              {wishListProducts.length > 0 && (
                 <span className="absolute w-5 h-5 rounded-full bg-[#993556] text-background text-xs -top-2 -left-2 flex items-center justify-center">
-                  {wishListItems.length > 9 ? "9+" : wishListItems.length}
+                  {wishListProducts.length > 9 ? "9+" : wishListProducts.length}
                 </span>
               )}
             </Link>
@@ -174,12 +174,12 @@ const Navbar = () => {
               <span>
                 <Heart
                   strokeWidth={1}
-                  className={`${wishListItems.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
+                  className={`${wishListProducts.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
                 />
               </span>
-              {wishListItems.length > 0 && (
+              {wishListProducts.length > 0 && (
                 <span className="absolute w-5 h-5 rounded-full bg-[#993556] text-background text-xs -top-2 -left-2 flex items-center justify-center">
-                  {wishListItems.length > 9 ? "9+" : wishListItems.length}
+                  {wishListProducts.length > 9 ? "9+" : wishListProducts.length}
                 </span>
               )}
             </Link>

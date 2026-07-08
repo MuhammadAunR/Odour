@@ -1,22 +1,16 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useWishlist } from "../context/WishlistContext";
 import { SecondaryButton } from "@/components/UI/Buttons";
 import ProductGridCard from "@/components/UI/Card";
 import { BookHeart } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useProducts } from "../context/ProductContext";
 
 const WishlistPage = () => {
-  const { wishListItems } = useWishlist();
+  const { wishListProducts } = useWishlist();
 
-  const { products } = useProducts();
-
-  console.log(products)
-  const wishListedProducts = products.filter((prod) =>
-    wishListItems.includes(prod._id),
-  );
+  // console.log('prods from wishlist page =>', wishListProducts)
 
   return (
     <main className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full">
@@ -26,12 +20,17 @@ const WishlistPage = () => {
             My Wishlist
           </h1>
           <span className="font-semibold text-muted">
-            Total Items: {wishListItems.length}
+            Total Items: {wishListProducts.length}
           </span>
         </div>
+        {wishListProducts.length > 0 &&
+          <Link href={'/shop'} className="underline underline-offset-2 text-muted hover:text-foreground transition-colors ease-linear cursor-pointer">
+            Continue shopping
+          </Link>
+        }
       </header>
 
-      {wishListItems.length === 0 && (
+      {wishListProducts.length === 0 && (
         <>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -55,7 +54,7 @@ const WishlistPage = () => {
 
       <section>
         <div className="flex items-center justify-center gap-3 py-7 flex-wrap">
-          {wishListedProducts.map((item) => {
+          {wishListProducts.map((item) => {
             return <ProductGridCard key={item.name} product={item} />;
           })}
         </div>

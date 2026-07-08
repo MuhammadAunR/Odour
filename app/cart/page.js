@@ -17,9 +17,10 @@ const CartPage = () => {
         handleItemInc,
         handleCheckout,
     } = useCart();
-    const { toggleWishList, wishListItems } = useWishlist();
+    const { toggleWishList, wishListProducts } = useWishlist();
 
     const finalPriceFormat = handleSubTotal;
+
 
     return (
         <main className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full">
@@ -106,7 +107,7 @@ const CartPage = () => {
                                             size={22}
                                             strokeWidth={1}
                                             className={
-                                                wishListItems?.includes(item._id)
+                                                wishListProducts?.includes(item._id)
                                                     ? "fill-red-500 text-red-500"
                                                     : "text-red-500"
                                             }

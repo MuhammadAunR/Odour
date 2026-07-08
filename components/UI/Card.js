@@ -14,7 +14,7 @@ const ProductGridCard = ({ product, index }) => {
   const router = useRouter();
   const { togglePopup, handleProduct } = usePopup();
   const { toggleCart, addCartItemIdToLS } = useCart();
-  const { toggleWishList, wishListItems } = useWishlist();
+  const { handleWishListItemsInLS, wishListProducts } = useWishlist();
 
   const defaultPriceAndSize =
     product?.sizes?.find((size) => size.isDefault) ||
@@ -67,14 +67,14 @@ const ProductGridCard = ({ product, index }) => {
 
         <motion.button
           onClick={() => {
-            toggleWishList(product._id);
+            handleWishListItemsInLS(product);
           }}
           className="absolute bottom-3 md:-bottom-10 right-3 md:group-hover/ProductGridCard:bottom-12 p-1.5 bg-background/80 backdrop-blur-sm rounded-full transition-all duration-300 cursor-pointer"
         >
           <Heart
             size={16}
             className={
-              wishListItems?.includes(product._id)
+              wishListProducts?.includes(product)
                 ? "fill-red-500 text-red-600"
                 : "text-foreground"
             }
@@ -144,7 +144,7 @@ export default ProductGridCard;
 const ProductListCard = ({ product, index }) => {
   const router = useRouter();
   const { toggleCart, addCartItemIdToLS } = useCart();
-  const { toggleWishList, wishListItems } = useWishlist();
+  const { toggleWishList, wishListProducts } = useWishlist();
   const defaultPriceAndSize =
     product?.sizes?.find((size) => size.isDefault) ||
     product?.sizes?.[0] ||
@@ -256,7 +256,7 @@ const ProductListCard = ({ product, index }) => {
               >
                 <Heart
                   className={
-                    wishListItems?.includes(product._id)
+                    wishListProducts?.includes(product._id)
                       ? "fill-red-500 text-red-600"
                       : "text-foreground/50"
                   }
