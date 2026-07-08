@@ -16,7 +16,7 @@ const FilterContext = ({ children }) => {
   const [activeFilterCount, setActiveFilterCount] = useState([]);
   const [loading, setLoading] = useState(false);
   const [queryParams, setQueryParams] = useState({
-    page: 1,
+    page: Number(searchParams.get("page")) || 1,
     limit: Number(searchParams.get("limit")) || 12,
     gender: searchParams.get("gender") || "",
     season: searchParams.get("seasone") || "",
