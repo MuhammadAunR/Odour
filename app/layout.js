@@ -11,6 +11,7 @@ import Filter from "@/components/Filter";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import WhatsappButton from "@/components/WhatsappButton";
 import ScrollToTopBtn from "@/components/ScrollToTopBtn";
+import AuthProviders from "./providers";
 
 const dubiel = localFont({
   src: "../app/fonts/DubielPlain.woff2",
@@ -50,11 +51,13 @@ export default function RootLayout({ children }) {
               <Cart />
               <Filter />
               <NavSidebar />
-              <LayoutWrapper>
-                <WhatsappButton />
-                <ScrollToTopBtn />
-                {children}
-              </LayoutWrapper>
+              <AuthProviders>
+                <LayoutWrapper>
+                  <WhatsappButton />
+                  <ScrollToTopBtn />
+                  {children}
+                </LayoutWrapper>
+              </AuthProviders>
             </AppWrapper>
           </LenisWrapper>
         </ReactToastContainer>

@@ -8,6 +8,7 @@ import { useNavContext } from "@/app/context/NavbarContext";
 import { navOptions } from "./Assets";
 import { usePathname, useRouter } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [fixNavbar, setFixNavbar] = useState(false);
@@ -24,9 +25,14 @@ const Navbar = () => {
 
   const pathname = usePathname();
   const router = useRouter();
+  const { data: session, status } = useSession()
 
   const handleAuthPageRouting = () => {
-    router.push("/authpage");
+    if (status === 'authenticated' && session){
+      router.push('/adminDashboard')
+    } else{
+      router.push('/authpage')
+    }
   };
 
   const formatPrice = (amount) => {

@@ -4,6 +4,7 @@ import { SecondaryButton } from '@/components/UI/Buttons'
 import { Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import { signIn } from 'next-auth/react'
 
 const leftAnimationProps = {
     initial: { opacity: 0, x: 20 },
@@ -35,9 +36,12 @@ const FacebookIcon = () => (
 
 const SocialButtons = () => (
     <div className='flex items-center justify-center gap-5'>
-        <span className='border border-foreground/20 p-2 hover:border-foreground/70 transition-all ease-linear cursor-pointer rounded-full'>
+        <motion.span
+            whileTap={{ scale: 1.03 }}
+            onClick={() => signIn("google", { callbackUrl: '/adminDashboard' })}
+            className='border border-foreground/20 p-2 hover:border-foreground/70 transition-all ease-linear cursor-pointer rounded-full'>
             <GoogleIcon />
-        </span>
+        </motion.span>
         <span className='border border-foreground/20 p-2 hover:border-foreground/70 transition-all ease-linear cursor-pointer rounded-full'>
             <FacebookIcon />
         </span>
