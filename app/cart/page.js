@@ -17,7 +17,7 @@ const CartPage = () => {
         handleItemInc,
         handleCheckout,
     } = useCart();
-    const { toggleWishList, wishListProducts } = useWishlist();
+    const { handleWishListItemsInLS, wishListProducts } = useWishlist();
 
     const finalPriceFormat = handleSubTotal;
 
@@ -98,7 +98,7 @@ const CartPage = () => {
                                 <div className="flex items-center justify-center gap-5">
                                     <motion.button
                                         onClick={() => {
-                                            toggleWishList(item._id);
+                                            handleWishListItemsInLS(item._id);
                                         }}
                                         whileTap={{ scale: 0.95 }}
                                         className="transition-all duration-300 cursor-pointer"

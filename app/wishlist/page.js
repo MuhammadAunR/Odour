@@ -10,7 +10,7 @@ import Link from "next/link";
 const WishlistPage = () => {
   const { wishListProducts } = useWishlist();
 
-  // console.log('prods from wishlist page =>', wishListProducts)
+  console.log('prods from wishlist page =>', wishListProducts)
 
   return (
     <main className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full">
@@ -55,7 +55,7 @@ const WishlistPage = () => {
       <section>
         <div className="flex items-center justify-center gap-3 py-7 flex-wrap">
           {wishListProducts.map((item) => {
-            return <ProductGridCard key={item.name} product={item} />;
+            return <ProductGridCard key={item._id} product={item} />;
           })}
         </div>
       </section>

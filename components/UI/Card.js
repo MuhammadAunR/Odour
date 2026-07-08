@@ -144,7 +144,7 @@ export default ProductGridCard;
 const ProductListCard = ({ product, index }) => {
   const router = useRouter();
   const { toggleCart, addCartItemIdToLS } = useCart();
-  const { toggleWishList, wishListProducts } = useWishlist();
+  const { handleWishListItemsInLS, wishListProducts } = useWishlist();
   const defaultPriceAndSize =
     product?.sizes?.find((size) => size.isDefault) ||
     product?.sizes?.[0] ||
@@ -250,13 +250,13 @@ const ProductListCard = ({ product, index }) => {
             <div className="flex items-end justify-end gap-2 flex-wrap-reverse">
               <button
                 onClick={(e) => {
-                  (e.stopPropagation(), toggleWishList(product._id));
+                  (e.stopPropagation(), handleWishListItemsInLS(product));
                 }}
                 className="border border-foreground/30 p-1.5 cursor-pointer"
               >
                 <Heart
                   className={
-                    wishListProducts?.includes(product._id)
+                    wishListProducts?.includes(product)
                       ? "fill-red-500 text-red-600"
                       : "text-foreground/50"
                   }
