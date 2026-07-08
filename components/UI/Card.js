@@ -75,7 +75,7 @@ const ProductGridCard = ({ product, index }) => {
             size={16}
             className={
               wishListProducts?.includes(product)
-                ? "fill-red-500 text-red-600"
+                ? "fill-red-500 text-red-500"
                 : "text-foreground"
             }
           />
@@ -97,7 +97,6 @@ const ProductGridCard = ({ product, index }) => {
 
           <button
             onClick={() => {
-
               addCartItemIdToLS(product);
               toggleCart();
             }}
@@ -125,7 +124,7 @@ const ProductGridCard = ({ product, index }) => {
             <span className="max-md:text-[10px] text-xs text-foreground/40 line-through">
               PKR {defaultPriceAndSize.price.toLocaleString()}
             </span>
-            <span className="font-bold text-red-600 max-md:text-sm">
+            <span className="font-bold text-red-500 max-md:text-sm">
               PKR {defaultPriceAndSize.discountedPrice.toLocaleString()}
             </span>
           </div>
@@ -231,10 +230,10 @@ const ProductListCard = ({ product, index }) => {
                 <span className="text-foreground/40 line-through text-sm">
                   PKR {defaultPriceAndSize.price.toLocaleString()}
                 </span>
-                <span className="font-bold text-red-600 text-xl">
+                <span className="font-bold text-red-500 text-xl">
                   PKR {defaultPriceAndSize.discountedPrice.toLocaleString()}
                 </span>
-                <span className="text-red-600 text-sm">
+                <span className="text-red-500 text-sm">
                   You save PKR{" "}
                   {(
                     defaultPriceAndSize.price -
@@ -257,7 +256,7 @@ const ProductListCard = ({ product, index }) => {
                 <Heart
                   className={
                     wishListProducts?.includes(product)
-                      ? "fill-red-500 text-red-600"
+                      ? "fill-red-500 text-red-500"
                       : "text-foreground/50"
                   }
                 />

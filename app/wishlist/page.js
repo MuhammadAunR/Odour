@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useWishlist } from "../context/WishlistContext";
 import { SecondaryButton } from "@/components/UI/Buttons";
 import ProductGridCard from "@/components/UI/Card";

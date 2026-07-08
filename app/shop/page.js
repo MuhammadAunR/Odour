@@ -8,6 +8,7 @@ import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useFilter } from "../context/FilterContext";
 import { motion } from "framer-motion";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const ShopPage = () => {
   const {
@@ -20,14 +21,21 @@ const ShopPage = () => {
   } = useFilter();
 
   const [productView, setProductView] = useState("grid");
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const isInitialMount = useRef(true);
 
   const totalPages = apiResponse.totalPages;
 
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const currentPage = Number(searchParams.get("page"))|| 1;
+
   const handleCurrentPage = (page) => {
-    setCurrentPage(page);
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("page", page)
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
     setQueryParams((prev) => ({
       ...prev,
       page: page,
@@ -35,6 +43,18 @@ const ShopPage = () => {
     window.scrollTo(0, 0);
   };
 
+  const handelForwardPagination = () => {
+    if (currentPage < totalPages) {
+      handleCurrentPage(currentPage + 1)
+    }
+  };
+
+  const handelBackwardPagination = () => {
+    if (currentPage > 1) {
+      handleCurrentPage(currentPage - 1)
+    }
+  };
+  
   useEffect(() => {
     function handleProductView() {
       if (window.innerWidth <= 1025) {
@@ -45,30 +65,6 @@ const ShopPage = () => {
     window.addEventListener("resize", handleProductView);
     return () => window.removeEventListener("resize", handleProductView);
   }, []);
-
-  const handelForwardPagination = () => {
-    if (currentPage < totalPages) {
-      const page = currentPage + 1;
-      setCurrentPage(page);
-      setQueryParams((prev) => ({
-        ...prev,
-        page: page,
-      }));
-      window.scrollTo(0, 0);
-    } else return;
-  };
-
-  const handelBackwardPagination = () => {
-    if (currentPage > 1) {
-      const page = currentPage - 1;
-      setCurrentPage(page);
-      setQueryParams((prev) => ({
-        ...prev,
-        page: page,
-      }));
-      window.scrollTo(0, 0);
-    } else return;
-  };
 
   useEffect(() => {
     if (isInitialMount.current) {
