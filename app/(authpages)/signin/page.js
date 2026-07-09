@@ -3,6 +3,7 @@ import { BackToHome, container, FacebookIcon, GoogleIcon, item } from '@/compone
 import { SecondaryButton } from '@/components/UI/Buttons'
 import { Eye, EyeOff } from 'lucide-react'
 import { motion } from 'motion/react'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import React, { useState } from 'react'
@@ -29,23 +30,20 @@ const SignInPage = () => {
             toast.warning('All input fields required')
             return
         }
-        const res = await fetch('/api/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userCredentials)
+        const results = await signIn('credentials', {
+            email: userCredentials.email,
+            password: userCredentials.password,
+            redirect: false,
         })
-        const data = await res.json()
-        if (!res.ok) {
-            toast.error(data.message)
+        if (!results?.ok) {
+            toast.error(results.error)
             return
         }
         setUserCredentials({
             email: "",
             password: "",
         })
-        if (data.user.role === 'admin') {
+        if (results.role === 'admin') {
             redirect('/adminDashboard')
         } else {
             redirect('/shop')
