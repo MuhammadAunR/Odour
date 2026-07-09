@@ -44,6 +44,7 @@ const SignUpPage = () => {
 
 
     async function handleSignUp() {
+      
         if (
             !userCredentials.name.trim() ||
             !userCredentials.email.trim() ||

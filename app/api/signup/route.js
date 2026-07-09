@@ -9,6 +9,15 @@ export async function POST(request) {
 
         await connectDB()
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+        if (!emailRegex.test(email)) {
+            return NextResponse.json(
+                { message: 'Invalid email address' },
+                { status: 400 }
+            )
+        }
+
         const existingUser = await Users.findOne({ email })
 
         if (existingUser) {
