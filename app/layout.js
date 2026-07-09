@@ -2,14 +2,9 @@ import { Inter } from "next/font/google";
 import "./styles/globals.css";
 import localFont from "next/font/local";
 import AppWrapper from "./context/AppWrapper";
-import Cart from "@/components/Cart";
-import NavSidebar from "@/components/NavSidebar";
 import LenisWrapper from "@/components/LenisWrapper";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
-import Filter from "@/components/Filter";
-import LayoutWrapper from "@/components/LayoutWrapper";
-import WhatsappButton from "@/components/WhatsappButton";
 import ScrollToTopBtn from "@/components/ScrollToTopBtn";
 import AuthProviders from "./providers";
 
@@ -48,15 +43,9 @@ export default function RootLayout({ children }) {
         <ReactToastContainer>
           <LenisWrapper>
             <AppWrapper>
-              <Cart />
-              <Filter />
-              <NavSidebar />
               <AuthProviders>
-                <LayoutWrapper>
-                  <WhatsappButton />
-                  <ScrollToTopBtn />
-                  {children}
-                </LayoutWrapper>
+                <ScrollToTopBtn />
+                {children}
               </AuthProviders>
             </AppWrapper>
           </LenisWrapper>
