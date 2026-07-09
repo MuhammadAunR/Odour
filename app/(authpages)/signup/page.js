@@ -9,6 +9,11 @@ import React, { useState } from 'react'
 const SignUpPage = () => {
 
     const [signUpPasswordVisible, setSignUpPasswordVisible] = useState(false)
+    const [userCredentials, setUserCredentials] = useState({
+        name: "",
+        email: "",
+        password: "",
+    })
 
     return (
         <motion.main
