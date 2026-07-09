@@ -17,7 +17,7 @@ const FooterSection = () => {
     {
       title: "Account",
       links: [
-        { label: "My Account", href: "/authpage" },
+        { label: "My Account", href: "/signin" },
         { label: "Order History", href: "/" },
         { label: "Wishlist", href: "/wishlist" },
         { label: "Track Order", href: "/" },

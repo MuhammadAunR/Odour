@@ -31,7 +31,7 @@ const Navbar = () => {
     if (status === 'authenticated' && session){
       router.push('/adminDashboard')
     } else{
-      router.push('/authpage')
+      router.push('/signin')
     }
   };
 

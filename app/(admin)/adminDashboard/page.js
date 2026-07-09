@@ -8,7 +8,7 @@ export default async function AdminDashboard() {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-        redirect('/authpage')
+        redirect('/signin')
     }
 
     return (

@@ -76,7 +76,7 @@ const NavSidebar = () => {
                         </svg>
                     </span>
                 </div>
-                <Link href={'/authpage'} onClick={toggleNavbar} className='transition-all ease-linear duration-300 cursor-pointer text-foreground flex items-center gap-2'>
+                <Link href={'/signin'} onClick={toggleNavbar} className='transition-all ease-linear duration-300 cursor-pointer text-foreground flex items-center gap-2'>
                     <UserRound size={20} />
                     <span className='font-semibold'>Accounts</span>
                 </Link>
