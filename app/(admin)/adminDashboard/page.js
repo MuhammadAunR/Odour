@@ -1,34 +1,19 @@
-'use client'
-import { SecondaryButton } from '@/components/UI/Buttons'
-import { signOut, useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import AdminNavbar from '@/components/admin/AdminNavbar'
+import { authOptions } from '@/lib/auth'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
-const AdminDashBoard = () => {
-    const { data: session, status } = useSession()
-    const router = useRouter()
 
-    useEffect(() => {
-        if (status === 'unauthenticated') {
-            router.push('/authpage')
-        }
-    }, [status, router])
+export default async function AdminDashboard() {
+    const session = await getServerSession(authOptions)
 
-    if (status === 'loading') {
-        return <p>Loading...</p>
+    if (!session) {
+        redirect('/authpage')
     }
+
     return (
         <>
-            <main className='min-h-screen'>
-                <p>{session?.user?.name}</p>
-                <p>{session?.user?.email}</p>
-                <p>{status}</p>
-                <span onClick={() => signOut({ callbackUrl: '/authpage' })}>
-                    <SecondaryButton text={'Logout'} />
-                </span>
-            </main>
+            <AdminNavbar />
         </>
     )
 }
-
-export default AdminDashBoard
