@@ -1,19 +1,80 @@
 'use client'
 import { BackToHome, container, FacebookIcon, GoogleIcon, item } from '@/components/admin/AuthPagesCompos'
+import Loader from '@/components/LoaderUI'
 import { SecondaryButton } from '@/components/UI/Buttons'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { redirect } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 const SignUpPage = () => {
 
     const [signUpPasswordVisible, setSignUpPasswordVisible] = useState(false)
+    const [signUpConfirmPasswordVisible, setSignUpConfirmPasswordVisible] = useState(false)
+    const [loader, setLoader] = useState(false)
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [userCredentials, setUserCredentials] = useState({
         name: "",
         email: "",
         password: "",
     })
+
+    const handleUserInputCredentials = (e) => {
+        const { name, value } = e.target
+        setUserCredentials(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (
+                confirmPassword &&
+                confirmPassword !== userCredentials.password
+            ) {
+                toast.error('Passwords do not match')
+            }
+        }, 1000)
+
+        return () => clearTimeout(timer)
+    }, [confirmPassword, userCredentials.password])
+
+
+    async function handleSignUp() {
+        if (
+            !userCredentials.name.trim() ||
+            !userCredentials.email.trim() ||
+            !userCredentials.password.trim()
+        ) {
+            toast.warning('All fields are required')
+            return
+        }
+        setLoader(true)
+        const res = await fetch('/api/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userCredentials),
+        })
+        const data = await res.json()
+        if (!res.ok) {
+            toast.warning(data.message)
+            setLoader(false)
+            return
+        }
+        setLoader(false)
+        setUserCredentials({
+            name: "",
+            email: "",
+            password: "",
+        })
+        setConfirmPassword("")
+        redirect('/signin')
+    }
 
     return (
         <motion.main
@@ -48,17 +109,26 @@ const SignUpPage = () => {
                     <div className='w-full lg:w-10/12 space-y-2'>
                         <input
                             type='name'
+                            onChange={handleUserInputCredentials}
+                            value={userCredentials.name}
+                            name='name'
                             required
                             placeholder='Enter your name'
                             className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
                         <input
                             type='email'
+                            onChange={handleUserInputCredentials}
+                            value={userCredentials.email}
+                            name='email'
                             required
                             placeholder='Email Address'
                             className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
                         <span className='relative flex items-center'>
                             <input
                                 type={signUpPasswordVisible ? 'text' : 'password'}
+                                onChange={handleUserInputCredentials}
+                                value={userCredentials.password}
+                                name='password'
                                 required
                                 placeholder='Enter a password'
                                 className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
@@ -68,12 +138,14 @@ const SignUpPage = () => {
                         </span>
                         <span className='relative flex items-center'>
                             <input
-                                type={signUpPasswordVisible ? 'text' : 'password'}
+                                type={signUpConfirmPasswordVisible ? 'text' : 'password'}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                value={confirmPassword}
                                 required
                                 placeholder='Confirm your password'
                                 className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
-                            <span onClick={() => setSignUpPasswordVisible(p => !p)} className='absolute right-3 cursor-pointer'>
-                                {signUpPasswordVisible ? <EyeOff size={18} color='grey' /> : <Eye size={18} color='grey' />}
+                            <span onClick={() => setSignUpConfirmPasswordVisible(p => !p)} className='absolute right-3 cursor-pointer'>
+                                {signUpConfirmPasswordVisible ? <EyeOff size={18} color='grey' /> : <Eye size={18} color='grey' />}
                             </span>
                         </span>
                     </div>
@@ -88,11 +160,35 @@ const SignUpPage = () => {
                     </div>
 
                 </motion.div>
-                <motion.span
-                    variants={item}
-                >
-                    <SecondaryButton text={'Sign Up'} />
-                </motion.span>
+
+                {loader ?
+                    <motion.span
+                        key='loader'
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{
+                            opacity: 1,
+                            scale: 1,
+                            rotate: 360,
+                        }}
+                        transition={{
+                            rotate: {
+                                duration: 1.2,
+                                repeat: Infinity,
+                                ease: 'linear',
+                            },
+                        }}
+                    >
+                        <LoaderCircle size={32} />
+                    </motion.span>
+                    :
+                    <motion.span
+                        key='button'
+                        variants={item}
+                        onClick={handleSignUp}
+                    >
+                        <SecondaryButton text={'Sign Up'} />
+                    </motion.span>
+                }
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}

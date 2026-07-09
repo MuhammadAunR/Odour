@@ -121,3 +121,13 @@ html.lenis {
     transform: scale(1);
   }
 }
+
+@keyframes loaderSpinAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
