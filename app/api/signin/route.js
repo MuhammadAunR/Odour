@@ -33,7 +33,7 @@ export async function POST(request) {
             )
         }
         return NextResponse.json(
-            { message: 'Signed in successfully' },
+            { message: 'Signed in successfully', user },
             { status: 200 }
         )
     } catch (error) {

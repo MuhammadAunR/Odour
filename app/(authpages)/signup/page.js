@@ -25,7 +25,7 @@ const SignUpPage = () => {
         const { name, value } = e.target
         setUserCredentials(prev => ({
             ...prev,
-            [name]: value
+            [name]: value,
         }))
     }
 
@@ -44,7 +44,7 @@ const SignUpPage = () => {
 
 
     async function handleSignUp() {
-      
+
         if (
             !userCredentials.name.trim() ||
             !userCredentials.email.trim() ||

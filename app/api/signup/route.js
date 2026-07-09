@@ -40,9 +40,10 @@ export async function POST(request) {
             { status: 201 }
         )
     } catch (error) {
-        console.log(error)
+        
         return NextResponse.json(
             { message: 'Something went wrong, request failed.' },
+            { error: error.message },
             { status: 500 }
         )
     }

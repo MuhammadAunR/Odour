@@ -45,7 +45,11 @@ const SignInPage = () => {
             email: "",
             password: "",
         })
-        redirect('/signup')
+        if (data.user.role === 'admin') {
+            redirect('/adminDashboard')
+        } else {
+            redirect('/shop')
+        }
     }
 
     return (
