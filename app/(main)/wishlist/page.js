@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { useWishlist } from "../context/WishlistContext";
 import { SecondaryButton } from "@/components/UI/Buttons";
 import ProductGridCard from "@/components/UI/Card";
 import { BookHeart } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useWishlist } from "@/app/context/WishlistContext";
 
 const WishlistPage = () => {
   const { wishListProducts } = useWishlist();

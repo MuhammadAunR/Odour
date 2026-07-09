@@ -6,9 +6,9 @@ import ProductGridCard, {
 import ProductQuickView from "@/components/ProductQuickView";
 import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { useFilter } from "../context/FilterContext";
 import { motion } from "framer-motion";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useFilter } from "@/app/context/FilterContext";
 
 const ShopPage = () => {
   const {

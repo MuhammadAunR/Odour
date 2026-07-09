@@ -4,9 +4,9 @@ import { PrimaryButton, SecondaryButton } from "@/components/UI/Buttons";
 import { BookHeart, Heart, Trash } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useCart } from "../context/CartContext";
 import Image from "next/image";
-import { useWishlist } from "../context/WishlistContext";
+import { useCart } from "@/app/context/CartContext";
+import { useWishlist } from "@/app/context/WishlistContext";
 
 const CartPage = () => {
     const {
