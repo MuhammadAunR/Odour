@@ -4,11 +4,49 @@ import { SecondaryButton } from '@/components/UI/Buttons'
 import { Eye, EyeOff } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const SignInPage = () => {
 
     const [signInPasswordVisible, setSignInPasswordVisible] = useState(false)
+    const [userCredentials, setUserCredentials] = useState({
+        email: "",
+        password: "",
+    })
+
+    const handleUserInputCredentials = (e) => {
+        const { name, value } = e.target
+        setUserCredentials(prev => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    async function handleSignIn() {
+        if (!userCredentials.email.trim() || !userCredentials.password.trim()) {
+            toast.warning('All input fields required')
+            return
+        }
+        const res = await fetch('/api/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userCredentials)
+        })
+        const data = await res.json()
+        if (!res.ok) {
+            toast.error(data.message)
+            return
+        }
+        setUserCredentials({
+            email: "",
+            password: "",
+        })
+        redirect('/signup')
+    }
 
     return (
         <motion.main
@@ -43,12 +81,18 @@ const SignInPage = () => {
                     <div className='w-full lg:w-10/12 space-y-2'>
                         <input
                             type='email'
+                            onChange={handleUserInputCredentials}
+                            value={userCredentials.email}
+                            name='email'
                             required
                             placeholder='Email Address'
                             className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
                         <span className='relative flex items-center'>
                             <input
                                 type={signInPasswordVisible ? 'text' : 'password'}
+                                onChange={handleUserInputCredentials}
+                                value={userCredentials.password}
+                                name='password'
                                 required
                                 placeholder='Enter your password'
                                 className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
@@ -64,6 +108,7 @@ const SignInPage = () => {
                 </motion.div>
                 <motion.span
                     variants={item}
+                    onClick={handleSignIn}
                 >
                     <SecondaryButton text={'Sign In'} />
                 </motion.span>
