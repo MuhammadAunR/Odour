@@ -1,19 +1,18 @@
 'use client'
-import { BackToHome, container, FacebookIcon, GoogleIcon, item } from '@/components/admin/AuthPagesCompos'
-import Loader from '@/components/LoaderUI'
+import { BackToHome, container, FacebookIcon, GoogleIcon, item, SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { SecondaryButton } from '@/components/UI/Buttons'
-import { Eye, EyeOff, LoaderCircle } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
 const SignUpPage = () => {
 
     const [signUpPasswordVisible, setSignUpPasswordVisible] = useState(false)
     const [signUpConfirmPasswordVisible, setSignUpConfirmPasswordVisible] = useState(false)
-    const [loader, setLoader] = useState(false)
+    const [credentialsLoading, setCredentialsLoading] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState('')
     const [userCredentials, setUserCredentials] = useState({
         name: "",
@@ -40,12 +39,12 @@ const SignUpPage = () => {
             toast.warning('All fields are required')
             return
         }
-        
+
         if (userCredentials.password !== confirmPassword) {
             toast.warning('Password does not match')
             return
         }
-        setLoader(true)
+        setCredentialsLoading(true)
         const res = await fetch('/api/signup', {
             method: 'POST',
             headers: {
@@ -59,7 +58,7 @@ const SignUpPage = () => {
             setLoader(false)
             return
         }
-        setLoader(false)
+        setCredentialsLoading(false)
         setUserCredentials({
             name: "",
             email: "",
@@ -154,25 +153,8 @@ const SignUpPage = () => {
 
                 </motion.div>
 
-                {loader ?
-                    <motion.span
-                        key='loader'
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{
-                            opacity: 1,
-                            scale: 1,
-                            rotate: 360,
-                        }}
-                        transition={{
-                            rotate: {
-                                duration: 1.2,
-                                repeat: Infinity,
-                                ease: 'linear',
-                            },
-                        }}
-                    >
-                        <LoaderCircle size={32} />
-                    </motion.span>
+                {credentialsLoading ?
+                    <SimpleLoader />
                     :
                     <motion.span
                         key='button'

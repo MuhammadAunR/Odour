@@ -1,5 +1,5 @@
 'use client'
-import { BackToHome, container, FacebookIcon, GoogleIcon, item } from '@/components/admin/AuthPagesCompos'
+import { BackToHome, container, FacebookIcon, GoogleIcon, item, SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { SecondaryButton } from '@/components/UI/Buttons'
 import { Eye, EyeOff } from 'lucide-react'
 import { motion } from 'motion/react'
@@ -12,6 +12,8 @@ import { toast } from 'react-toastify'
 const SignInPage = () => {
 
     const [signInPasswordVisible, setSignInPasswordVisible] = useState(false)
+    const [credentialsLoading, setCredentialsLoading] = useState(false)
+    const [googleLoading, setGoogleLoading] = useState(false)
     const [userCredentials, setUserCredentials] = useState({
         email: "",
         password: "",
@@ -31,6 +33,7 @@ const SignInPage = () => {
             toast.warning('All input fields required')
             return
         }
+        setCredentialsLoading(true)
         const results = await signIn('credentials', {
             email: userCredentials.email,
             password: userCredentials.password,
@@ -50,6 +53,14 @@ const SignInPage = () => {
         } else {
             router.push('/shop')
         }
+        setCredentialsLoading(false)
+    }
+
+    const handleGoogleSignIn = () => {
+        setGoogleLoading(true)
+        signIn('google', {
+            callbackUrl: '/adminDashboard'
+        })
     }
 
     return (
@@ -110,12 +121,18 @@ const SignInPage = () => {
                         Forgot Password?
                     </h5>
                 </motion.div>
-                <motion.span
-                    variants={item}
-                    onClick={handleSignIn}
-                >
-                    <SecondaryButton text={'Sign In'} />
-                </motion.span>
+
+                {credentialsLoading ?
+                    <SimpleLoader />
+                    :
+                    <motion.span
+                        key='button'
+                        variants={item}
+                        onClick={handleSignIn}
+                    >
+                        <SecondaryButton text={'Sign In'} />
+                    </motion.span>
+                }
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}
@@ -130,15 +147,18 @@ const SignInPage = () => {
                     className='flex flex-col items-center justify-center gap-3 w-full'>
                     <h5 className='text-foreground/50 text-sm tracking-wide'>Or Sign In using: </h5>
 
+                    {googleLoading ?
+                        <SimpleLoader />
+                        :
+                        <motion.button
+                            onClick={handleGoogleSignIn}
+                            whileTap={{ scale: 0.97 }}
+                            className='flex items-center justify-center gap-5 border w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
+                            <span><GoogleIcon /></span>
+                            <span className='font-semibold'>Continue with Google</span>
+                        </motion.button>
+                    }
                     <motion.button
-                        initial
-                        whileTap={{ scale: 0.97 }}
-                        className='flex items-center justify-center gap-5 border w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
-                        <span><GoogleIcon /></span>
-                        <span className='font-semibold'>Continue with Google</span>
-                    </motion.button>
-                    <motion.button
-                        initial
                         whileTap={{ scale: 0.97 }}
                         className='flex items-center justify-center gap-5 border w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
                         <span><FacebookIcon /></span>
@@ -147,7 +167,7 @@ const SignInPage = () => {
                 </motion.div>
             </section>
 
-        </motion.main>
+        </motion.main >
     )
 }
 
