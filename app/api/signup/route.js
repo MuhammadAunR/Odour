@@ -18,6 +18,13 @@ export async function POST(request) {
             )
         }
 
+        if (password.length < 8) {
+            return NextResponse.json(
+                { message: 'Password must contain at least 8 characters' },
+                { status: 400 }
+            )
+        }
+
         const existingUser = await Users.findOne({ email })
 
         if (existingUser) {
@@ -40,7 +47,7 @@ export async function POST(request) {
             { status: 201 }
         )
     } catch (error) {
-        
+
         return NextResponse.json(
             { message: 'Something went wrong, request failed.' },
             { error: error.message },
