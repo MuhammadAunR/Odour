@@ -3,9 +3,10 @@ import { BackToHome, container, FacebookIcon, GoogleIcon, item, SimpleLoader } f
 import { SecondaryButton } from '@/components/UI/Buttons'
 import { Eye, EyeOff } from 'lucide-react'
 import { motion } from 'motion/react'
+import { signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import React, { useState } from 'react'
+import { redirect, useSearchParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 const SignUpPage = () => {
@@ -20,6 +21,7 @@ const SignUpPage = () => {
         email: "",
         password: "",
     })
+    const searchParams = useSearchParams()
 
     const handleUserInputCredentials = (e) => {
         const { name, value } = e.target
@@ -28,6 +30,13 @@ const SignUpPage = () => {
             [name]: value,
         }))
     }
+
+    useEffect(() => {
+        const error = searchParams.get('error')
+        if (error === 'AccountAlreadyExists') {
+            toast.warning('Account already exists. Sign In Please')
+        }
+    }, [searchParams])
 
 
     async function handleSignUp() {
@@ -67,6 +76,14 @@ const SignUpPage = () => {
         })
         setConfirmPassword("")
         redirect('/signin')
+    }
+
+    const handleGoogleSignUp = () => {
+        setGoogleLoading(true)
+        document.cookie = 'authIntent=signup; path=/; max-age=300; SameSite=Lax';
+        signIn('google', {
+            callbackUrl: '/signin'
+        })
     }
 
     return (
@@ -172,8 +189,6 @@ const SignUpPage = () => {
                     transition={{ duration: 0.50, ease: "linear" }}
                     viewport={{ once: false }}
                     className='bg-muted/40 w-full h-px'></motion.div>
-
-
                 <motion.div
                     variants={item}
                     className='flex flex-col items-center justify-center gap-3 w-full'>
@@ -182,6 +197,7 @@ const SignUpPage = () => {
                         <SimpleLoader />
                         :
                         <motion.button
+                            onClick={handleGoogleSignUp}
                             whileTap={{ scale: 0.97 }}
                             className='flex items-center justify-center gap-5 border w-full lg:w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
                             <span><GoogleIcon /></span>

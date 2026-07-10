@@ -68,6 +68,7 @@ const SignInPage = () => {
 
     const handleGoogleSignIn = () => {
         setGoogleLoading(true)
+        document.cookie = 'authIntent=signin; path=/; max-age=300; SameSite=Lax';
         signIn('google', {
             callbackUrl: '/adminDashboard'
         })
