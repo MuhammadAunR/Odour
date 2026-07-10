@@ -3,9 +3,9 @@ import { BackToHome, container, FacebookIcon, GoogleIcon, item } from '@/compone
 import { SecondaryButton } from '@/components/UI/Buttons'
 import { Eye, EyeOff } from 'lucide-react'
 import { motion } from 'motion/react'
-import { signIn } from 'next-auth/react'
+import { getSession, signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -16,6 +16,7 @@ const SignInPage = () => {
         email: "",
         password: "",
     })
+    const router = useRouter()
 
     const handleUserInputCredentials = (e) => {
         const { name, value } = e.target
@@ -43,10 +44,11 @@ const SignInPage = () => {
             email: "",
             password: "",
         })
-        if (results.role === 'admin') {
-            redirect('/adminDashboard')
+        const session = await getSession()
+        if (session.user.role === 'admin') {
+            router.push('/adminDashboard')
         } else {
-            redirect('/shop')
+            router.push('/shop')
         }
     }
 
