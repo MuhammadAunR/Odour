@@ -73,7 +73,7 @@ const SignUpPage = () => {
             variants={container}
             initial="hidden"
             animate="show"
-            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface h-fit w-1/3 p-10 px-5'>
+            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface h-fit w-full md:w-130 p-10 px-5'>
 
             <section className='flex flex-col gap-7 items-center justify-center relative'>
 
@@ -123,7 +123,7 @@ const SignUpPage = () => {
                                 name='password'
                                 required
                                 placeholder='Enter a password'
-                                className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
+                                className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-all ease-linear' />
                             <span onClick={() => setSignUpPasswordVisible(p => !p)} className='absolute right-3 cursor-pointer'>
                                 {signUpPasswordVisible ? <EyeOff size={18} color='grey' /> : <Eye size={18} color='grey' />}
                             </span>
@@ -135,7 +135,7 @@ const SignUpPage = () => {
                                 value={confirmPassword}
                                 required
                                 placeholder='Confirm your password'
-                                className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-colors ease-linear' />
+                                className='bg-background px-5 py-2 w-full outline-none text-foreground/60 border border-foreground/10 hover:border-foreground/30 transition-all ease-linear' />
                             <span onClick={() => setSignUpConfirmPasswordVisible(p => !p)} className='absolute right-3 cursor-pointer'>
                                 {signUpConfirmPasswordVisible ? <EyeOff size={18} color='grey' /> : <Eye size={18} color='grey' />}
                             </span>
@@ -177,18 +177,17 @@ const SignUpPage = () => {
                     variants={item}
                     className='flex flex-col items-center justify-center gap-3 w-full'>
                     <h5 className='text-foreground/50 text-sm tracking-wide'>Or Sign Up using: </h5>
-
                     <motion.button
                         initial
                         whileTap={{ scale: 0.97 }}
-                        className='flex items-center justify-center gap-5 border w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
+                        className='flex items-center justify-center gap-5 border w-full lg:w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
                         <span><GoogleIcon /></span>
                         <span className='font-semibold'>Continue with Google</span>
                     </motion.button>
                     <motion.button
                         initial
                         whileTap={{ scale: 0.97 }}
-                        className='flex items-center justify-center gap-5 border w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
+                        className='flex items-center justify-center gap-5 border w-full lg:w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
                         <span><FacebookIcon /></span>
                         <span className='font-semibold'>Continue with Facebook</span>
                     </motion.button>
