@@ -1,3 +1,4 @@
+import { LoaderCircle } from "lucide-react"
 import { motion } from "motion/react"
 import { redirect } from "next/navigation"
 
@@ -51,3 +52,25 @@ const item = {
 }
 
 export { item }
+
+const SimpleLoader = () => {
+    return <motion.span
+        key='loader'
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{
+            opacity: 1,
+            scale: 1,
+            rotate: 360,
+        }}
+        transition={{
+            rotate: {
+                duration: 1.2,
+                repeat: Infinity,
+                ease: 'linear',
+            },
+        }}
+    >
+        <LoaderCircle size={32} />
+    </motion.span>
+}
+export { SimpleLoader }
