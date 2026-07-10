@@ -75,11 +75,11 @@ const Navbar = () => {
           </span>
 
           <Link href={"/"} className="max-lg:hidden">
-            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">SCENTRA</h1>
           </Link>
 
           <Link href={"/"} className="lg:hidden">
-            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">SCENTRA</h1>
           </Link>
 
           <div className="flex items-center gap-5 h-14 px-5">
@@ -164,11 +164,11 @@ const Navbar = () => {
           </span>
 
           <Link href={"/"} className="max-lg:hidden">
-            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">SCENTRA</h1>
           </Link>
 
           <Link href={"/"} className="lg:hidden">
-            <h1 className="font-display font-bold text-4xl lg:text-5xl">Odour</h1>
+            <h1 className="font-display font-bold text-4xl lg:text-5xl">SCENTRA</h1>
           </Link>
 
           <div className="flex items-center gap-5 h-14 px-5">

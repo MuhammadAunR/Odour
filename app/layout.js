@@ -27,7 +27,7 @@ const inter = Inter({
 
 
 export const metadata = {
-  title: "Odour",
+  title: "SCENTRA",
   description: "Perfumes",
 };
 
