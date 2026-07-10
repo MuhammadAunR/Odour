@@ -168,12 +168,6 @@ const SignInPage = () => {
                             <span className='font-semibold'>Continue with Google</span>
                         </motion.button>
                     }
-                    <motion.button
-                        whileTap={{ scale: 0.97 }}
-                        className='flex items-center justify-center gap-5 border w-full lg:w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
-                        <span><FacebookIcon /></span>
-                        <span className='font-semibold'>Continue with Facebook</span>
-                    </motion.button>
                 </motion.div>
             </section>
 

@@ -13,6 +13,7 @@ const SignUpPage = () => {
     const [signUpPasswordVisible, setSignUpPasswordVisible] = useState(false)
     const [signUpConfirmPasswordVisible, setSignUpConfirmPasswordVisible] = useState(false)
     const [credentialsLoading, setCredentialsLoading] = useState(false)
+    const [googleLoading, setGoogleLoading] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState('')
     const [userCredentials, setUserCredentials] = useState({
         name: "",
@@ -177,20 +178,16 @@ const SignUpPage = () => {
                     variants={item}
                     className='flex flex-col items-center justify-center gap-3 w-full'>
                     <h5 className='text-foreground/50 text-sm tracking-wide'>Or Sign Up using: </h5>
-                    <motion.button
-                        initial
-                        whileTap={{ scale: 0.97 }}
-                        className='flex items-center justify-center gap-5 border w-full lg:w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
-                        <span><GoogleIcon /></span>
-                        <span className='font-semibold'>Continue with Google</span>
-                    </motion.button>
-                    <motion.button
-                        initial
-                        whileTap={{ scale: 0.97 }}
-                        className='flex items-center justify-center gap-5 border w-full lg:w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
-                        <span><FacebookIcon /></span>
-                        <span className='font-semibold'>Continue with Facebook</span>
-                    </motion.button>
+                    {googleLoading ?
+                        <SimpleLoader />
+                        :
+                        <motion.button
+                            whileTap={{ scale: 0.97 }}
+                            className='flex items-center justify-center gap-5 border w-full lg:w-10/12 px-7 py-2 border-muted/40 hover:border-muted hover:bg-background transition-all ease-linear duration-300 cursor-pointer'>
+                            <span><GoogleIcon /></span>
+                            <span className='font-semibold'>Continue with Google</span>
+                        </motion.button>
+                    }
                 </motion.div>
             </section>
 
