@@ -5,8 +5,8 @@ import { Eye, EyeOff } from 'lucide-react'
 import { motion } from 'motion/react'
 import { getSession, signIn } from 'next-auth/react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 const SignInPage = () => {
@@ -19,6 +19,15 @@ const SignInPage = () => {
         password: "",
     })
     const router = useRouter()
+    const searchParams = useSearchParams()
+
+    useEffect(() => {
+        const error = searchParams.get('error')
+        if (error === 'AccountNotRegistered') {
+            toast.error('Account not registered. Please sign up first.')
+        }
+    }, [searchParams])
+
 
     const handleUserInputCredentials = (e) => {
         const { name, value } = e.target
