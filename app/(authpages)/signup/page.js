@@ -29,19 +29,6 @@ const SignUpPage = () => {
         }))
     }
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (
-                confirmPassword &&
-                confirmPassword !== userCredentials.password
-            ) {
-                toast.error('Passwords do not match')
-            }
-        }, 1000)
-
-        return () => clearTimeout(timer)
-    }, [confirmPassword, userCredentials.password])
-
 
     async function handleSignUp() {
 
@@ -51,6 +38,11 @@ const SignUpPage = () => {
             !userCredentials.password.trim()
         ) {
             toast.warning('All fields are required')
+            return
+        }
+        
+        if (userCredentials.password !== confirmPassword) {
+            toast.warning('Password does not match')
             return
         }
         setLoader(true)
