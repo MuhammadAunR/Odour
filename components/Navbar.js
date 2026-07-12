@@ -28,9 +28,9 @@ const Navbar = () => {
   const { data: session, status } = useSession()
 
   const handleAuthPageRouting = () => {
-    if (status === 'authenticated' && session){
+    if (status === 'authenticated' && session?.user?.role === 'admin') {
       router.push('/adminDashboard')
-    } else{
+    } else {
       router.push('/signin')
     }
   };
