@@ -65,7 +65,7 @@ const SignUpPage = () => {
         const data = await res.json()
         if (!res.ok) {
             toast.warning(data.message)
-            setLoader(false)
+            setCredentialsLoading(false)
             return
         }
         setCredentialsLoading(false)
