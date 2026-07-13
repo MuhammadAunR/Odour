@@ -4,20 +4,49 @@ import { motion } from 'motion/react'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
 const Sidebar = ({ session }) => {
     const [sidebarOpen, setSidebarOpen] = useState(true)
+    const [activeOption, setactiveOption] = useState('adminDashboard')
+    const pathName = usePathname()
     const router = useRouter()
+
+    const mainMenu = [
+        { option: 'Dashboard', icon: <Warehouse strokeWidth={1} />, path: '/adminDashboard' },
+        { option: 'Orders', icon: <ShoppingCart strokeWidth={1} />, path: '/orders' },
+        { option: 'Catergories', icon: <GalleryVerticalEnd strokeWidth={1} />, path: '/categories' },
+    ]
+    const productMenu = [
+        { option: 'Add Product', icon: <CirclePlus strokeWidth={1} />, path: '/addProduct' },
+        { option: 'Product List', icon: <ListOrdered strokeWidth={1} />, path: '/productList' },
+    ]
+    const adminMenu = [
+        { option: 'Admin', icon: <CircleUserRound strokeWidth={1} />, path: '/admin' },
+        { option: 'Signout', icon: <LogOut strokeWidth={1} />, path: '/signin' },
+    ]
+
+    useEffect(() => {
+        const handleActivePath = () => {
+            setactiveOption(pathName)
+        }
+        handleActivePath()
+    }, [pathName])
 
     const toggleSidebarOpening = () => {
         setSidebarOpen(prev => !prev)
     }
 
-    async function handleSignout() {
-        await signOut()
+    const handleRouting = (path) => {
+        if (!path) return
+        if (path === '/signin') {
+            signOut()
+            return
+        }
+        router.push(path)
     }
+
     return (
         <aside className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full absolute'} w-100 transition-all duration-300 ease-in-out p-7 flex flex-col items-start justify-between bg-surface h-[calc(100vh-60px)]`}>
 
@@ -32,67 +61,71 @@ const Sidebar = ({ session }) => {
             <div
                 className='space-y-7 w-full'>
                 <motion.div
+                    key={pathName}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.01 }}
                     viewport={{ once: false }}
-                    className='space-y-5 w-full'>
+                    className='space-y-3 w-full'>
                     <div className='flex items-center justify-between w-full'>
                         <h2 className='font-bold text-lg'>Main Menu</h2>
                         <span onClick={toggleSidebarOpening}>
                             <PanelLeftClose strokeWidth={1} />
                         </span>
                     </div>
-                    <ul className='space-y-3'>
-                        <li className='flex items-center gap-2'>
-                            <span><Warehouse strokeWidth={1} /></span>
-                            <Link href={'/'} className='font-semibold'>Dashboard</Link>
-                        </li>
-                        <li className='flex items-center gap-2'>
-                            <span><ShoppingCart strokeWidth={1} /></span>
-                            <Link href={'/'} className='font-semibold'>Order Management</Link>
-                        </li>
-                        <li className='flex items-center gap-2'>
-                            <span><GalleryVerticalEnd strokeWidth={1} /></span>
-                            <Link href={'/'} className='font-semibold'>Categories</Link>
-                        </li>
+                    <ul className='space-y-1'>
+                        {mainMenu.map((item, index) => {
+                            return <li
+                                key={item.option}
+                                onClick={() => handleRouting(item.path)}
+                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-in-out duration-300 hover:bg-foreground hover:text-white
+                                ${activeOption === item.path ? 'bg-foreground text-white' : 'bg-transparent text-black'}`}>
+                                <span>{item.icon}</span>
+                                <span className='font-semibold'>{item.option}</span>
+                            </li>
+                        })}
                     </ul>
                 </motion.div>
                 <motion.div
+                    key={pathName}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
                     viewport={{ once: false }}
-                    className='space-y-5'>
+                    className='space-y-3 w-full'>
                     <h2 className='font-bold text-lg'>Products</h2>
-                    <ul className='space-y-3'>
-                        <li className='flex items-center gap-2'>
-                            <span><CirclePlus strokeWidth={1} /></span>
-                            <Link href={'/'} className='font-semibold'>Add Product</Link>
-                        </li>
-                        <li className='flex items-center gap-2'>
-                            <span><ListOrdered strokeWidth={1} /></span>
-                            <Link href={'/'} className='font-semibold'>Product List</Link>
-                        </li>
-
+                    <ul className='space-y-1'>
+                        {productMenu.map((item, index) => {
+                            return <li
+                                key={item.option}
+                                onClick={() => handleRouting(item.path)}
+                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-in-out duration-300 hover:bg-foreground hover:text-white
+                                ${activeOption === item.path ? 'bg-foreground text-white' : 'bg-transparent text-black'}`}>
+                                <span>{item.icon}</span>
+                                <span className='font-semibold'>{item.option}</span>
+                            </li>
+                        })}
                     </ul>
                 </motion.div>
                 <motion.div
+                    key={pathName}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
                     viewport={{ once: false }}
-                    className='space-y-5'>
+                    className='space-y-3 w-full'>
                     <h2 className='font-bold text-lg'>Admin</h2>
-                    <ul className='space-y-3'>
-                        <li className='flex items-center gap-2'>
-                            <span><CircleUserRound strokeWidth={1} /></span>
-                            <Link href={'/'} className='font-semibold'>Admin Role</Link>
-                        </li>
-                        <li onClick={handleSignout} className='flex items-center gap-2 cursor-pointer'>
-                            <span><LogOut strokeWidth={1} /></span>
-                            <span className='font-semibold'>Signout</span>
-                        </li>
+                    <ul className='space-y-1'>
+                        {adminMenu.map((item, index) => {
+                            return <li
+                                key={item.option}
+                                onClick={() => handleRouting(item.path)}
+                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-in-out duration-300 hover:bg-foreground hover:text-white
+                                ${activeOption === item.path ? 'bg-foreground text-white' : 'bg-transparent text-black'}`}>
+                                <span>{item.icon}</span>
+                                <span className='font-semibold'>{item.option}</span>
+                            </li>
+                        })}
                     </ul>
                 </motion.div>
             </div>

@@ -2,8 +2,11 @@
 import React from 'react'
 import { Bell } from 'lucide-react'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 const AdminNavbar = ({ session }) => {
+
+
   return (
     <>
       <nav className='flex items-center justify-between bg-foreground py-3 h-15 px-5 text-white'>
