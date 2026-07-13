@@ -3,7 +3,6 @@ import { CirclePlus, CircleUserRound, GalleryVerticalEnd, ListOrdered, LogOut, P
 import { motion } from 'motion/react'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -15,16 +14,16 @@ const Sidebar = ({ session }) => {
 
     const mainMenu = [
         { option: 'Dashboard', icon: <Warehouse strokeWidth={1} />, path: '/adminDashboard' },
-        { option: 'Orders', icon: <ShoppingCart strokeWidth={1} />, path: '/orders' },
-        { option: 'Catergories', icon: <GalleryVerticalEnd strokeWidth={1} />, path: '/categories' },
+        { option: 'Orders', icon: <ShoppingCart strokeWidth={1} />, path: '/adminDashboard/orders' },
+        { option: 'Catergories', icon: <GalleryVerticalEnd strokeWidth={1} />, path: '/adminDashboard/categories' },
     ]
     const productMenu = [
-        { option: 'Add Product', icon: <CirclePlus strokeWidth={1} />, path: '/addProduct' },
-        { option: 'Product List', icon: <ListOrdered strokeWidth={1} />, path: '/productList' },
+        { option: 'Add Product', icon: <CirclePlus strokeWidth={1} />, path: '/adminDashboard/addProduct' },
+        { option: 'Product List', icon: <ListOrdered strokeWidth={1} />, path: '/adminDashboard/productList' },
     ]
     const adminMenu = [
-        { option: 'Admin', icon: <CircleUserRound strokeWidth={1} />, path: '/admin' },
-        { option: 'Signout', icon: <LogOut strokeWidth={1} />, path: '/signin' },
+        { option: 'Admin', icon: <CircleUserRound strokeWidth={1} />, path: '/adminDashboard/admin' },
+        { option: 'Signout', icon: <LogOut strokeWidth={1} />, path: '/adminDashboard/signin' },
     ]
 
     useEffect(() => {
@@ -48,7 +47,7 @@ const Sidebar = ({ session }) => {
     }
 
     return (
-        <aside className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full absolute'} w-100 transition-all duration-300 ease-in-out p-7 flex flex-col items-start justify-between bg-surface h-[calc(100vh-60px)]`}>
+        <aside className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full absolute'} w-90 transition-all duration-300 ease-in-out p-7 flex flex-col items-start justify-between bg-surface h-[calc(100vh-60px)]`}>
 
             <motion.span
                 whileTap={{ scale: 0.97 }}
@@ -59,9 +58,9 @@ const Sidebar = ({ session }) => {
             </motion.span>
 
             <div
-                className='space-y-7 w-full'>
+                className='space-y-5 w-full'>
                 <motion.div
-                    key={pathName}
+                    key={'mainMenu'}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.01 }}
@@ -74,11 +73,11 @@ const Sidebar = ({ session }) => {
                         </span>
                     </div>
                     <ul className='space-y-1'>
-                        {mainMenu.map((item, index) => {
+                        {mainMenu.map((item) => {
                             return <li
                                 key={item.option}
                                 onClick={() => handleRouting(item.path)}
-                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-in-out duration-300 hover:bg-foreground hover:text-white
+                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-linear duration-300 hover:bg-foreground hover:text-white
                                 ${activeOption === item.path ? 'bg-foreground text-white' : 'bg-transparent text-black'}`}>
                                 <span>{item.icon}</span>
                                 <span className='font-semibold'>{item.option}</span>
@@ -87,7 +86,7 @@ const Sidebar = ({ session }) => {
                     </ul>
                 </motion.div>
                 <motion.div
-                    key={pathName}
+                    key={'productMenu'}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
@@ -95,11 +94,11 @@ const Sidebar = ({ session }) => {
                     className='space-y-3 w-full'>
                     <h2 className='font-bold text-lg'>Products</h2>
                     <ul className='space-y-1'>
-                        {productMenu.map((item, index) => {
+                        {productMenu.map((item) => {
                             return <li
                                 key={item.option}
                                 onClick={() => handleRouting(item.path)}
-                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-in-out duration-300 hover:bg-foreground hover:text-white
+                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-linear duration-300 hover:bg-foreground hover:text-white
                                 ${activeOption === item.path ? 'bg-foreground text-white' : 'bg-transparent text-black'}`}>
                                 <span>{item.icon}</span>
                                 <span className='font-semibold'>{item.option}</span>
@@ -108,7 +107,7 @@ const Sidebar = ({ session }) => {
                     </ul>
                 </motion.div>
                 <motion.div
-                    key={pathName}
+                    key={'adminMenu'}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
@@ -116,11 +115,11 @@ const Sidebar = ({ session }) => {
                     className='space-y-3 w-full'>
                     <h2 className='font-bold text-lg'>Admin</h2>
                     <ul className='space-y-1'>
-                        {adminMenu.map((item, index) => {
+                        {adminMenu.map((item) => {
                             return <li
                                 key={item.option}
                                 onClick={() => handleRouting(item.path)}
-                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-in-out duration-300 hover:bg-foreground hover:text-white
+                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-linear duration-300 hover:bg-foreground hover:text-white
                                 ${activeOption === item.path ? 'bg-foreground text-white' : 'bg-transparent text-black'}`}>
                                 <span>{item.icon}</span>
                                 <span className='font-semibold'>{item.option}</span>
