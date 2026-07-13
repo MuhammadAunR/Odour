@@ -8,7 +8,7 @@ export default async function AdminLayout({ children }) {
     <>
       <div>
         <AdminNavbar session={session} />
-        <div className="flex gap-1">
+        <div className="flex">
           <Sidebar session={session} />
           <main className="flex-1 overflow-y-auto">
             {children}
