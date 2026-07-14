@@ -3,6 +3,7 @@ import Filter from "@/components/Filter";
 import FooterSection from "@/components/FooterSection";
 import Navbar from "@/components/Navbar";
 import NavSidebar from "@/components/NavSidebar";
+import ScrollToTopBtn from "@/components/ScrollToTopBtn";
 import WhatsappButton from "@/components/WhatsappButton";
 
 export default function MainLayout({ children }) {
@@ -12,6 +13,7 @@ export default function MainLayout({ children }) {
             <NavSidebar />
             <Cart />
             <Filter />
+            <ScrollToTopBtn />
             {children}
             <FooterSection />
             <WhatsappButton />

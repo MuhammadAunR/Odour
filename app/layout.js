@@ -5,7 +5,6 @@ import AppWrapper from "./context/AppWrapper";
 import LenisWrapper from "@/components/LenisWrapper";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
-import ScrollToTopBtn from "@/components/ScrollToTopBtn";
 import AuthProviders from "./providers";
 
 const dubiel = localFont({
@@ -44,7 +43,6 @@ export default function RootLayout({ children }) {
           <LenisWrapper>
             <AppWrapper>
               <AuthProviders>
-                <ScrollToTopBtn />
                 {children}
               </AuthProviders>
             </AppWrapper>
