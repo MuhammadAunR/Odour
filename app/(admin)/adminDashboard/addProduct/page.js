@@ -1,5 +1,6 @@
 'use client'
 import { SecondaryButton } from '@/components/UI/Buttons'
+import { Plus, Trash2 } from 'lucide-react'
 import { motion } from 'motion/react'
 import React, { useState } from 'react'
 
@@ -88,55 +89,63 @@ const AddProduct = () => {
                     <h2 className='text-xl font-semibold'>Price and Inventory</h2>
 
                     <div className='space-y-3'>
-                        <table className="w-full border-collapse">
-                            <thead>
-                                <tr>
-                                    <th>Size</th>
-                                    <th>Original Price</th>
-                                    <th>Sale Price</th>
-                                    <th>Stock</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {sizes.map((variant, index) => (
-                                    <tr key={variant.size}>
-                                        <td className='w-40 font-semibold'>{variant}</td>
-
-                                        <td>
-                                            <input
-                                                name='originalPrice'
-                                                onChange={handleProductDetailsInput}
-                                                value={productDetails.variants.originalPrice}
-                                                type="text"
-                                                placeholder='Original Price'
-                                                className='bg-background px-5 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear' />
-                                        </td>
-
-                                        <td>
-                                            <input
-                                                name='originalPrice'
-                                                onChange={handleProductDetailsInput}
-                                                value={productDetails.variants.originalPrice}
-                                                type="text"
-                                                placeholder='Original Price'
-                                                className='bg-background px-5 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear' />
-                                        </td>
-
-                                        <td>
-                                            <input
-                                                name='stockQuantity'
-                                                onChange={handleProductDetailsInput}
-                                                value={productDetails.variants.stockQuantity}
-                                                type="number"
-                                                placeholder='Product Quantity'
-                                                className='bg-background px-5 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
-                                            />
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <div className='flex items-center gap-3'>
+                            <div className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 py-3 flex flex-col items-center relative group/variantCard overflow-hidden'>
+                                <span className='bg-white border-t-2 border-foreground/20 w-full py-2 flex items-center justify-center absolute -bottom-10 group-hover/variantCard:bottom-0 transition-all ease-linear duration-300 cursor-pointer hover:text-red-500'>
+                                    <Trash2 />
+                                </span>
+                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
+                                    <div className='text-sm'>Size</div>
+                                    <input
+                                        name='sku'
+                                        onChange={handleProductDetailsInput}
+                                        value={productDetails.sku}
+                                        type="text"
+                                        placeholder="Size in ML"
+                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                    />
+                                </label>
+                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
+                                    <div className='text-sm'>Original Price</div>
+                                    <input
+                                        name='sku'
+                                        onChange={handleProductDetailsInput}
+                                        value={productDetails.sku}
+                                        type="text"
+                                        placeholder="Original Price"
+                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                    />
+                                </label>
+                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
+                                    <div className='text-sm'>Sale Price</div>
+                                    <input
+                                        name='sku'
+                                        onChange={handleProductDetailsInput}
+                                        value={productDetails.sku}
+                                        type="text"
+                                        placeholder="Sale Price"
+                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                    />
+                                </label>
+                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
+                                    <div className='text-sm'>Stock</div>
+                                    <input
+                                        name='stockQuantity'
+                                        onChange={handleProductDetailsInput}
+                                        value={productDetails.sku}
+                                        type="number"
+                                        placeholder="Stock Qty"
+                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                    />
+                                </label>
+                            </div>
+                            <div className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 py-3 flex flex-col items-center justify-center text-foreground/50 font-semibold cursor-pointer hover:bg-foreground/5 transition-all ease-linear duration-300'>
+                                <span><Plus strokeWidth={3} size={30} /></span>
+                                <span>
+                                    Add other Size
+                                </span>
+                            </div>
+                        </div>
                         <label htmlFor="name" className='flex items-center gap-5'>
                             <div className='font-semibold w-40'>SKU</div>
                             <input
