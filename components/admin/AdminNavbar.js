@@ -7,7 +7,7 @@ const AdminNavbar = ({ session }) => {
 
   return (
     <>
-      <nav className='fixed w-full shadow-2xl flex items-center justify-between bg-foreground py-3 h-15 px-5 text-white'>
+      <nav className='fixed z-100 w-full shadow-2xl flex items-center justify-between bg-foreground py-3 h-15 px-5 text-white'>
         <div>
           <h1 className='font-display text-4xl'>Scentra</h1>
         </div>
