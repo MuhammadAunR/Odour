@@ -2,6 +2,7 @@
 import { SecondaryButton } from '@/components/UI/Buttons'
 import { Plus, Trash2 } from 'lucide-react'
 import { motion } from 'motion/react'
+import Image from 'next/image'
 import React, { useState } from 'react'
 
 const AddProduct = () => {
@@ -10,6 +11,7 @@ const AddProduct = () => {
     const fragranceFamily = ['Woody', 'Citrus', 'Floral', 'Fresh', 'Oriental']
     const productCategories = ['Perfume', 'Attar', 'Limited Edition', 'New Arrivals', 'Best Sellers',]
 
+    const [productImagePreview, setProductImagePreview] = useState([])
     const [productDetails, setProductDetails] = useState({
         productName: '',
         description: '',
@@ -75,6 +77,25 @@ const AddProduct = () => {
         }))
     }
 
+    const handleProductPreview = (e) => {
+        const file = e.target.files[0];
+        console.log(file)
+        if (!file) return;
+
+        setProductImagePreview(prev => [
+            ...prev,
+            {
+                id: crypto.randomUUID(),
+                url: URL.createObjectURL(file),
+                fileName: file.name.split('.')[0]
+            }
+        ]);
+    };
+    const handleRemovePreviewImage = (id) => {
+        setProductImagePreview(prev => prev.filter(img => img.id !== id))
+    }
+    console.log(productImagePreview)
+
     return (
         <>
             <main className='py-5 px-2 space-y-5'>
@@ -126,7 +147,7 @@ const AddProduct = () => {
                     <div className='space-y-3'>
                         <div className='flex items-center gap-3'>
                             {productDetails.variants.map((variant, index) => {
-                                return <div key={index} className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 pt-5 flex flex-col items-center relative group/variantCard overflow-hidden'>
+                                return <div key={index} className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 pt-5 flex flex-col gap-1 items-center relative group/variantCard overflow-hidden'>
 
                                     <span onClick={() => removeProductVariantCard(index)} className='absolute top-2 right-2 text-red-500 cursor-pointer scale-0 group-hover/variantCard:scale-100 transition-all ease-linear duration-300'>
                                         <Trash2 size={20} />
@@ -267,21 +288,42 @@ const AddProduct = () => {
                     <h2 className='text-xl font-semibold'>Media</h2>
 
                     <div className='space-y-3'>
-                        <div className='flex items-center gap-5'>
-                            <div className='font-semibold w-40'>Product Images</div>
-                            <div className=''>
-                                <input
-                                    type="file"
-                                    placeholder=''
-                                    className='bg-background px-5 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
-                                />
-                            </div>
+                        <div className='font-semibold flex flex-col items-start'>Product Images
+                            <span className='text-red-500 font-normal'>(Max 3)</span>   
+                            <span className='text-sm text-foreground/50'>Valid image formates, jpeg,webp.</span>
                         </div>
-                        <div className='font-semibold w-40'>Preview Images</div>
-                        <div className='flex items-center justify-start gap-3'>
-                            <div className='w-30 h-30 border border-foreground/50 flex items-center justify-center text-foreground/50'>No preview</div>
-                            <div className='w-30 h-30 border border-foreground/50 flex items-center justify-center text-foreground/50'>No preview</div>
-                            <div className='w-30 h-30 border border-foreground/50 flex items-center justify-center text-foreground/50'>No preview</div>
+
+                        <div className='flex gap-3'>
+                            <div className='flex items-center justify-start gap-3'>
+                                {productImagePreview.length === 0 &&
+                                    <div className='w-30 h-30 border border-foreground/50 text-xs text-foreground/50 flex items-center justify-center'>No Image Selected</div>
+                                }
+                                {productImagePreview.map((img, index) => {
+                                    return <div key={index} className='w-30 h-30 border border-foreground/50 text-foreground/50 relative group/previewImg overflow-hidden'>
+                                        <Image src={img.url} alt={img.fileName} fill sizes='500px' className='object-cover' />
+                                        <span onClick={() => handleRemovePreviewImage(img.id)} className='absolute w-full h-full scale-0 bg-black/10 backdrop-blur-sm flex items-center justify-center text-red-500 group-hover/previewImg:scale-100 transition-all ease-linear duration-300 cursor-pointer'><Trash2 size={40} /></span>
+                                    </div>
+                                })}
+                            </div>
+                            <div className='flex flex-col items-start gap-5'>
+                                <div className='relative w-30 h-30'>
+                                    <input
+                                        type="file"
+                                        accept='image/*'
+                                        title='Add Image'
+                                        disabled={productImagePreview.length === 3}
+                                        onChange={handleProductPreview}
+                                        className='bg-background w-full h-full outline-none text-transparent border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                    />
+
+                                    <div className='absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-foreground/50'>
+                                        <Plus strokeWidth={3} />
+                                        <span className='text-sm text-center'>
+                                            Add Image
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </motion.section>
