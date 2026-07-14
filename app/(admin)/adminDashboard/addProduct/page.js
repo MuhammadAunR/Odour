@@ -6,7 +6,6 @@ import React, { useState } from 'react'
 
 const AddProduct = () => {
 
-    const sizes = ['30ml', '50ml', '100ml']
     const gender = ['Male', 'Female', 'Unisex']
     const fragranceFamily = ['Woody', 'Citrus', 'Floral', 'Fresh', 'Oriental']
     const productCategories = ['Perfume', 'Attar', 'Limited Edition', 'New Arrivals', 'Best Sellers',]
@@ -76,8 +75,6 @@ const AddProduct = () => {
         }))
     }
 
-    console.log(productDetails)
-
     return (
         <>
             <main className='py-5 px-2 space-y-5'>
@@ -85,7 +82,12 @@ const AddProduct = () => {
                     <h1 className='text-2xl font-bold text-center'>Add Product</h1>
                 </header>
 
-                <section className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
+                <motion.section
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                    viewport={{ once: false }}
+                    className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                     <h2 className='text-xl font-semibold'>Product Information</h2>
 
                     <div className='space-y-3'>
@@ -111,9 +113,14 @@ const AddProduct = () => {
                             ></textarea>
                         </label>
                     </div>
-                </section>
+                </motion.section>
 
-                <section className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
+                <motion.section
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                    viewport={{ once: false }}
+                    className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                     <h2 className='text-xl font-semibold'>Price and Inventory</h2>
 
                     <div className='space-y-3'>
@@ -189,9 +196,14 @@ const AddProduct = () => {
                             />
                         </label>
                     </div>
-                </section>
+                </motion.section>
 
-                <section className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
+                <motion.section
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                    viewport={{ once: false }}
+                    className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                     <h2 className='text-xl font-semibold'>Product Variants</h2>
 
                     <div className='space-y-3'>
@@ -244,9 +256,14 @@ const AddProduct = () => {
                             </div>
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
-                <section className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
+                <motion.section
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 }}
+                    viewport={{ once: false }}
+                    className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                     <h2 className='text-xl font-semibold'>Media</h2>
 
                     <div className='space-y-3'>
@@ -267,9 +284,14 @@ const AddProduct = () => {
                             <div className='w-30 h-30 border border-foreground/50 flex items-center justify-center text-foreground/50'>No preview</div>
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
-                <section className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
+                <motion.section
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 }}
+                    viewport={{ once: false }}
+                    className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                     <h2 className='text-xl font-semibold'>Finalize and Save</h2>
 
                     <div className='flex items-center justify-end gap-7'>
@@ -280,7 +302,7 @@ const AddProduct = () => {
                             <SecondaryButton text={'Save'} />
                         </span>
                     </div>
-                </section>
+                </motion.section>
             </main>
         </>
     )
