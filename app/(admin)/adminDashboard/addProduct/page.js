@@ -44,8 +44,36 @@ const AddProduct = () => {
         }))
     }
 
-    const handleProductVariants = () => {
+    const handleProductVariantInput = (index, field, value) => {
+        setProductDetails(prev => ({
+            ...prev,
+            variants: prev.variants.map((variant, i) => {
+                return i === index ? { ...variant, [field]: value } : variant
+            })
+        }))
+    }
 
+    const addProductVariantsCard = () => {
+        setProductDetails(prev => ({
+            ...prev,
+            variants: [
+                ...prev.variants,
+                {
+                    size: '',
+                    originalPrice: '',
+                    salePrice: null,
+                    stockQuantity: '',
+                }
+            ]
+        }))
+    }
+
+    const removeProductVariantCard = (index) => {
+        if (productDetails.variants.length === 1) return
+        setProductDetails(prev => ({
+            ...prev,
+            variants: prev.variants.filter((_, i) => i !== index)
+        }))
     }
 
     console.log(productDetails)
@@ -90,56 +118,59 @@ const AddProduct = () => {
 
                     <div className='space-y-3'>
                         <div className='flex items-center gap-3'>
-                            <div className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 py-3 flex flex-col items-center relative group/variantCard overflow-hidden'>
-                                <span className='bg-white border-t-2 border-foreground/20 w-full py-2 flex items-center justify-center absolute -bottom-10 group-hover/variantCard:bottom-0 transition-all ease-linear duration-300 cursor-pointer hover:text-red-500'>
-                                    <Trash2 />
-                                </span>
-                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
-                                    <div className='text-sm'>Size</div>
-                                    <input
-                                        name='sku'
-                                        onChange={handleProductDetailsInput}
-                                        value={productDetails.sku}
-                                        type="text"
-                                        placeholder="Size in ML"
-                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
-                                    />
-                                </label>
-                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
-                                    <div className='text-sm'>Original Price</div>
-                                    <input
-                                        name='sku'
-                                        onChange={handleProductDetailsInput}
-                                        value={productDetails.sku}
-                                        type="text"
-                                        placeholder="Original Price"
-                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
-                                    />
-                                </label>
-                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
-                                    <div className='text-sm'>Sale Price</div>
-                                    <input
-                                        name='sku'
-                                        onChange={handleProductDetailsInput}
-                                        value={productDetails.sku}
-                                        type="text"
-                                        placeholder="Sale Price"
-                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
-                                    />
-                                </label>
-                                <label htmlFor="name" className='flex flex-col items-start gap-1'>
-                                    <div className='text-sm'>Stock</div>
-                                    <input
-                                        name='stockQuantity'
-                                        onChange={handleProductDetailsInput}
-                                        value={productDetails.sku}
-                                        type="number"
-                                        placeholder="Stock Qty"
-                                        className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
-                                    />
-                                </label>
-                            </div>
-                            <div className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 py-3 flex flex-col items-center justify-center text-foreground/50 font-semibold cursor-pointer hover:bg-foreground/5 transition-all ease-linear duration-300'>
+                            {productDetails.variants.map((variant, index) => {
+                                return <div key={index} className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 pt-5 flex flex-col items-center relative group/variantCard overflow-hidden'>
+
+                                    <span onClick={() => removeProductVariantCard(index)} className='absolute top-2 right-2 text-red-500 cursor-pointer scale-0 group-hover/variantCard:scale-100 transition-all ease-linear duration-300'>
+                                        <Trash2 size={20} />
+                                    </span>
+                                    <label htmlFor="size" className='flex flex-col items-start'>
+                                        <div className='text-sm'>Size</div>
+                                        <input
+                                            name='size'
+                                            onChange={(e) => handleProductVariantInput(index, 'size', e.target.value)}
+                                            value={variant.size ?? ''}
+                                            type="text"
+                                            placeholder="Size in ML"
+                                            className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                        />
+                                    </label>
+                                    <label htmlFor="originalPrice" className='flex flex-col items-start'>
+                                        <div className='text-sm'>Original Price</div>
+                                        <input
+                                            name='originalPrice'
+                                            onChange={(e) => handleProductVariantInput(index, 'originalPrice', e.target.value)}
+                                            value={variant.originalPrice ?? ''}
+                                            type="text"
+                                            placeholder="Original Price"
+                                            className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                        />
+                                    </label>
+                                    <label htmlFor="salePrice" className='flex flex-col items-start'>
+                                        <div className='text-sm'>Sale Price</div>
+                                        <input
+                                            name='salePrice'
+                                            onChange={(e) => handleProductVariantInput(index, 'salePrice', e.target.value)}
+                                            value={variant.salePrice ?? ''}
+                                            type="text"
+                                            placeholder="Sale Price"
+                                            className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                        />
+                                    </label>
+                                    <label htmlFor="stockQuantity" className='flex flex-col items-start'>
+                                        <div className='text-sm'>Stock</div>
+                                        <input
+                                            name='stockQuantity'
+                                            onChange={(e) => handleProductVariantInput(index, 'stock', e.target.value)}
+                                            value={variant.stockQuantity ?? ''}
+                                            type="number"
+                                            placeholder="Stock Qty"
+                                            className='bg-background text-sm px-3 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear'
+                                        />
+                                    </label>
+                                </div>
+                            })}
+                            <div onClick={addProductVariantsCard} className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 py-3 flex flex-col items-center justify-center text-foreground/50 font-semibold cursor-pointer hover:bg-foreground/5 transition-all ease-linear duration-300'>
                                 <span><Plus strokeWidth={3} size={30} /></span>
                                 <span>
                                     Add other Size
