@@ -25,7 +25,6 @@ const AddProduct = () => {
             }
         ],
         images: [],
-        isOnSale: false,
         sku: '',
     })
 
@@ -89,24 +88,6 @@ const AddProduct = () => {
                     <h2 className='text-xl font-semibold'>Price and Inventory</h2>
 
                     <div className='space-y-3'>
-                        <div className='flex items-center gap-5'>
-                            <div className='font-semibold w-40'>Sale Status</div>
-                            <div className='flex items-center gap-5'>
-                                {['Regular', 'On Sale'].map((s, i) => {
-                                    return <motion.button
-                                        key={i}
-                                        onClick={() => setProductDetails(prev => ({ ...prev, isOnSale: s === 'On Sale' }))}
-                                        whileTap={{ scale: 0.97 }}
-                                        className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${(s === 'On Sale' && productDetails.isOnSale) ||
-                                                (s === 'Regular' && !productDetails.isOnSale)
-                                                ? 'bg-foreground/80 text-background'
-                                                : 'bg-background'}`}>
-                                        {s}
-                                    </motion.button>
-                                })}
-                            </div>
-                        </div>
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr>
