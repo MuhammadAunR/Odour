@@ -1,6 +1,6 @@
 'use client'
 import { useSidebar } from '@/app/context/admin/SidebarContext'
-import { CirclePlus, CircleUserRound, GalleryVerticalEnd, ListOrdered, LogOut, PanelLeftClose, PanelRightClose, ShoppingCart, SquareArrowRightExit, Warehouse } from 'lucide-react'
+import { CirclePlus, CircleUserRound, GalleryVerticalEnd, ListOrdered, LogOut, PanelLeftClose, PanelLeftOpen, ShoppingCart, SquareArrowRightExit, Warehouse } from 'lucide-react'
 import { motion } from 'motion/react'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
@@ -52,7 +52,7 @@ const Sidebar = ({ session }) => {
                 className={`cursor-pointer absolute z-10 left-0 top-3 transition-all duration-500 ease-in-out bg-black rounded-full p-2 flex items-center gap-2 w-10 h-10 hover:w-45 overflow-hidden group/sidebarButton
                 ${sidebarOpen ? 'scale-0' : 'translate-x-100'}`}
             >
-                <PanelRightClose strokeWidth={2} color='white' className="shrink-0" />
+                <PanelLeftOpen strokeWidth={2} color='white' className="shrink-0" />
                 <span className="text-white px-1 whitespace-nowrap opacity-0 scale-0 group-hover/sidebarButton:opacity-100 group-hover/sidebarButton:scale-100 transition-all duration-300">
                     Open Side Panel
                 </span>
