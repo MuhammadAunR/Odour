@@ -1,6 +1,6 @@
 'use client'
 import { useSidebar } from '@/app/context/admin/SidebarContext'
-import { CirclePlus, CircleUserRound, GalleryVerticalEnd, ListOrdered, LogOut, PanelLeftClose, PanelLeftOpen, ShoppingCart, SquareArrowRightExit, Warehouse } from 'lucide-react'
+import { CirclePlus, CircleUserRound, ListOrdered, LogOut, PanelLeftClose, PanelLeftOpen, SquareArrowRightExit, Warehouse } from 'lucide-react'
 import { motion } from 'motion/react'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
@@ -104,8 +104,6 @@ const Sidebar = ({ session }) => {
                     </ul>
                 </motion.div>
             </div>
-
-
             <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
