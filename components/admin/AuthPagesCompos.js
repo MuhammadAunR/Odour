@@ -54,23 +54,18 @@ const item = {
 export { item }
 
 const SimpleLoader = () => {
-    return <motion.span
-        key='loader'
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{
-            opacity: 1,
-            scale: 1,
-            rotate: 360,
-        }}
-        transition={{
-            rotate: {
-                duration: 1.2,
+    return (
+        <motion.span
+            animate={{ rotate: 360 }}
+            transition={{
+                duration: 1,
                 repeat: Infinity,
-                ease: 'linear',
-            },
-        }}
-    >
-        <LoaderCircle size={32} />
-    </motion.span>
-}
+                ease: "linear",
+            }}
+            className="inline-flex"
+        >
+            <LoaderCircle size={32} />
+        </motion.span>
+    );
+};
 export { SimpleLoader }
