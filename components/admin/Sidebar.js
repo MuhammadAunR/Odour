@@ -15,10 +15,6 @@ const Sidebar = ({ session }) => {
 
     const mainMenu = [
         { option: 'Dashboard', icon: <Warehouse strokeWidth={1} />, path: '/adminDashboard' },
-        { option: 'Orders', icon: <ShoppingCart strokeWidth={1} />, path: '/adminDashboard/orders' },
-        { option: 'Catergories', icon: <GalleryVerticalEnd strokeWidth={1} />, path: '/adminDashboard/categories' },
-    ]
-    const productMenu = [
         { option: 'Add Product', icon: <CirclePlus strokeWidth={1} />, path: '/adminDashboard/addProduct' },
         { option: 'Product List', icon: <ListOrdered strokeWidth={1} />, path: '/adminDashboard/productList' },
     ]
@@ -75,27 +71,6 @@ const Sidebar = ({ session }) => {
                     </div>
                     <ul className='space-y-1'>
                         {mainMenu.map((item) => {
-                            return <li
-                                key={item.option}
-                                onClick={() => handleRouting(item.path)}
-                                className={`flex items-center gap-2 p-2 rounded-md cursor-pointer transition-all ease-linear duration-300 hover:bg-foreground hover:text-white
-                                ${activeOption === item.path ? 'bg-foreground text-white' : 'bg-transparent text-black'}`}>
-                                <span>{item.icon}</span>
-                                <span className='font-semibold'>{item.option}</span>
-                            </li>
-                        })}
-                    </ul>
-                </motion.div>
-                <motion.div
-                    key={'productMenu'}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 }}
-                    viewport={{ once: false }}
-                    className='space-y-3 w-full'>
-                    <h2 className='font-bold text-lg'>Products</h2>
-                    <ul className='space-y-1'>
-                        {productMenu.map((item) => {
                             return <li
                                 key={item.option}
                                 onClick={() => handleRouting(item.path)}
