@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
+
     await connectDB()
     const body = await req.json()
 
@@ -25,14 +26,13 @@ export async function POST(req) {
 
       return `${prefix}-${Date.now()}`;
     };
-    const genSKU = generateSKU(body.category)
 
     const product = await Product.create({
       name: body.productName,
       slug: slug,
       description: body.description,
 
-      sku: genSKU,
+      sku: generateSKU(body.category),
 
       category: body.category,
       attribute: body.attribute,
@@ -49,7 +49,6 @@ export async function POST(req) {
       defaultSalePrice:
         body.variants[0].salePrice || null,
     })
-    console.log('Here')
 
     return NextResponse.json(
       { message: 'Product Saved', product },
@@ -57,7 +56,10 @@ export async function POST(req) {
     )
   } catch (error) {
     return NextResponse.json(
-      { message: 'Failed to save product', error },
+      {
+        message: 'Failed to save product',
+        error: error.message,
+      },
       { status: 400 }
     )
   }
@@ -68,14 +70,15 @@ export async function GET() {
     await connectDB()
     const products = await Product.find()
     return NextResponse.json(
-      { message: 'Product Fetched Successfully' },
       products,
-      { status: 200 }
+      { message: 'Product Fetched Successfully' },
+      { status: 200 },
     )
   } catch (error) {
     return NextResponse.json(
       { message: "Failed to fetch products" },
-      { status: 500 }
+      { message: error.message },
+      { status: 500 },
     );
   }
 

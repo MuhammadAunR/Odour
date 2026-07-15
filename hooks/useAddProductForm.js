@@ -33,7 +33,6 @@ export const useAddProductForm = () => {
             fragranceFamily,
             variants,
         } = productDetails;
-        console.log(productDetails)
 
         if (!productName.trim()) return 'Product name is required';
         if (!description.trim()) return 'Description is required';
