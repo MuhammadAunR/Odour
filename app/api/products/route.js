@@ -63,3 +63,21 @@ export async function POST(req) {
   }
 }
 
+export async function GET() {
+  try {
+    await connectDB()
+    const products = await Product.find()
+    return NextResponse.json(
+      { message: 'Product Fetched Successfully' },
+      products,
+      { status: 200 }
+    )
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Failed to fetch products" },
+      { status: 500 }
+    );
+  }
+
+}
+

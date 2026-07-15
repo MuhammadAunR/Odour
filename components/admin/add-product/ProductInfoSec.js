@@ -6,7 +6,7 @@ import React from 'react'
 
 const ProductInfoSec = () => {
     const { productDetails, handleProductDetailsInput, } = useProductForm()
-    // console.log(productDetails)
+
     return (
         <>
             <motion.section
