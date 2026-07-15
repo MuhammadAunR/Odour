@@ -1,98 +1,65 @@
 import { connectDB } from "@/lib/mongodb";
 import Product from "@/models/Product";
+import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function POST(req) {
   try {
-    await connectDB();
+    await connectDB()
+    const body = await req.json()
 
-    const { searchParams } = new URL(request.url);
+    const slug = body.productName
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-');
 
-    const gender = searchParams.get("gender");
-    const fragranceFamily = searchParams.get("fragranceFamily");
-    const season = searchParams.get("season");
-    const isOnSale = searchParams.get("isOnSale");
-    const tags = searchParams.get("tags");
-    const minPrice = searchParams.get("minPrice");
-    const maxPrice = searchParams.get("maxPrice");
-    const sort = searchParams.get("sort") || "id_asc";
-    const page = parseInt(searchParams.get("page")) || 1;
-    const limit = parseInt(searchParams.get("limit")) || 12;
-    const search = searchParams.get("search");
+    const generateSKU = (category) => {
+      const prefixMap = {
+        Perfume: "PERF",
+        Attar: "ATT",
+        Tester: "TEST",
+        Deodorant: "DEO",
+      };
 
-    const filter = {};
-    if (gender) filter.gender = gender;
-    if (fragranceFamily) filter.fragranceFamily = fragranceFamily;
-    if (season) filter.season = { $in: [season] };
-    if (isOnSale) filter.isOnSale = isOnSale === "true";
-    if (tags) filter.tags = { $in: [tags] };
-    if (minPrice || maxPrice) {
-      filter.price = {};
-      if (minPrice) filter.price.$gte = parseInt(minPrice);
-      if (maxPrice) filter.price.$lte = parseInt(maxPrice);
-    }
-    if (search) {
-      filter.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { brand: { $regex: search, $options: "i" } },
-      ];
-    }
+      const prefix = prefixMap[category] || "SCE";
 
-    const filterWithoutGender = { ...filter };
-    delete filterWithoutGender.gender;
-
-    const filterWithoutSeason = { ...filter };
-    delete filterWithoutSeason.season;
-
-    const filterWithoutFragranceFamily = { ...filter };
-    delete filterWithoutFragranceFamily.fragranceFamily;
-
-    const [gender_count, season_count, fragranceFamily_count] =
-      await Promise.all([
-        Product.aggregate([
-          { $match: filterWithoutGender },
-          { $group: { _id: "$gender", count: { $sum: 1 } } },
-        ]),
-        Product.aggregate([
-          { $match: filterWithoutSeason },
-          { $unwind: "$season" },
-          { $group: { _id: "$season", count: { $sum: 1 } } },
-        ]),
-        Product.aggregate([
-          { $match: filterWithoutFragranceFamily },
-          { $group: { _id: "$fragranceFamily", count: { $sum: 1 } } },
-        ]),
-      ]);
-
-    const sortMap = {
-      price_asc: { price: 1 },
-      price_desc: { price: -1 },
-      name_asc: { name: 1 },
-      newest: { createdAt: -1 },
-      id_asc: { id: 1 },
+      return `${prefix}-${Date.now()}`;
     };
-    const sortObj = sortMap[sort] || { id: 1 };
+    const genSKU = generateSKU(body.category)
 
-    const skip = (page - 1) * limit;
-    const total = await Product.countDocuments(filter);
+    const product = await Product.create({
+      name: body.productName,
+      slug: slug,
+      description: body.description,
 
-    const products = await Product.find(filter)
-      .sort(sortObj)
-      .skip(skip)
-      .limit(limit);
+      sku: genSKU,
 
-    return Response.json({
-      total,
-      page,
-      totalPages: Math.ceil(total / limit),
-      products,
-      gender: gender_count,
-      season: season_count,
-      fragranceFamily: fragranceFamily_count,
-    });
+      category: body.category,
+      attribute: body.attribute,
+      gender: body.gender,
+      season: body.season,
+      fragranceFamily: body.fragranceFamily,
+
+      images: body.images,
+
+      variants: body.variants,
+
+      defaultPrice: body.variants[0].originalPrice,
+
+      defaultSalePrice:
+        body.variants[0].salePrice || null,
+    })
+    console.log('Here')
+
+    return NextResponse.json(
+      { message: 'Product Saved', product },
+      { status: 201 }
+    )
   } catch (error) {
-    return Response.json(
-      { message: "Failed to get products",error },
-      { status: 404 },
-    );
+    return NextResponse.json(
+      { message: 'Failed to save product', error },
+      { status: 400 }
+    )
   }
 }
+
