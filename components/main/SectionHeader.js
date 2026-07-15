@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { motion } from "framer-motion"
-import { containerVariants, itemVariants } from '@/components/Assets'
+import { containerVariants, itemVariants } from '@/components/main/Assets'
 
 
 const SectionHeader = ({headerContent}) => {

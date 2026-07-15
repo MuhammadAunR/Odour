@@ -1,5 +1,5 @@
 'use client'
-import SectionHeader from '@/components/SectionHeader'
+import SectionHeader from '@/components/main/SectionHeader'
 import { Mail, MapPin } from 'lucide-react'
 import { motion } from "framer-motion"
 import Link from 'next/link'

@@ -4,9 +4,9 @@ import { ShoppingCart, Trash, X } from "lucide-react";
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { PrimaryButton } from "./UI/Buttons";
+import { PrimaryButton } from "../UI/Buttons";
 import Link from "next/link";
-import useBlockYScroll from "./BlockYScroll";
+import useBlockYScroll from "../BlockYScroll";
 
 
 const Cart = () => {

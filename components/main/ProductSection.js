@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import ProductGridCard, { ProductCardSkeleton } from './UI/Card'
+import ProductGridCard, { ProductCardSkeleton } from '../UI/Card'
 import { useProducts } from '@/app/context/ProductContext'
 import SectionHeader from './SectionHeader'
 import { motion } from 'motion/react'

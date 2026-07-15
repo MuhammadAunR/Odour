@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { PrimaryButton } from "./UI/Buttons";
+import { PrimaryButton } from "../UI/Buttons";
 import Link from "next/link";
 
 

@@ -3,7 +3,7 @@ import ProductGridCard, {
   ProductCardSkeleton,
   ProductListCard,
 } from "@/components/UI/Card";
-import ProductQuickView from "@/components/ProductQuickView";
+import ProductQuickView from "@/components/main/ProductQuickView";
 import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";

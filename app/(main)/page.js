@@ -1,7 +1,7 @@
-import FeatureStrip from "@/components/FeatureStrip";
-import HeroSection from "@/components/HeroSection";
-import ProductQuickView from "@/components/ProductQuickView";
-import ProductSection from "@/components/ProductSection";
+import FeatureStrip from "@/components/main/FeatureStrip";
+import HeroSection from "@/components/main/HeroSection";
+import ProductQuickView from "@/components/main/ProductQuickView";
+import ProductSection from "@/components/main/ProductSection";
 
 
 export default function Home() {

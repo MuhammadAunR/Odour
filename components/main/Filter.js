@@ -3,8 +3,8 @@
 import { useFilter } from '@/app/context/FilterContext'
 import { ChevronDown, X } from 'lucide-react'
 import React, { useState } from 'react'
-import useBlockYScroll from './BlockYScroll'
-import { SecondaryButton } from './UI/Buttons'
+import useBlockYScroll from '../BlockYScroll'
+import { SecondaryButton } from '../UI/Buttons'
 
 const Filter = () => {
     const { isFilterSideOpen, toggleFilterSide, setActiveFilterCount } = useFilter()

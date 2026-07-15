@@ -8,7 +8,7 @@ import { usePopup } from "@/app/context/QuickPopupContext";
 import { useRouter } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";
 import { PrimaryButton } from "./Buttons";
-import { seasonConfig } from "../Assets";
+import { seasonConfig } from "../main/Assets";
 
 const ProductGridCard = ({ product, index }) => {
   const router = useRouter();

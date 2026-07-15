@@ -2,8 +2,8 @@
 import React from 'react'
 import { motion } from "framer-motion"
 import Image from 'next/image'
-import SectionHeader from '@/components/SectionHeader'
-import { processingSteps } from '@/components/Assets'
+import SectionHeader from '@/components/main/SectionHeader'
+import { processingSteps } from '@/components/main/Assets'
 import Link from 'next/link'
 import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
 

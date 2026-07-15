@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useEffect } from 'react'
 import { navOptions } from './Assets';
 import { UserRound } from 'lucide-react';
-import useBlockYScroll from './BlockYScroll';
+import useBlockYScroll from '../BlockYScroll';
 
 
 const NavSidebar = () => {

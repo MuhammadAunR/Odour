@@ -8,9 +8,9 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from "framer-motion"
-import { avatarColors, seasonConfig, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/Assets'
+import { avatarColors, seasonConfig, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/main/Assets'
 import CountUp from 'react-countup'
-import SectionHeader from '@/components/SectionHeader'
+import SectionHeader from '@/components/main/SectionHeader'
 
 const Product = ({ params }) => {
 
