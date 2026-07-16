@@ -89,3 +89,61 @@ export async function DELETE(req) {
   }
 }
 
+export async function PUT(req) {
+  try {
+
+    await connectDB()
+    const body = await req.json()
+
+    const existingProduct = await Product.findById(body._id);
+
+    if (!existingProduct) {
+      return NextResponse.json(
+        { message: 'Product Not found' },
+        { status: 404 }
+      )
+    }
+
+    const slug =
+      existingProduct.name !== body.productName ? generateSLUG(body.productName) : existingProduct.slug
+
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      body._id,
+      {
+        name: body.productName,
+        slug,
+        description: body.description,
+        category: body.category,
+        attribute: body.attribute,
+        gender: body.gender,
+        season: body.season,
+        fragranceFamily: body.fragranceFamily,
+        images: body.images,
+        variants: body.variants,
+        defaultPrice: body.variants[0].originalPrice,
+        defaultSalePrice: body.variants[0].salePrice || null,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedProduct) {
+      return NextResponse.json(
+        { message: 'Product Not found' },
+        { status: 404 }
+      )
+    }
+    return NextResponse.json(
+      { message: 'Product Updated', product: updatedProduct, },
+      { status: 200 }
+    )
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Failed to update product', error: error.message },
+      { status: 400 }
+    )
+  }
+}
