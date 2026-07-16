@@ -38,3 +38,18 @@ export const fetchAllProducts = async () => {
         data: data
     }
 }
+
+export const deleteProductById = async (id) => {
+    const response = await fetch('/api/products', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ _id: id }),
+    })
+    const data = await response.json()
+    return {
+        ok: response.ok,
+        message: data.message
+    }
+}
