@@ -31,7 +31,7 @@ const ProductMediaSec = () => {
                             }
                             {productImagePreview.map((img, index) => {
                                 return <div key={index} className='w-30 h-30 border border-foreground/50 text-foreground/50 relative group/previewImg overflow-hidden'>
-                                    <Image src={img.url} alt={img.fileName} fill sizes='500px' className='object-cover' />
+                                    <Image src={img.url} alt={img.fileName ?? 'Cloudinary Image'} fill sizes='500px' className='object-cover' />
                                     <span onClick={() => handleRemovePreviewImage(img.id)} className='absolute w-full h-full scale-0 bg-black/10 backdrop-blur-sm flex items-center justify-center text-red-500 group-hover/previewImg:scale-100 transition-all ease-linear duration-300 cursor-pointer'><Trash2 size={40} /></span>
                                 </div>
                             })}
