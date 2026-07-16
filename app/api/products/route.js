@@ -1,4 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
+import { generateSKU, generateSLUG } from "@/lib/productUtils";
 import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 
@@ -8,28 +9,9 @@ export async function POST(req) {
     await connectDB()
     const body = await req.json()
 
-    const slug = body.productName
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-');
-
-    const generateSKU = (category) => {
-      const prefixMap = {
-        Perfume: "PERF",
-        Attar: "ATT",
-        Tester: "TEST",
-        Deodorant: "DEO",
-      };
-
-      const prefix = prefixMap[category] || "SCE";
-
-      return `${prefix}-${Date.now()}`;
-    };
-
     const product = await Product.create({
       name: body.productName,
-      slug: slug,
+      slug: generateSLUG(body.productName),
       description: body.description,
 
       sku: generateSKU(body.category),
@@ -76,11 +58,34 @@ export async function GET() {
     )
   } catch (error) {
     return NextResponse.json(
-      { message: "Failed to fetch products" },
-      { message: error.message },
+      { message: "Failed to fetch products", error: error.message },
       { status: 500 },
     );
   }
 
+}
+
+export async function DELETE(req) {
+  try {
+    await connectDB()
+    const { _id } = await req.json()
+    const product = await Product.findByIdAndDelete(_id)
+    if (!product) {
+      return NextResponse.json(
+        { message: 'Product Not found' },
+        { status: 404 }
+      )
+    }
+    return NextResponse.json(
+      { message: 'Product deleted' },
+      { status: 200 }
+    )
+
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Failed to delete product', error: error.message },
+      { status: 400 }
+    )
+  }
 }
 
