@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 
 const AddProduct = () => {
 
-    const { productDetails, validateProduct, productImagePreview, resetProductForm, setProductDetails } = useProductForm()
+    const { productDetails, validateProduct, productImagePreview, setProductImagePreview, resetProductForm, setProductDetails } = useProductForm()
     const [loading, setLoading] = useState(false)
     const [productFormAction, setProductFormAction] = useState('Save')
     const router = useRouter()
@@ -31,6 +31,7 @@ const AddProduct = () => {
             }
             const product = results.data[0];
             setProductFormAction('Update')
+            setProductImagePreview(product.images)
             setProductDetails({
                 _id: product._id,
                 productName: product.name,
