@@ -15,7 +15,11 @@ const AdminNavbar = ({ session }) => {
         <div className='flex items-center justify-center gap-5'>
           <div className='flex items-center justify-center gap-3'>
             <div className='relative w-8 h-8 rounded-full overflow-hidden'>
-              <Image src={'https://lh3.googleusercontent.com/a/ACg8ocIPWiTb0eVU3fHvkNOhUevikUwBb3GTAP-kKZdeYfUlxByMxw8=s96-c'} alt='Profile Image' fill className='object-contain' />
+              <Image
+                src={'https://lh3.googleusercontent.com/a/ACg8ocIPWiTb0eVU3fHvkNOhUevikUwBb3GTAP-kKZdeYfUlxByMxw8=s96-c'} alt='Profile Image'
+                fill
+                sizes='240px'
+                className='object-contain' />
             </div>
             <h2>{session?.user?.name}</h2>
           </div>

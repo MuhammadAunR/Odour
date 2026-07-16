@@ -113,7 +113,12 @@ const Sidebar = ({ session }) => {
                 <div className='w-full h-px bg-foreground'></div>
                 <div className='flex items-center gap-2'>
                     <div className='relative w-8 h-8 rounded-full overflow-hidden'>
-                        <Image src={'https://lh3.googleusercontent.com/a/ACg8ocIPWiTb0eVU3fHvkNOhUevikUwBb3GTAP-kKZdeYfUlxByMxw8=s96-c'} alt='Profile Image' fill className='object-contain' />
+                        <Image
+                            src={'https://lh3.googleusercontent.com/a/ACg8ocIPWiTb0eVU3fHvkNOhUevikUwBb3GTAP-kKZdeYfUlxByMxw8=s96-c'}
+                            alt='Profile Image'
+                            fill
+                            sizes='240px'
+                            className='object-contain' />
                     </div>
                     <div className='flex flex-col items-start'>
                         <span title={session?.user?.name} className='truncate w-50 cursor-pointer text-sm font-semibold'>{session?.user?.name}</span>
