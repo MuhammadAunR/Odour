@@ -27,18 +27,16 @@ const ProductList = () => {
         getAllProducts()
     }, [])
 
-    async function handleActions(action, id) {
-        if (action === 'delete') {
-            const result = await deleteProductById(id)
-            if (!result.ok) {
-                toast.error(result.message)
-                return
-            }
-            setProducts(prev => {
-                return prev.filter(prod => prod._id !== id)
-            })
-            toast.success(result.message)
+    async function handleProductDelete(id) {
+        const result = await deleteProductById(id)
+        if (!result.ok) {
+            toast.error(result.message)
+            return
         }
+        setProducts(prev => {
+            return prev.filter(prod => prod._id !== id)
+        })
+        toast.success(result.message)
     }
 
     const handleProductUpdate = (product) => {
@@ -125,7 +123,7 @@ const ProductList = () => {
                                                         <SquarePen strokeWidth={1.5} />
                                                     </button>
                                                     <button
-                                                        onClick={() => handleActions('delete', product._id)}
+                                                        onClick={() => handleProductDelete(product._id)}
                                                         className="p-2 rounded-lg hover:bg-red-100 cursor-pointer">
                                                         <Trash2 strokeWidth={1.5} />
                                                     </button>
