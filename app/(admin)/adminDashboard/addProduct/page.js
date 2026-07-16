@@ -58,7 +58,6 @@ const AddProduct = () => {
 
         try {
             setLoading(true);
-
             const uploadedImages = await Promise.all(
                 productImagePreview.map(image =>
                     uploadImage(image.file)
