@@ -1,4 +1,5 @@
 import cloudinary from '@/lib/cloudinary';
+import { NextResponse } from 'next/server';
 
 export async function POST(request) {
     try {
@@ -26,8 +27,25 @@ export async function POST(request) {
         });
 
     } catch (error) {
-        return Response.json(
+        return NextResponse.json(
             { message: 'Upload failed' },
+            { status: 500 }
+        );
+    }
+}
+
+export async function DELETE(request) {
+    try {
+        const { publicIds } = await request.json();
+        console.log(publicIds)
+        const result = await cloudinary.api.delete_resources(publicIds);
+        return NextResponse.json(
+            { success: true, result },
+            { status: 200 }
+        );
+    } catch (error) {
+        return NextResponse.json(
+            { success: false, message: "Failed to delete image", error: error.message },
             { status: 500 }
         );
     }

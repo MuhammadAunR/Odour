@@ -10,6 +10,17 @@ export const uploadImage = async (file) => {
     return response.json();
 };
 
+export const removeImageFromCloudinary = async (images) => {
+    const response = await fetch('/api/upload', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ publicIds: images.map(img => img.publicId) })
+    })
+    return response.json()
+}
+
 export const createProduct = async (payload) => {
     const response = await fetch('/api/products', {
         method: 'POST',
