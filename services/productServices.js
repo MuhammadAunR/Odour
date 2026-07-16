@@ -53,3 +53,32 @@ export const deleteProductById = async (id) => {
         message: data.message
     }
 }
+
+export const updateProduct = async (productDetails) => {
+    const response = await fetch('/api/products', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productDetails)
+    })
+    const data = await response.json()
+    return {
+        ok: response.ok,
+        message: data.message
+    }
+}
+
+export const fetchProductBySlug = async (slug) => {
+    const response = await fetch(`/api/products?slug=${slug}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    const data = await response.json()
+    return {
+        ok: response.ok,
+        data,
+    }
+}

@@ -96,7 +96,6 @@ export async function PUT(req) {
     const body = await req.json()
 
     const existingProduct = await Product.findById(body._id);
-
     if (!existingProduct) {
       return NextResponse.json(
         { message: 'Product Not found' },
@@ -147,3 +146,4 @@ export async function PUT(req) {
     )
   }
 }
+

@@ -6,16 +6,47 @@ import ProductInfoSec from '@/components/admin/add-product/ProductInfoSec'
 import ProductMediaSec from '@/components/admin/add-product/ProductMediaSec'
 import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { SecondaryButton } from '@/components/UI/Buttons'
-import { createProduct, uploadImage } from '@/services/productServices'
+import { createProduct, fetchProductBySlug, updateProduct, uploadImage } from '@/services/productServices'
 import { motion } from 'motion/react'
-import React, { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 
 const AddProduct = () => {
 
-    const { productDetails, validateProduct, productImagePreview, resetProductForm } = useProductForm()
+    const { productDetails, validateProduct, productImagePreview, resetProductForm, setProductDetails } = useProductForm()
     const [loading, setLoading] = useState(false)
+    const [productFormAction, setProductFormAction] = useState('Save')
+    const router = useRouter()
+
+    const searchParams = useSearchParams()
+    useEffect(() => {
+        const prodSlug = searchParams.get('slug')
+        if (!prodSlug) return;
+        async function getProductBySlug(prodSlug) {
+            const results = await fetchProductBySlug(prodSlug)
+            if (!results.ok) {
+                toast.error(results.message)
+            }
+            const product = results.data[0];
+            setProductFormAction('Update')
+            setProductDetails({
+                _id: product._id,
+                productName: product.name,
+                description: product.description,
+                category: product.category,
+                attribute: product.attribute,
+                gender: product.gender,
+                season: product.season,
+                fragranceFamily: product.fragranceFamily,
+                variants: product.variants,
+                images: product.images,
+            });
+        }
+        getProductBySlug(prodSlug)
+    }, [searchParams])
+
 
     async function handleCreateProduct() {
         const error = validateProduct();
@@ -53,6 +84,18 @@ const AddProduct = () => {
         }
     }
 
+    async function handleUpdateProduct() {
+        const results = await updateProduct(productDetails)
+        if (!results.ok) {
+            toast.error(results.message)
+            return
+        }
+        toast.success(results.message)
+        resetProductForm()
+        setProductFormAction('Save')
+        router.push('/adminDashboard/productList')
+    }
+
     return (
         <>
             <main className='py-5 px-2 space-y-5'>
@@ -83,8 +126,8 @@ const AddProduct = () => {
                             <motion.button
                                 whileTap={{ scale: 0.97 }}
                                 className='bg-foreground/10 px-5 py-2.5 uppercase font-semibold hover:bg-foreground/20 transition-all ease-linear cursor-pointer'>Cancel</motion.button>
-                            <span onClick={handleCreateProduct}>
-                                <SecondaryButton text={'Save'} />
+                            <span onClick={productFormAction === 'Save' ? handleCreateProduct : handleUpdateProduct}>
+                                <SecondaryButton text={productFormAction === 'Save' ? 'Save' : 'Update'} />
                             </span>
                         </div>
                     }

@@ -7,11 +7,13 @@ import { useRouter } from 'next/navigation'
 import { deleteProductById, fetchAllProducts } from '@/services/productServices'
 import { toast } from 'react-toastify'
 import Image from 'next/image'
+import { useProductForm } from '@/app/context/admin/ProductFormContext'
 
 const ProductList = () => {
 
     const router = useRouter()
     const [products, setProducts] = useState([])
+    const { setProductToUpdate, setProductDetails } = useProductForm()
 
     useEffect(() => {
         async function getAllProducts() {
@@ -36,8 +38,11 @@ const ProductList = () => {
                 return prev.filter(prod => prod._id !== id)
             })
             toast.success(result.message)
-
         }
+    }
+
+    const handleProductUpdate = (product) => {
+        router.push(`/adminDashboard/addProduct?slug=${product.slug}`)
     }
 
     return (
@@ -111,13 +116,17 @@ const ProductList = () => {
 
                                             <td className="p-4">
                                                 <div className="flex justify-center gap-2">
-                                                    <button className="p-2 rounded-lg hover:bg-gray-200">
+                                                    <button className="p-2 rounded-lg hover:bg-gray-200 cursor-pointer">
                                                         <Info strokeWidth={1.5} />
                                                     </button>
-                                                    <button className="p-2 rounded-lg hover:bg-gray-200">
+                                                    <button
+                                                        onClick={() => handleProductUpdate(product)}
+                                                        className="p-2 rounded-lg hover:bg-gray-200 cursor-pointer">
                                                         <SquarePen strokeWidth={1.5} />
                                                     </button>
-                                                    <button onClick={() => handleActions('delete', product._id)} className="p-2 rounded-lg hover:bg-red-100">
+                                                    <button
+                                                        onClick={() => handleActions('delete', product._id)}
+                                                        className="p-2 rounded-lg hover:bg-red-100 cursor-pointer">
                                                         <Trash2 strokeWidth={1.5} />
                                                     </button>
                                                 </div>
