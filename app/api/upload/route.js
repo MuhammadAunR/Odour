@@ -37,7 +37,6 @@ export async function POST(request) {
 export async function DELETE(request) {
     try {
         const { publicIds } = await request.json();
-        console.log(publicIds)
         const result = await cloudinary.api.delete_resources(publicIds);
         return NextResponse.json(
             { success: true, result },

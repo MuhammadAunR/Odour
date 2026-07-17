@@ -81,7 +81,7 @@ export const updateProduct = async (productDetails) => {
 }
 
 export const fetchProductBySlug = async (slug) => {
-    const response = await fetch(`/api/products?slug=${slug}`, {
+    const response = await fetch(`/api/products/${slug}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

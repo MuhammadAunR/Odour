@@ -6,7 +6,7 @@ import ProductInfoSec from '@/components/admin/add-product/ProductInfoSec'
 import ProductMediaSec from '@/components/admin/add-product/ProductMediaSec'
 import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { SecondaryButton } from '@/components/UI/Buttons'
-import { createProduct, fetchProductBySlug, updateProduct, uploadImage } from '@/services/productServices'
+import { createProduct, fetchProductBySlug, removeImageFromCloudinary, updateProduct, uploadImage } from '@/services/productServices'
 import { motion } from 'motion/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -29,7 +29,7 @@ const AddProduct = () => {
             if (!results.ok) {
                 toast.error(results.message)
             }
-            const product = results.data[0];
+            const product = results.data;
             setProductFormAction('Update')
             setProductImagePreview(product.images)
             setProductDetails({
@@ -72,6 +72,7 @@ const AddProduct = () => {
             const { ok, data } = await createProduct(payload);
 
             if (!ok) {
+                await removeImageFromCloudinary(productDetails.images)
                 toast.error(data.message);
                 return;
             }
@@ -85,13 +86,25 @@ const AddProduct = () => {
     }
 
     async function handleUpdateProduct() {
-        const results = await updateProduct(productDetails)
+        setLoading(true)
+        const uploadedImages = await Promise.all(
+            productImagePreview.map(image =>
+                uploadImage(image.file)
+            )
+        );
+
+        const payload = {
+            ...productDetails,
+            images: uploadedImages,
+        };
+        const results = await updateProduct(payload)
         if (!results.ok) {
             toast.error(results.message)
             return
         }
         toast.success(results.message)
         resetProductForm()
+        setLoading(false)
         setProductFormAction('Save')
         router.push('/adminDashboard/productList')
     }

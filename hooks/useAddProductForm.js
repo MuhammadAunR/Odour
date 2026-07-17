@@ -1,4 +1,5 @@
 'use client'
+import { removeImageFromCloudinary } from '@/services/productServices'
 import React, { useState } from 'react'
 
 export const useAddProductForm = () => {
@@ -103,7 +104,6 @@ export const useAddProductForm = () => {
 
     const handleProductPreview = (e) => {
         const file = e.target.files[0];
-        console.log(file)
         if (!file) return;
 
         setProductImagePreview(prev => [
@@ -116,7 +116,8 @@ export const useAddProductForm = () => {
             }
         ]);
     };
-    const handleRemovePreviewImage = (id) => {
+    const handleRemovePreviewImage = async (id) => {
+        await removeImageFromCloudinary(productImagePreview)
         setProductImagePreview(prev => prev.filter(img => img.id !== id))
     }
 

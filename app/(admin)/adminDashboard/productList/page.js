@@ -22,7 +22,6 @@ const ProductList = () => {
                 toast.error('Failed to get products')
             }
             setProducts(data)
-            console.log(data[0])
         }
         getAllProducts()
     }, [])
@@ -103,8 +102,8 @@ const ProductList = () => {
                                             <td className="p-4">{product.category}</td>
                                             <td className="p-4">{product.variants.length}</td>
                                             <td className="p-4">{product.defaultPrice}</td>
-                                            <td className="p-4">{product.defaultSalePrice}</td>
-                                            <td className="p-4">45</td>
+                                            <td className="p-4">{product.defaultSalePrice ?? 'NULL'}</td>
+                                            <td className="p-4">{product.variants[0].stockQuantity}</td>
 
                                             <td className="p-4">
                                                 <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
