@@ -8,7 +8,7 @@ import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { SecondaryButton } from '@/components/UI/Buttons'
 import { createProduct, fetchProductBySlug, removeImageFromCloudinary, updateProduct, uploadImage } from '@/services/productServices'
 import { motion } from 'motion/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -19,8 +19,9 @@ const AddProduct = () => {
     const [loading, setLoading] = useState(false)
     const [productFormAction, setProductFormAction] = useState('Save')
     const router = useRouter()
-
     const searchParams = useSearchParams()
+    const pathName = usePathname()
+
     useEffect(() => {
         const prodSlug = searchParams.get('slug')
         if (!prodSlug) return;
@@ -47,6 +48,11 @@ const AddProduct = () => {
         }
         getProductBySlug(prodSlug)
     }, [searchParams])
+
+    useEffect(() => {
+        resetProductForm()
+    }, [pathName, searchParams])
+
 
 
     async function handleCreateProduct() {
