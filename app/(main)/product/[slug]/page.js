@@ -369,7 +369,7 @@ const Product = ({ params }) => {
                 </section>
 
                 <section>
-                    <SectionHeader headerContent={{ subHeading: 'The SCENTRA Promise', mainHeading: 'Why Choose Us' }} />
+                    <SectionHeader headerContent={{ subHeading: 'The ODOUR Promise', mainHeading: 'Why Choose Us' }} />
 
                     <div className='flex items-center justify-center gap-2 flex-wrap pb-10'>
                         {WhyChooseUsData.map((reason, index) => {

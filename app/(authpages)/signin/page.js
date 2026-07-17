@@ -88,7 +88,7 @@ const SignInPage = () => {
                 <motion.div
                     variants={item}
                     className='flex flex-col items-center justify-center gap-2'>
-                    <h1 className='text-5xl font-display font-bold'>SCENTRA</h1>
+                    <h1 className='text-5xl font-display font-bold'>ODOUR</h1>
                     <h2 className='text-4xl font-serif font-black tracking-wider'>Sign In</h2>
                     <div className='flex items-center justify-center gap-1'>
                         <p>New to our store? </p>

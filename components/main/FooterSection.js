@@ -38,7 +38,7 @@ const FooterSection = () => {
       <section className="w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative">
         <div className="w-full py-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div className="flex flex-col gap-6">
-            <h1 className="font-display font-bold text-4xl">SCENTRA</h1>
+            <h1 className="font-display font-bold text-4xl">ODOUR</h1>
             <p className="text-muted text-sm leading-relaxed max-w-xs">
               Subscribe to our newsletter and be the first to discover new
               arrivals, exclusive offers, and the art of fine fragrance.
@@ -133,7 +133,7 @@ const FooterSection = () => {
           </div>
 
           <p className="text-muted tracking-wide">
-            &copy; {new Date().getFullYear()} SCENTRA. All rights reserved.
+            &copy; {new Date().getFullYear()} ODOUR. All rights reserved.
           </p>
 
           <div className="flex items-center gap-3">

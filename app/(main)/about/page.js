@@ -15,7 +15,7 @@ const AboutPage = () => {
             <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 w-full max-w-7xl'>
                 <header className='min-h-100 h-fit my-10'>
 
-                    <SectionHeader headerContent={{ subHeading: 'The SCENTRA Story', mainHeading: 'About Us' }} />
+                    <SectionHeader headerContent={{ subHeading: 'The ODOUR Story', mainHeading: 'About Us' }} />
 
                     <section className='flex items-center justify-center gap-10 w-full max-lg:flex-col'>
                         <motion.div
@@ -39,8 +39,8 @@ const AboutPage = () => {
                             transition={{ duration: 0.3, delay: 0.3 }}
                             className='lg:w-1/2 flex flex-col gap-7 max-lg:pt-7 max-lg:pb-20'>
                             <div className='flex flex-col gap-3'>
-                                <h2 className='font-bold text-3xl md:text-5xl'>WELCOME TO <span className='font-display font-bold text-muted'>SCENTRA</span></h2>
-                                <p>SCENTRA was born from a simple belief — that fragrance is not just a scent, its a feeling, a memory, a statement. We craft perfumes that speak before you do.
+                                <h2 className='font-bold text-3xl md:text-5xl'>WELCOME TO <span className='font-display font-bold text-muted'>ODOUR</span></h2>
+                                <p>ODOUR was born from a simple belief — that fragrance is not just a scent, its a feeling, a memory, a statement. We craft perfumes that speak before you do.
                                 </p>
                             </div>
                             <div className='flex flex-col gap-3'>
@@ -50,7 +50,7 @@ const AboutPage = () => {
                             </div>
                             <div className='flex flex-col gap-3'>
                                 <h2 className='font-bold text-lg md:text-xl'>WON BEST ONLINE FRAGRANCE SHOP IN 2026</h2>
-                                <p>Just two years after launch, SCENTRA was recognized as the Best Online Fragrance Shop — a milestone that pushed us to dream bigger, craft better, and serve our community with even greater dedication.
+                                <p>Just two years after launch, ODOUR was recognized as the Best Online Fragrance Shop — a milestone that pushed us to dream bigger, craft better, and serve our community with even greater dedication.
                                 </p>
                             </div>
                         </motion.div>

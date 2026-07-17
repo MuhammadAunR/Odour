@@ -49,7 +49,7 @@ const testimonials = [
     {
         id: 1,
         name: 'Sarah Al-Rashid',
-        review: 'SCENTRA has completely transformed how I think about fragrance. The Sauvage I ordered arrived beautifully packaged and the scent is absolutely divine. Will never shop anywhere else.',
+        review: 'ODOUR has completely transformed how I think about fragrance. The Sauvage I ordered arrived beautifully packaged and the scent is absolutely divine. Will never shop anywhere else.',
         initials: 'SA'
     },
     {
@@ -61,13 +61,13 @@ const testimonials = [
     {
         id: 3,
         name: 'Fatima Zahra',
-        review: 'The curated collection here is unlike anything I have found locally. Rare fragrances at honest prices. The Black Opium is my signature scent now thanks to SCENTRA.',
+        review: 'The curated collection here is unlike anything I have found locally. Rare fragrances at honest prices. The Black Opium is my signature scent now thanks to ODOUR.',
         initials: 'FZ'
     },
     {
         id: 4,
         name: 'James Thornton',
-        review: 'As a fragrance enthusiast I am very particular. SCENTRA exceeded every expectation — authentic products, elegant presentation and a team that clearly understands their craft.',
+        review: 'As a fragrance enthusiast I am very particular. ODOUR exceeded every expectation — authentic products, elegant presentation and a team that clearly understands their craft.',
         initials: 'JT'
     },
     {
@@ -98,7 +98,7 @@ const WhyChooseUsData = [
     {
         icon: '◈',
         title: 'Luxury Packaging',
-        description: 'Each order is wrapped with care and elegance. Unboxing an SCENTRA delivery is an experience in itself.'
+        description: 'Each order is wrapped with care and elegance. Unboxing an ODOUR delivery is an experience in itself.'
     },
     {
         icon: '◎',

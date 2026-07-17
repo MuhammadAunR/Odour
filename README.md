@@ -1,6 +1,6 @@
-# SCENTRA
+# ODOUR
 
-A modern and elegant perfume e-commerce website built with Next.js and Tailwind CSS. SCENTRA is designed to provide a premium shopping experience through a clean user interface, responsive design, and luxury-inspired aesthetics.
+A modern and elegant perfume e-commerce website built with Next.js and Tailwind CSS. ODOUR is designed to provide a premium shopping experience through a clean user interface, responsive design, and luxury-inspired aesthetics.
 
 ## Features
 
@@ -40,7 +40,7 @@ src/
 
 ## Design Goals
 
-SCENTRA focuses on:
+ODOUR focuses on:
 
 - Minimalism
 - Luxury branding
@@ -50,7 +50,7 @@ SCENTRA focuses on:
 
 ## Challenges & Learnings
 
-Throughout the development of SCENTRA, the following concepts were explored and strengthened:
+Throughout the development of ODOUR, the following concepts were explored and strengthened:
 
 - Building responsive layouts using Tailwind CSS
 - Developing reusable React and Next.js components

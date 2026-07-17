@@ -66,7 +66,7 @@ const ProductSection = () => {
                             Every bottle holds a world. Every note tells a story only you can finish.
                         </p>
                         <h5 className='text-xl font-semibold font-display text-foreground'>
-                            SCENTRA
+                            ODOUR
                         </h5>
                     </motion.div>
                 </div>

@@ -9,7 +9,7 @@ const AdminNavbar = ({ session }) => {
     <>
       <nav className='fixed z-100 w-full shadow-2xl flex items-center justify-between bg-foreground py-3 h-15 px-5 text-white'>
         <div>
-          <h1 className='font-display text-4xl'>Scentra</h1>
+          <h1 className='font-display text-4xl'>ODOUR</h1>
         </div>
 
         <div className='flex items-center justify-center gap-5'>
