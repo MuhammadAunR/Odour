@@ -58,9 +58,8 @@ const Sidebar = ({ session }) => {
                 className='space-y-5 w-full'>
                 <motion.div
                     initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 }}
-                    viewport={{ once: false }}
                     className='space-y-3 w-full'>
                     <div className='flex items-center justify-between w-full'>
                         <h2 className='font-bold text-lg'>Main Menu</h2>
@@ -83,9 +82,8 @@ const Sidebar = ({ session }) => {
                 </motion.div>
                 <motion.div
                     initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
-                    viewport={{ once: false }}
                     className='space-y-3 w-full'>
                     <h2 className='font-bold text-lg'>Admin</h2>
                     <ul className='space-y-1'>
@@ -104,9 +102,8 @@ const Sidebar = ({ session }) => {
             </div>
             <motion.div
                 initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
-                viewport={{ once: false }}
                 className='space-y-7 w-full'>
                 <div className='w-full h-px bg-foreground'></div>
                 <div className='flex items-center gap-2'>
