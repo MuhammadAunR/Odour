@@ -21,9 +21,9 @@ const ProductInfoSec = () => {
                     <label htmlFor="name" className='flex items-center gap-5'>
                         <div className='font-semibold w-40'>Product Name</div>
                         <input
-                            name='productName'
+                            name='name'
                             onChange={handleProductDetailsInput}
-                            value={productDetails.productName}
+                            value={productDetails.name}
                             type="text"
                             placeholder='Product Name'
                             className='bg-background px-5 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear' />

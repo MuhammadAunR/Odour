@@ -6,7 +6,7 @@ export const useAddProductForm = () => {
 
     const [productImagePreview, setProductImagePreview] = useState([])
     const [productDetails, setProductDetails] = useState({
-        productName: '',
+        name: '',
         description: '',
         category: [],
         attribute: [],
@@ -25,7 +25,7 @@ export const useAddProductForm = () => {
     })
     const validateProduct = () => {
         const {
-            productName,
+            name,
             description,
             category,
             attribute,
@@ -35,7 +35,7 @@ export const useAddProductForm = () => {
             variants,
         } = productDetails;
 
-        if (!productName.trim()) return 'Product name is required';
+        if (!name.trim()) return 'Product name is required';
         if (!description.trim()) return 'Description is required';
 
         if (!fragranceFamily.length) return 'Select at least one fragrance family';
@@ -123,7 +123,7 @@ export const useAddProductForm = () => {
 
     const resetProductForm = () => {
         setProductDetails({
-            productName: '',
+            name: '',
             description: '',
             category: [],
             attribute: [],

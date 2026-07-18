@@ -7,21 +7,24 @@ import { useRouter } from 'next/navigation'
 import { deleteProductById, fetchAllProducts } from '@/services/productServices'
 import { toast } from 'react-toastify'
 import Image from 'next/image'
-import { useProductForm } from '@/app/context/admin/ProductFormContext'
+import { motion } from 'motion/react'
+import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 
 const ProductList = () => {
 
     const router = useRouter()
     const [products, setProducts] = useState([])
-    const { setProductToUpdate, setProductDetails } = useProductForm()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getAllProducts() {
+            setLoading(true)
             const { data, ok } = await fetchAllProducts()
             if (!ok) {
                 toast.error('Failed to get products')
             }
             setProducts(data)
+            setLoading(false)
         }
         getAllProducts()
     }, [])
@@ -44,18 +47,35 @@ const ProductList = () => {
 
     return (
         <main className='space-y-5 py-5 px-2'>
-            <header className='flex items-center justify-between py-7 px-5 bg-white shadow-lg rounded-2xl'>
+
+            <motion.header
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                viewport={{ once: false }}
+                className='flex items-center justify-between py-7 px-5 bg-white shadow-lg rounded-2xl'>
                 <h1 className='text-2xl font-bold'>Product List</h1>
                 <span onClick={() => router.push('/adminDashboard/addProduct')}>
                     <SecondaryButton text={'Add Product'} />
                 </span>
-            </header>
+            </motion.header>
 
-            <section className='mt-15'>
+            <motion.section
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                viewport={{ once: false }}
+                className='mt-15'>
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    {products.length === 0 ?
-                        <div className='w-full font-semibold text-foreground/50 text-xl py-10 flex items-center justify-center'>No porducts available</div>
-                        :
+                    {loading ? (
+                        <div className='w-full flex items-center justify-center py-10'>
+                            <SimpleLoader />
+                        </div>
+                    ) : products.length === 0 ? (
+                        <div className='w-full font-semibold text-foreground/50 text-xl py-10 flex items-center justify-center'>
+                            No products available
+                        </div>
+                    ) :
                         <div className="overflow-x-auto">
                             <table className="min-w-325 w-full">
                                 <thead>
@@ -89,7 +109,7 @@ const ProductList = () => {
                                             <td className="p-4 min-w-60 w-fit">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-15 h-15 rounded-full overflow-hidden relative">
-                                                        <Image src={product.images[0].url} alt={product.name} fill className='object-cover' />
+                                                        <Image src={product?.images[0]?.url} alt={product.name} fill sizes='240px' className='object-cover' />
                                                     </div>
                                                     <div>
                                                         <h3 className="font-medium">{product.name}</h3>
@@ -105,9 +125,20 @@ const ProductList = () => {
                                             <td className="p-4">{product.defaultSalePrice ?? 'NULL'}</td>
                                             <td className="p-4">{product.variants[0].stockQuantity}</td>
 
-                                            <td className="p-4">
-                                                <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-                                                    Active
+                                            <td className="p-4 w-52">
+                                                <span
+                                                    className={`px-3 py-1 rounded-full text-xs font-medium ${product.variants[0].stockQuantity === 0
+                                                        ? "bg-red-100 text-red-700"
+                                                        : product.variants[0].stockQuantity <= 5
+                                                            ? "bg-yellow-100 text-yellow-700"
+                                                            : "bg-green-100 text-green-700"
+                                                        }`}
+                                                >
+                                                    {product.variants[0].stockQuantity === 0
+                                                        ? "Out of Stock"
+                                                        : product.variants[0].stockQuantity <= 5
+                                                            ? "Low Stock"
+                                                            : "In Stock"}
                                                 </span>
                                             </td>
 
@@ -135,7 +166,7 @@ const ProductList = () => {
                         </div>
                     }
                 </div>
-            </section>
+            </motion.section>
         </main>
     )
 }

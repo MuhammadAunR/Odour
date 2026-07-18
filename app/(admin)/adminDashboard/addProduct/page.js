@@ -35,7 +35,7 @@ const AddProduct = () => {
             setProductImagePreview(product.images)
             setProductDetails({
                 _id: product._id,
-                productName: product.name,
+                name: product.name,
                 description: product.description,
                 category: product.category,
                 attribute: product.attribute,
@@ -52,8 +52,6 @@ const AddProduct = () => {
     useEffect(() => {
         resetProductForm()
     }, [pathName, searchParams])
-
-
 
     async function handleCreateProduct() {
         const error = validateProduct();
@@ -91,6 +89,22 @@ const AddProduct = () => {
         }
     }
 
+    const handleCancel = () => {
+        const error = validateProduct();
+        if (error) {
+            toast.warning(error);
+            return;
+        }
+        if (productFormAction === 'Update' && window.confirm('Are you sure to cancel product update ?')) {
+            router.push('/adminDashboard/productList')
+            toast('Update Cancelled')
+        }
+        if (productFormAction === 'Save' && window.confirm('Are you sure to cancel product save ?')) {
+            resetProductForm()
+            toast.warning('Product not Saved')
+        }
+    }
+
     async function handleUpdateProduct() {
         setLoading(true)
         const uploadedImages = await Promise.all(
@@ -98,16 +112,17 @@ const AddProduct = () => {
                 uploadImage(image.file)
             )
         );
-
         const payload = {
             ...productDetails,
             images: uploadedImages,
         };
+
         const results = await updateProduct(payload)
         if (!results.ok) {
             toast.error(results.message)
             return
         }
+
         toast.success(results.message)
         resetProductForm()
         setLoading(false)
@@ -138,7 +153,7 @@ const AddProduct = () => {
                     transition={{ delay: 0.5 }}
                     viewport={{ once: false }}
                     className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
-                    <h2 className='text-xl font-semibold'>Finalize and Save</h2>
+                    <h2 className='text-xl font-semibold'>Finalize and {productFormAction}</h2>
 
                     {loading ?
 
@@ -148,6 +163,7 @@ const AddProduct = () => {
                         :
                         <div className='flex items-center justify-end gap-7'>
                             <motion.button
+                                onClick={handleCancel}
                                 whileTap={{ scale: 0.97 }}
                                 className='bg-foreground/10 px-5 py-2.5 uppercase font-semibold hover:bg-foreground/20 transition-all ease-linear cursor-pointer'>Cancel</motion.button>
                             <span onClick={productFormAction === 'Save' ? handleCreateProduct : handleUpdateProduct}>

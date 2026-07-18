@@ -10,8 +10,8 @@ export async function POST(req) {
     const body = await req.json()
 
     const product = await Product.create({
-      name: body.productName,
-      slug: generateSLUG(body.productName),
+      name: body.name,
+      slug: generateSLUG(body.name),
       description: body.description,
 
       sku: generateSKU(body.category),
@@ -104,14 +104,17 @@ export async function PUT(req) {
     }
 
     const slug =
-      existingProduct.name !== body.productName ? generateSLUG(body.productName) : existingProduct.slug
+      existingProduct.name !== body.name ? generateSLUG(body.name) : existingProduct.slug
+    const sku =
+      existingProduct.category !== body.category ? generateSKU(body.category) : existingProduct.sku
 
 
     const updatedProduct = await Product.findByIdAndUpdate(
       body._id,
       {
-        name: body.productName,
+        name: body.name,
         slug,
+        sku,
         description: body.description,
         category: body.category,
         attribute: body.attribute,
