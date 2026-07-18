@@ -118,9 +118,14 @@ const AddProduct = () => {
     return (
         <>
             <main className='py-5 px-2 space-y-5'>
-                <header className='w-full'>
+                <motion.header
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.01 }}
+                    viewport={{ once: false }}
+                    className='w-full py-7 px-5 bg-white shadow-lg rounded-2xl'>
                     <h1 className='text-2xl font-bold text-center'>Add Product</h1>
-                </header>
+                </motion.header>
 
                 <ProductInfoSec />
                 <PriceSection />
