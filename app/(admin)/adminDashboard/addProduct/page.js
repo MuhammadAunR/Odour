@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 
 const AddProduct = () => {
 
-    const { productDetails, validateProduct, productImagePreview, setProductImagePreview, resetProductForm, setProductDetails } = useProductForm()
+    const { productDetails, validateProduct, productImagePreview, setProductImagePreview, resetProductForm, setProductDetails, imagesToRemoveFromCloudinary, setImagesToRemoveFromCloudinary } = useProductForm()
     const [loading, setLoading] = useState(false)
     const [productFormAction, setProductFormAction] = useState('Save')
     const router = useRouter()
@@ -32,7 +32,10 @@ const AddProduct = () => {
             }
             const product = results.data;
             setProductFormAction('Update')
-            setProductImagePreview(product.images)
+            setProductImagePreview(product.images.map(img => ({
+                ...img, id: crypto.randomUUID()
+            })))
+
             setProductDetails({
                 _id: product._id,
                 name: product.name,
@@ -107,22 +110,34 @@ const AddProduct = () => {
 
     async function handleUpdateProduct() {
         setLoading(true)
-        const uploadedImages = await Promise.all(
-            productImagePreview.map(image =>
-                uploadImage(image.file)
-            )
-        );
-        const payload = {
-            ...productDetails,
-            images: uploadedImages,
-        };
-
+        async function handleImageUpload() {
+            const newImagesToUpload = productImagePreview.filter(obj => 'file' in obj)
+            const existingImagesInCloudinary = productImagePreview.filter(obj => 'publicId' in obj)
+            if (newImagesToUpload.length > 0) {
+                const uploadedImages = await Promise.all(
+                    newImagesToUpload.map(image =>
+                        uploadImage(image.file)
+                    )
+                );
+                const payload = {
+                    ...productDetails,
+                    images: [...existingImagesInCloudinary, ...uploadedImages],
+                };
+                return payload
+            }
+            return productDetails
+        }
+        if (imagesToRemoveFromCloudinary.length > 0) {
+            await removeImageFromCloudinary(imagesToRemoveFromCloudinary)
+            setImagesToRemoveFromCloudinary([])
+        }
+        const payload = await handleImageUpload()
         const results = await updateProduct(payload)
         if (!results.ok) {
             toast.error(results.message)
+            setLoading(false)
             return
         }
-
         toast.success(results.message)
         resetProductForm()
         setLoading(false)

@@ -1,10 +1,10 @@
 'use client'
-import { removeImageFromCloudinary } from '@/services/productServices'
 import React, { useState } from 'react'
 
 export const useAddProductForm = () => {
 
     const [productImagePreview, setProductImagePreview] = useState([])
+    const [imagesToRemoveFromCloudinary, setImagesToRemoveFromCloudinary] = useState([])
     const [productDetails, setProductDetails] = useState({
         name: '',
         description: '',
@@ -106,19 +106,29 @@ export const useAddProductForm = () => {
         const file = e.target.files[0];
         if (!file) return;
 
-        setProductImagePreview(prev => [
-            ...prev,
-            {
-                file,
-                id: crypto.randomUUID(),
-                url: URL.createObjectURL(file),
-                fileName: file.name.split('.')[0]
-            }
-        ]);
+        setProductImagePreview(prev => {
+            const updated = [
+                ...prev,
+                {
+                    file,
+                    id: crypto.randomUUID(),
+                    url: URL.createObjectURL(file),
+                    fileName: file.name.split('.')[0]
+                }
+            ];
+            console.log(updated)
+            return updated;
+        });
     };
-    const handleRemovePreviewImage = async (id) => {
-        await removeImageFromCloudinary(productImagePreview)
+    const handleRemovePreviewImage = (id) => {
         setProductImagePreview(prev => prev.filter(img => img.id !== id))
+        const imageToDelete = productImagePreview.find(img => 'publicId' in img && img.id === id)
+        if (imageToDelete) {
+            setImagesToRemoveFromCloudinary(prev => [
+                ...prev,
+                imageToDelete
+            ]);
+        }
     }
 
     const resetProductForm = () => {
@@ -144,6 +154,6 @@ export const useAddProductForm = () => {
     }
 
     return {
-        productDetails, setProductDetails, handleRemovePreviewImage, handleProductPreview, removeProductVariantCard, addProductVariantsCard, handleProductVariantInput, handleProductDetailsInput, validateProduct, handleProductDetailsViaButton, setProductImagePreview, productImagePreview, resetProductForm
+        productDetails, setProductDetails, handleRemovePreviewImage, handleProductPreview, removeProductVariantCard, addProductVariantsCard, handleProductVariantInput, handleProductDetailsInput, validateProduct, handleProductDetailsViaButton, setProductImagePreview, productImagePreview, resetProductForm, imagesToRemoveFromCloudinary, setImagesToRemoveFromCloudinary
     };
 }
