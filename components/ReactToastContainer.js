@@ -6,7 +6,7 @@ const ReactToastContainer = ({ children }) => {
         <>
             <ToastContainer
                 position="top-center"
-                autoClose={3000}
+                autoClose={2000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick={false}
