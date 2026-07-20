@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { SecondaryButton } from '@/components/UI/Buttons'
-import { Info, SquarePen, Trash2 } from 'lucide-react'
+import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
+import { Info, Search, SquarePen, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { deleteProductById, fetchAllProducts } from '@/services/productServices'
 import { toast } from 'react-toastify'
@@ -65,7 +65,23 @@ const ProductList = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
                 viewport={{ once: false }}
-                className='mt-15'>
+                className='py-7 px-5 bg-white shadow-lg rounded-2xl'>
+                <label htmlFor="name" className='flex items-center'>
+                    <div className='p-2 text-foreground/80 border border-foreground/30 rounded-l-md'><Search /></div>
+                    <input
+                        name='name'
+                        type="text"
+                        placeholder='Search product name or SKU'
+                        className='bg-background px-5 py-2 w-full outline-none text-foreground/80 rounded-r-md border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear' />
+                </label>
+            </motion.section>
+
+            <motion.section
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: false }}
+                className=''>
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                     {loading ? (
                         <div className='w-full flex items-center justify-center py-10'>
@@ -125,7 +141,7 @@ const ProductList = () => {
                                             <td className="p-4">{product.defaultSalePrice ?? 'NULL'}</td>
                                             <td className="p-4">{product.variants[0].stockQuantity}</td>
 
-                                            <td className="p-4 w-52">
+                                            <td className="p-4 w-42">
                                                 <span
                                                     className={`px-3 py-1 rounded-full text-xs font-medium ${product.variants[0].stockQuantity === 0
                                                         ? "bg-red-100 text-red-700"
@@ -167,6 +183,10 @@ const ProductList = () => {
                     }
                 </div>
             </motion.section>
+
+            <div className='w-full flex items-center justify-center py-5'>
+                <PrimaryButton text={'Load More Products'} />
+            </div>
         </main>
     )
 }
