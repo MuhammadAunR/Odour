@@ -93,14 +93,15 @@ const AddProduct = () => {
     }
 
     const handleCancel = () => {
+        if (productFormAction === 'Update' && window.confirm('Are you sure to cancel product update ?')) {
+            router.push('/adminDashboard/productList')
+            toast('Update Cancelled')
+            return
+        }
         const error = validateProduct();
         if (error) {
             toast.warning(error);
             return;
-        }
-        if (productFormAction === 'Update' && window.confirm('Are you sure to cancel product update ?')) {
-            router.push('/adminDashboard/productList')
-            toast('Update Cancelled')
         }
         if (productFormAction === 'Save' && window.confirm('Are you sure to cancel product save ?')) {
             resetProductForm()
@@ -109,6 +110,11 @@ const AddProduct = () => {
     }
 
     async function handleUpdateProduct() {
+        const error = validateProduct();
+        if (error) {
+            toast.warning(error);
+            return;
+        }
         setLoading(true)
         async function handleImageUpload() {
             const newImagesToUpload = productImagePreview.filter(obj => 'file' in obj)
