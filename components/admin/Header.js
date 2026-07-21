@@ -1,6 +1,12 @@
+import { CalendarDays, Clock } from 'lucide-react'
 import React from 'react'
 
 const Header = () => {
+
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+
     return (
         <>
             <header className='space-y-5 py-5 px-2'>
@@ -12,7 +18,10 @@ const Header = () => {
                         <p className='text-sm text-foreground/50'>Here what's heppening with yoour store</p>
                     </div>
                     <span className='font-semibold text-lg'>
-                        Date: {new Date().toDateString()}
+                        <div className='flex items-center gap-1'>
+                            <CalendarDays />-
+                            <span>{new Date().toDateString()}</span>
+                        </div>
                     </span>
                 </section>
             </header>
