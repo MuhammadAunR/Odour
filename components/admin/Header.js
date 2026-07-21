@@ -1,4 +1,7 @@
-import { CalendarDays, Clock } from 'lucide-react'
+'use client'
+
+import { CalendarDays } from 'lucide-react'
+import { motion } from 'motion/react';
 import React from 'react'
 
 const Header = () => {
@@ -9,7 +12,12 @@ const Header = () => {
 
     return (
         <>
-            <header className='space-y-5 py-5 px-2'>
+            <motion.header
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.01 }}
+                viewport={{ once: false }}
+                className='space-y-5 py-5 px-2'>
                 <section className='w-full py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between'>
                     <div className='flex flex-col'>
                         <h1 className='font-bold text-2xl'>
@@ -24,7 +32,7 @@ const Header = () => {
                         </div>
                     </span>
                 </section>
-            </header>
+            </motion.header>
         </>
     )
 }
