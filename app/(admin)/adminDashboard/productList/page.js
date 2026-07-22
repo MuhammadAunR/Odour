@@ -49,10 +49,10 @@ const ProductList = () => {
         <main className='space-y-5 py-5 px-2'>
 
             <motion.header
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                viewport={{ once: false }}
+                initial={{ opacity: 0, y: -30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.01 }}
+                viewport={{ once: true }}
                 className='flex items-center justify-between py-7 px-5 bg-white shadow-lg rounded-2xl'>
                 <h1 className='text-2xl font-bold'>Product List</h1>
                 <span onClick={() => router.push('/adminDashboard/addProduct')}>
@@ -61,10 +61,10 @@ const ProductList = () => {
             </motion.header>
 
             <motion.section
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                viewport={{ once: false }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.95, delay: 0.1 }}
+                viewport={{ once: true }}
                 className='py-7 px-5 bg-white shadow-lg rounded-2xl'>
                 <label htmlFor="name" className='flex items-center'>
                     <div className='p-2 text-foreground/80 border border-foreground/30 rounded-l-md'><Search /></div>
@@ -77,10 +77,10 @@ const ProductList = () => {
             </motion.section>
 
             <motion.section
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                viewport={{ once: false }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.95, delay: 0.2 }}
+                viewport={{ once: true }}
                 className=''>
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                     {loading ? (
@@ -184,9 +184,14 @@ const ProductList = () => {
                 </div>
             </motion.section>
 
-            <div className='w-full flex items-center justify-center py-5'>
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.95, delay: 0.3 }}
+                viewport={{ once: true }}
+                className='w-full flex items-center justify-center py-5'>
                 <PrimaryButton text={'Load More Products'} />
-            </div>
+            </motion.div>
         </main>
     )
 }
