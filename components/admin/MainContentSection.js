@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import SalesChart from './dashboard-components/SalesChart';
 import { motion } from 'motion/react';
+import RevenueAnalytics from './dashboard-components/RevenueAnalytics';
 
 const MainContentSection = () => {
 
@@ -72,33 +73,65 @@ const MainContentSection = () => {
     }
     return (
         <>
-            <main className='space-y-5 py-5 px-2'>
+            <main className='space-y-5 py-5 px-2 flex items-center flex-wrap gap-3'>
 
                 <motion.div
                     key={activeTimePeriodChart}
                     initial={{
-                        opacity: 0, filter: "blur(10px)"
+                        opacity: 0,
+                        y: 20,
+                        filter: "blur(10px)"
                     }}
-                    animate={{
-                        opacity: 1, filter: "blur(0px)"
+                    whileInView={{
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)"
                     }}
                     transition={{
-                        duration: 0.3,
-                        delay: 0.3
+                        duration: 0.6,
+                        ease: "easeOut"
                     }}
-                    viewport={{ once: false }}
+                    viewport={{
+                        once: true,
+                        amount: 0.2
+                    }}
                     className='py-7 px-5 bg-white shadow-lg rounded-2xl w-full space-y-7'>
+                    <h2 className='text-2xl font-semibold'>Sales Chart</h2>
                     <div className='flex items-center justify-start gap-2'>
                         {['Monthly Sales', 'Weekly Sales'].map((sale, index) => {
                             return <button
                                 key={index}
                                 onClick={() => handleActiveTimePeriodSales(sale.toLowerCase())}
-                                className={`border-2 border-foreground/70 px-7 py-2 font-semibold hover:bg-foreground/80 hover:text-background transition-all ease-linear duration-300
+                                className={`border-2 border-foreground/70 px-4 py-1 text-xs font-semibold hover:bg-foreground/80 hover:text-background transition-all ease-linear duration-300
                                 ${activeTimePeriodChart === sale.toLowerCase() ? 'bg-foreground/80 text-background' : 'bg-background text-foreground'}    
                                 cursor-pointer`}>{sale}</button>
                         })}
                     </div>
                     <SalesChart timePeriod={activeTimePeriodChart} salesData={activeTimePeriodChart === 'monthly sales' ? monthlySalesData : weeklySalesData} />
+                </motion.div>
+
+                <motion.div
+                    initial={{
+                        opacity: 0,
+                        y: 20,
+                        filter: "blur(10px)"
+                    }}
+                    whileInView={{
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)"
+                    }}
+                    transition={{
+                        duration: 0.6,
+                        ease: "easeOut"
+                    }}
+                    viewport={{
+                        once: true,
+                        amount: 0.2
+                    }}
+                    className='py-7 px-5 bg-white shadow-lg rounded-2xl w-full space-y-7'>
+                    <h2 className='text-2xl font-semibold'>Revenue Analytics</h2>
+                    <RevenueAnalytics />
                 </motion.div>
             </main>
         </>

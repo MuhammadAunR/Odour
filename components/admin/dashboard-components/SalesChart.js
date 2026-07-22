@@ -19,7 +19,19 @@ const SalesChart = ({ salesData, timePeriod }) => {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey={`${timePeriod === 'monthly sales' ? "month" : "day"}`} />
                         <YAxis tickFormatter={(value) => `PKR ${value / 1000}${value != 0 ? 'K' : ''}`} width={90} />
-                        <Tooltip />
+                        <Tooltip
+
+                            cursor={{
+                                stroke: "#94a3b8",
+                                strokeWidth: 2,
+                                strokeDasharray: "5 5",
+                            }}
+                            contentStyle={{
+                                backgroundColor: "#ffffff",
+                                border: "1px solid #e5e7eb",
+                                borderRadius: "12px",
+                                boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+                            }} />
                         <Area
                             type="monotone"
                             dataKey="sales"
