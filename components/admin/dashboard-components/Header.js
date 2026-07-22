@@ -13,10 +13,10 @@ const Header = () => {
     return (
         <>
             <motion.header
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: -30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.01 }}
-                viewport={{ once: false }}
+                viewport={{ once: true }}
                 className='space-y-5 py-5 px-2'>
                 <section className='w-full py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between'>
                     <div className='flex flex-col'>
