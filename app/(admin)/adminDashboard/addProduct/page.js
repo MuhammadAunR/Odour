@@ -155,10 +155,10 @@ const AddProduct = () => {
         <>
             <main className='py-5 px-2 space-y-5'>
                 <motion.header
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: -30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.01 }}
-                    viewport={{ once: false }}
+                    viewport={{ once: true }}
                     className='w-full py-7 px-5 bg-white shadow-lg rounded-2xl'>
                     <h1 className='text-2xl font-bold text-center'>Add Product</h1>
                 </motion.header>
@@ -169,10 +169,10 @@ const AddProduct = () => {
                 <ProductMediaSec />
 
                 <motion.section
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
-                    viewport={{ once: false }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.95, delay: 0.6 }}
+                    viewport={{ once: true }}
                     className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                     <h2 className='text-xl font-semibold'>Finalize and {productFormAction}</h2>
 

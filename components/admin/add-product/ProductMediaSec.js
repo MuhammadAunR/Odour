@@ -11,10 +11,10 @@ const ProductMediaSec = () => {
     return (
         <>
             <motion.section
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-                viewport={{ once: false }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.95, delay: 0.4 }}
+                viewport={{ once: true }}
                 className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                 <h2 className='text-xl font-semibold'>Media</h2>
 
