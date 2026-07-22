@@ -41,15 +41,17 @@ const KPISection = () => {
         <>
             <main className='space-y-5 py-5 px-2'>
 
-                <motion.section
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 }}
-                    viewport={{ once: false }}
+                <section
                     className='w-full flex items-center justify-between py-7 px-5 bg-white shadow-lg rounded-2xl'>
-                    {dashboardCards.map(card => {
+                    {dashboardCards.map((card, index) => {
                         const Icon = card.icon
-                        return <div key={card.title} className='w-60 min-h-20 p-5 bg-surface/30 border-2 border-surface rounded-lg flex gap-2 hover:shadow-md transition-all ease-linear duration-300'>
+                        return <motion.div
+                            initial={{ opacity: 0, y: 25 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            viewport={{ once: true }}
+                            key={card.title}
+                            className='w-60 min-h-20 p-5 bg-surface/30 border-2 border-surface rounded-lg flex gap-2 hover:shadow-md transition-all ease-linear duration-300'>
                             <span className={`${card.bgColor} ${card.textColor} h-fit p-2 rounded-md`}>
                                 <Icon size={50} />
                             </span>
@@ -57,9 +59,9 @@ const KPISection = () => {
                                 <h1 className='text-lg font-semibold'>{card.title}</h1>
                                 <span className='text-2xl font-bold'>{card.value}</span>
                             </div>
-                        </div>
+                        </motion.div>
                     })}
-                </motion.section>
+                </section>
 
             </main>
         </>
