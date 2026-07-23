@@ -32,7 +32,7 @@ const ProductGridCard = ({ product, index }) => {
           alt={product.name}
           fill
           priority
-          sizes="(max-width: 768px) 50vw, 25vw"
+          sizes="300px"
           className="object-cover transition-transform duration-500 hover:scale-105"
         />
 
@@ -158,7 +158,7 @@ const ProductListCard = ({ product, index }) => {
             alt={product.name}
             fill
             priority
-            sizes="1000px"
+            sizes="360px"
             className="object-cover group-hover/ProductListCard:scale-105 transition-all ease-linear duration-500"
           />
         </div>
