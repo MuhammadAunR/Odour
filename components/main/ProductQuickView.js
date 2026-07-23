@@ -17,8 +17,11 @@ const ProductQuickView = () => {
 
     useEffect(() => {
         if (!quickViewProduct) return
-        const defaultSize = quickViewProduct.sizes?.find(size => size.isDefault) || quickViewProduct.sizes?.[0] || null
+        const defaultSize = quickViewProduct?.variants?.find((variant) => variant.originalPrice == quickViewProduct.defaultPrice) ||
+            quickViewProduct?.variants?.[0] ||
+            null;
         setSelectedPriceAndSize(defaultSize)
+        console.log(defaultSize)
     }, [quickViewProduct])
 
     const handleDefaultPriceAndSize = (size) => {
@@ -60,52 +63,56 @@ const ProductQuickView = () => {
                         </div>
 
                         <div className='flex items-center justify-center gap-5 p-5 max-md:flex-col w-full h-fit'>
-                            <div className='relative w-full sm:w-72 md:w-80 lg:w-96 aspect-3/4 overflow-hidden shrink-0'>
+                            <div className='relative w-full sm:w-72 md:w-80 lg:w-1/2 aspect-3/4 overflow-hidden shrink-0'>
                                 <Image
-                                    src={quickViewProduct.imgSrc}
+                                    src={quickViewProduct.images[0].url}
                                     fill
-                                    alt={quickViewProduct.alt}
+                                    sizes="(max-width: 640px) 100vw,
+                                           (max-width: 768px) 288px,
+                                           (max-width: 1024px) 320px,
+                                            50vw"
+                                    alt={quickViewProduct.name}
                                     className='object-cover'
                                 />
                             </div>
-                            <div className='flex flex-col justify-center gap-4'>
+                            <div className='flex flex-col justify-center gap-4 md:w-1/2'>
                                 <div>
-                                    <h3 className='text-4xl font-black font-serif tracking-wider'>
+                                    <h3 className='text-4xl font-semibold font-serif'>
                                         {quickViewProduct.name}
                                     </h3>
-                                    <h4 className='text-lg font-semibold'>
-                                        {quickViewProduct.brand}
+                                    <h4 className='text-lg'>
+                                        By <span className='font-bold text-foreground/70 font-display'>ODOUR</span>
                                     </h4>
-                                    <p className='text-muted'>{quickViewProduct.description}</p>
+                                    <p className='text-muted font-serif line-clamp-3'>{quickViewProduct.description}</p>
                                 </div>
 
                                 <div className='w-full h-[.5px] bg-foreground/20'></div>
                                 <div>
                                     {selectedPriceAndSize && (
-                                        quickViewProduct.isOnSale && selectedPriceAndSize.discountedPrice !== null ? (
+                                        quickViewProduct.defaultSalePrice && selectedPriceAndSize.salePrice !== null ? (
                                             <div className='flex flex-col gap-1'>
                                                 <div className='flex items-center gap-5'>
                                                     <span className='font-bold text-red-500 text-lg'>
-                                                        PKR {selectedPriceAndSize.discountedPrice.toLocaleString()}
+                                                        PKR {selectedPriceAndSize.salePrice.toLocaleString()}
                                                     </span>
                                                     <span className='px-2 py-1 text-xs font-semibold bg-red-500 text-white'>
-                                                        -{Math.round(((selectedPriceAndSize.price - selectedPriceAndSize.discountedPrice) / selectedPriceAndSize.price) * 100)}%
+                                                        -{Math.round(((selectedPriceAndSize.originalPrice - selectedPriceAndSize.salePrice) / selectedPriceAndSize.originalPrice) * 100)}%
                                                     </span>
                                                 </div>
                                                 <span className='text-sm text-foreground/40 line-through'>
-                                                    PKR {selectedPriceAndSize.price.toLocaleString()}
+                                                    PKR {selectedPriceAndSize.originalPrice.toLocaleString()}
                                                 </span>
                                             </div>
                                         ) : (
                                             <span className='font-bold text-foreground text-lg'>
-                                                PKR {selectedPriceAndSize.price.toLocaleString()}
+                                                PKR {selectedPriceAndSize.originalPrice.toLocaleString()}
                                             </span>
                                         )
                                     )}
                                 </div>
                                 <div className='w-full h-[.5px] bg-foreground/20'></div>
                                 <div className='flex items-center gap-2'>
-                                    {quickViewProduct.sizes.map(item => {
+                                    {quickViewProduct.variants.map(item => {
                                         return <div
                                             onClick={() => handleDefaultPriceAndSize(item)}
                                             key={item.size}
@@ -115,7 +122,11 @@ const ProductQuickView = () => {
                                     })}
                                 </div>
                                 <div className='w-full h-[.5px] bg-foreground/20'></div>
-                                <div className='text-lg'>{quickViewProduct.fragranceFamily}</div>
+                                <div className='flex items-center gap-1'>
+                                    {quickViewProduct.fragranceFamily.map((family) => {
+                                        return <div key={family} className='text-lg border border-foreground/20 py-1 px-3 font-serif'>{family}</div>
+                                    })}
+                                </div>
                                 <div className='w-full h-[.5px] bg-foreground/20'></div>
                                 <div className='flex items-center justify-center gap-2'>
                                     <button

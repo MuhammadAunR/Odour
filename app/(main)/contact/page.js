@@ -54,7 +54,7 @@ const ContactPage = () => {
                     transition={{ duration: 0.3, delay: 0.3 }}
                     className='lg:w-1/2 w-full'>
                     <div className='flex flex-col gap-3 mb-8'>
-                        <h3 className='text-4xl tracking-wider font-serif font-bold text-foreground'>Let us Talk</h3>
+                        <h3 className='text-4xl tracking-wider font-serif font-semibold text-foreground'>Let us Talk</h3>
                         <p className='text-muted leading-relaxed'>
                             Have a question about a scent, an order, or just want to say hello?
                             We would love to hear from you.

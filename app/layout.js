@@ -7,9 +7,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
 import AuthProviders from "./providers";
 
-const dubiel = localFont({
-  src: "../app/fonts/DubielPlain.woff2",
-  variable: "--font-dubiel",
+const raleway = localFont({
+  src: "../app/fonts/Raleway.woff2",
+  variable: "--font-raleway",
   display: "swap",
 });
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${dubiel.variable} ${topLuxury.variable} h-full antialiased`}
+      className={`${inter.variable} ${raleway.variable} ${topLuxury.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ScrollToTop />

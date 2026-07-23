@@ -16,10 +16,6 @@ const ProductGridCard = ({ product, index }) => {
   const { toggleCart, addCartItemIdToLS } = useCart();
   const { handleWishListItemsInLS, wishListProducts } = useWishlist();
 
-  const defaultPriceAndSize =
-    product?.sizes?.find((size) => size.isDefault) ||
-    product?.sizes?.[0] ||
-    null;
 
   return (
     <motion.div
@@ -32,8 +28,8 @@ const ProductGridCard = ({ product, index }) => {
       <div className="relative w-75 h-75 overflow-hidden">
         <Image
           onClick={() => router.push(`/product/${product.slug}`)}
-          src={product.imgSrc}
-          alt={product.alt}
+          src={product.images[0].url}
+          alt={product.name}
           fill
           priority
           sizes="(max-width: 768px) 50vw, 25vw"
@@ -42,23 +38,23 @@ const ProductGridCard = ({ product, index }) => {
 
         <span
           className={`absolute top-2 left-2 px-2 py-1 text-xs font-medium
-                    ${product.gender === "Men"
+                    ${product.gender[0] === "Men"
               ? "bg-blue-950 text-background"
-              : product.gender === "Women"
+              : product.gender[0] === "Women"
                 ? "bg-pink-900 text-background"
                 : "bg-foreground text-background"
             }`}
         >
-          {product.gender}
+          {product.gender[0]}
         </span>
 
-        {product.isOnSale && (
+        {product.defaultSalePrice && (
           <span className="absolute top-2 right-2 px-2 py-1 text-xs font-semibold bg-red-500 text-white">
             -
             {Math.round(
-              ((defaultPriceAndSize.price -
-                defaultPriceAndSize.discountedPrice) /
-                defaultPriceAndSize.price) *
+              ((product.defaultPrice -
+                product.defaultSalePrice) /
+                product.defaultPrice) *
               100,
             )}
             %
@@ -113,20 +109,20 @@ const ProductGridCard = ({ product, index }) => {
         <div className="flex items-center gap-2">
           <h3 className="md:text-xl font-bold font-display">{product.name}</h3>
         </div>
-        <p className="text-xs text-foreground/40 mb-1">{product.brand}</p>
+        {/* <p className="text-xs text-foreground/40 mb-1">{product.brand}</p> */}
 
-        {product.isOnSale ? (
+        {product.defaultSalePrice ? (
           <div className="flex items-baseline gap-2">
             <span className="max-md:text-[10px] text-xs text-foreground/40 line-through">
-              PKR {defaultPriceAndSize.price.toLocaleString()}
+              PKR {product.defaultPrice.toLocaleString()}
             </span>
             <span className="font-bold text-red-500 max-md:text-sm">
-              PKR {defaultPriceAndSize.discountedPrice.toLocaleString()}
+              PKR {product.defaultSalePrice.toLocaleString()}
             </span>
           </div>
         ) : (
           <span className="max-md:text-sm font-bold text-foreground">
-            PKR {defaultPriceAndSize.price.toLocaleString()}
+            PKR {product.defaultPrice.toLocaleString()}
           </span>
         )}
       </div>
@@ -140,9 +136,10 @@ const ProductListCard = ({ product, index }) => {
   const router = useRouter();
   const { toggleCart, addCartItemIdToLS } = useCart();
   const { handleWishListItemsInLS, wishListProducts } = useWishlist();
+
   const defaultPriceAndSize =
-    product?.sizes?.find((size) => size.isDefault) ||
-    product?.sizes?.[0] ||
+    product?.variants?.find((variant) => variant.originalPrice == product.defaultPrice) ||
+    product?.variants?.[0] ||
     null;
 
   return (
@@ -157,7 +154,7 @@ const ProductListCard = ({ product, index }) => {
       >
         <div className="w-90 h-80 relative overflow-hidden">
           <Image
-            src={product.imgSrc}
+            src={product.images[0].url}
             alt={product.name}
             fill
             priority
@@ -169,7 +166,7 @@ const ProductListCard = ({ product, index }) => {
           <div className="flex flex-col items-start gap-3">
             <div className="flex flex-col items-start">
               <div className="flex items-center justify-start gap-5">
-                <h1 className="font-bold font-serif text-3xl tracking-wider">
+                <h1 className="font-semibold font-serif text-3xl tracking-wider">
                   {product.name}
                 </h1>
                 <span className="font-semibold">
@@ -184,14 +181,14 @@ const ProductListCard = ({ product, index }) => {
               <div className="flex items-center justify-center gap-2">
                 <span
                   className={`px-2 py-1 text-xs font-medium
-                    ${product.gender === "Men"
+                    ${product.gender[0] === "Men"
                       ? "bg-blue-950 text-background"
-                      : product.gender === "Women"
+                      : product.gender[0] === "Women"
                         ? "bg-pink-900 text-background"
                         : "bg-foreground text-background"
                     }`}
                 >
-                  {product.gender}
+                  {product.gender[0]}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -211,35 +208,35 @@ const ProductListCard = ({ product, index }) => {
           </div>
 
           <div className="actionSection flex flex-col gap-3 items-end">
-            {product.isOnSale ? (
+            {product.defaultSalePrice ? (
               <div className="flex flex-col items-end">
                 <span className="px-2 py-1 text-xs font-semibold bg-red-500 text-white">
                   -
                   {Math.round(
-                    ((defaultPriceAndSize.price -
-                      defaultPriceAndSize.discountedPrice) /
-                      defaultPriceAndSize.price) *
+                    ((defaultPriceAndSize.originalPrice -
+                      defaultPriceAndSize.salePrice) /
+                      defaultPriceAndSize.originalPrice) *
                     100,
                   )}
                   %
                 </span>
                 <span className="text-foreground/40 line-through text-sm">
-                  PKR {defaultPriceAndSize.price.toLocaleString()}
+                  PKR {defaultPriceAndSize.originalPrice.toLocaleString()}
                 </span>
                 <span className="font-bold text-red-500 text-xl">
-                  PKR {defaultPriceAndSize.discountedPrice.toLocaleString()}
+                  PKR {defaultPriceAndSize.salePrice.toLocaleString()}
                 </span>
                 <span className="text-red-500 text-sm">
                   You save PKR{" "}
                   {(
-                    defaultPriceAndSize.price -
-                    defaultPriceAndSize.discountedPrice
+                    defaultPriceAndSize.originalPrice -
+                    defaultPriceAndSize.salePrice
                   ).toLocaleString()}
                 </span>
               </div>
             ) : (
               <span className="font-bold text-foreground text-lg">
-                PKR {defaultPriceAndSize.price.toLocaleString()}
+                PKR {defaultPriceAndSize.originalPrice.toLocaleString()}
               </span>
             )}
             <div className="flex items-end justify-end gap-2 flex-wrap-reverse">

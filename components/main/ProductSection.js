@@ -7,11 +7,11 @@ import { motion } from 'motion/react'
 
 const ProductSection = () => {
 
-    const [activeFilter, setActiveFilter] = useState('bestseller')
+    const [activeFilter, setActiveFilter] = useState('New Arrivals')
     const { products } = useProducts()
 
-    const availableTags = [...new Set(products.flatMap(prod => prod.tags))]
-    const filteredProducts = products.filter(prod => prod.tags.includes(activeFilter))
+    const availableAttribute = [...new Set(products.flatMap(prod => prod.attribute))]
+    const filteredProducts = products.filter(prod => prod.attribute.includes(activeFilter))
 
     return (
         <>
@@ -27,13 +27,13 @@ const ProductSection = () => {
                     </div>
 
                     <div className='flex items-center justify-center gap-5 flex-wrap'>
-                        {availableTags.map(tag => (
+                        {availableAttribute.map(tag => (
                             <button
                                 key={tag}
                                 onClick={() => setActiveFilter(tag)}
                                 className={`px-5 py-3 transition-all ease-linear duration-300 cursor-pointer
                                     ${activeFilter === tag ? 'bg-foreground text-background' : 'bg-surface text-foreground'}`}>
-                                {tag === 'bestseller' ? 'Best Seller' : 'Trending'}
+                                {tag === 'New Arrivals' ? 'New Arrivals' : 'Limited Edition'}
                             </button>
                         ))}
                     </div>
@@ -48,7 +48,7 @@ const ProductSection = () => {
                 }
                 <section className='flex items-center justify-center gap-4 w-full flex-wrap'>
                     {filteredProducts.slice(0, 4).map((prod, index) => (
-                        <ProductGridCard key={prod.id} product={prod} index={index} />
+                        <ProductGridCard key={index} product={prod} index={index} />
                     ))}
                 </section>
             </main>

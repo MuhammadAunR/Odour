@@ -12,12 +12,12 @@ const ProductContext = ({ children }) => {
 
   useEffect(() => {
     async function fetchAllProducts() {
-        setLoading(true)
+      setLoading(true)
       try {
         const res = await fetch("/api/products?limit=12");
         const data = await res.json();
         console.log("Raw data from ProductContext", data);
-        setProducts(data.products);
+        setProducts(data);
         setApiResponse(data);
         setLoading(false)
       } catch (error) {

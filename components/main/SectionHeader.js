@@ -22,7 +22,7 @@ const SectionHeader = ({headerContent}) => {
 
             <motion.h2
                 variants={itemVariants}
-                className='text-4xl md:text-5xl font-black font-serif tracking-wider'>
+                className='text-4xl md:text-5xl font-semibold font-serif tracking-wider'>
                 {headerContent.mainHeading}
             </motion.h2>
 

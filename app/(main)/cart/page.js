@@ -87,7 +87,7 @@ const CartPage = () => {
                                 </div>
                                 <div className="flex flex-col flex-1 min-w-0">
                                     <div className="flex items-center gap-2">
-                                        <h3 className="text-2xl tracking-wider font-serif font-bold">{item.name}</h3>
+                                        <h3 className="text-2xl tracking-wider font-serif font-semibold">{item.name}</h3>
                                         <span className="text-sm">({item.selectedSize.size})</span>
                                     </div>
                                     <span className="text-sm text-gray-400">{item.brand}</span>

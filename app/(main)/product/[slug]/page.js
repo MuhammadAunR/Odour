@@ -158,7 +158,7 @@ const Product = ({ params }) => {
                     lg:w-1/2 min-h-150 h-fit'>
                         <div>
                             <div className='flex items-baseline gap-5'>
-                                <h3 className='text-3xl lg:text-4xl xl:text-5xl font-black font-serif tracking-widest'>{product.name}</h3>
+                                <h3 className='text-3xl lg:text-4xl xl:text-5xl font-semibold font-serif tracking-widest'>{product.name}</h3>
                                 <span className='font-semibold uppercase max-lg:text-sm'>For {product.gender}</span>
                             </div>
                             <h4 className='md:text-lg font-semibold'>{product.brand}</h4>
@@ -319,7 +319,7 @@ const Product = ({ params }) => {
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -10 }}
                                         transition={{ duration: 0.3, delay: 0.15 }}
-                                        className='font-serif tracking-wider text-lg font-bold'>
+                                        className='font-serif tracking-wider text-lg font-semibold'>
                                         {testimonials[testimonialCount]?.name}
                                     </motion.span>
                                 </AnimatePresence>
@@ -356,7 +356,7 @@ const Product = ({ params }) => {
                                     <CountUp
                                         end={stat.end}
                                         duration={4}
-                                        className='text-5xl font-black font-serif tracking-wide'
+                                        className='text-5xl font-semibold font-serif tracking-wide'
                                     />
                                     <span className='text-4xl tracking-wide'>{stat.suffix}</span>
                                 </div>
@@ -381,7 +381,7 @@ const Product = ({ params }) => {
                                 key={reason.title}
                                 className='flex flex-col items-center justify-center gap-3 w-100 min-h-80 bg-radial from-background via-surface/50 to-surface p-5 border border-transparent hover:border-foreground/60 transition-all ease-linear'>
                                 <span className='text-3xl'>{reason.icon}</span>
-                                <h3 className='text-3xl font-serif font-bold tracking-wider'>{reason.title}</h3>
+                                <h3 className='text-3xl font-serif font-semibold tracking-wider'>{reason.title}</h3>
                                 <p className='text-justify text-muted font-semibold'>{reason.description}</p>
                             </div>
                         })}

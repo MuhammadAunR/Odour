@@ -1,4 +1,4 @@
-const gender = ['Male', 'Female', 'Unisex']
+const gender = ['Men', 'Women', 'Unisex']
 const seasons = ['Spring', 'Winter', 'Summer', 'Fall']
 const fragranceFamily = ['Woody', 'Citrus', 'Floral', 'Fresh', 'Oriental']
 const productCategories = ['Perfume', 'Attar', 'Tester', 'Body Spray', 'Deodorant']

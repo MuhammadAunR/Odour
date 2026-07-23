@@ -47,8 +47,10 @@ export async function POST(req) {
   }
 }
 
-export async function GET() {
+export async function GET(params) {
   try {
+    const { limit } = await params
+    console.log(limit)
     await connectDB()
     const products = await Product.find()
     return NextResponse.json(

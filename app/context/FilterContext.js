@@ -40,7 +40,7 @@ const FilterContext = ({ children }) => {
       const res = await fetch(apiUrl);
       const data = await res.json();
       console.log("Raw data from FilterContext", data);
-      setProducts(data.products);
+      setProducts(data);
       setApiResponse(data);
       setLoading(false);
 

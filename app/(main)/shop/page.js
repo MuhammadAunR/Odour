@@ -30,7 +30,7 @@ const ShopPage = () => {
   const router = useRouter()
   const pathname = usePathname()
 
-  const currentPage = Number(searchParams.get("page"))|| 1;
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   const handleCurrentPage = (page) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -54,7 +54,7 @@ const ShopPage = () => {
       handleCurrentPage(currentPage - 1)
     }
   };
-  
+
   useEffect(() => {
     function handleProductView() {
       if (window.innerWidth <= 1025) {
@@ -183,13 +183,13 @@ const ShopPage = () => {
                   {products.map((prod, index) =>
                     productView === "grid" ? (
                       <ProductGridCard
-                        key={prod.id}
+                        key={prod._id}
                         product={prod}
                         index={index}
                       />
                     ) : (
                       <ProductListCard
-                        key={prod.id}
+                        key={prod._id}
                         product={prod}
                         index={index}
                       />
