@@ -160,6 +160,16 @@ const ShopPage = () => {
         </div>
 
         <div className="flex gap-8 pt-5 max-lg:flex-col">
+
+          {products.length === 0 && !loading &&
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, ease: "easeInOut" }}
+              className="text-xl font-semibold font-serif w-full text-center py-10 text-foreground/50">
+              No products available
+            </motion.div>
+          }
           <section className="flex-1 min-w-0 pb-5">
             {searchInput.trim() && products.length === 0 && !loading && (
               <motion.div
