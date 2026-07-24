@@ -107,7 +107,7 @@ const ProductGridCard = ({ product, index }) => {
 
       <div className="p-4 w-full space-y-1">
         <div className="flex items-center gap-2">
-          <h3 className="md:text-xl font-bold font-display">{product.name}</h3>
+          <h3 className="md:text-xl font-bold font-serif">{product.name}</h3>
         </div>
         {/* <p className="text-xs text-foreground/40 mb-1">{product.brand}</p> */}
 
@@ -116,12 +116,12 @@ const ProductGridCard = ({ product, index }) => {
             <span className="max-md:text-[10px] text-xs text-foreground/40 line-through">
               PKR {product.defaultPrice.toLocaleString()}
             </span>
-            <span className="font-bold text-red-500 max-md:text-sm">
+            <span className="font-semibold text-red-500 max-md:text-sm">
               PKR {product.defaultSalePrice.toLocaleString()}
             </span>
           </div>
         ) : (
-          <span className="max-md:text-sm font-bold text-foreground">
+          <span className="max-md:text-sm font-semibold text-foreground">
             PKR {product.defaultPrice.toLocaleString()}
           </span>
         )}
