@@ -1,55 +1,39 @@
 'use client'
 
 import { useFilter } from '@/app/context/FilterContext'
-import { ChevronDown, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import React, { useState } from 'react'
 import useBlockYScroll from '../BlockYScroll'
 import { SecondaryButton } from '../UI/Buttons'
+import { useRouter } from 'next/navigation'
 
 const Filter = () => {
-    const { filters, isFilterSideOpen, toggleFilterSide, setActiveFilterCount, setQueryParams, queryParams } = useFilter()
-    console.log(filters)
+    const { filters, isFilterSideOpen, toggleFilterSide, queryParams } = useFilter()
 
     const [draftParams, setDraftParams] = useState(queryParams)
-    const [open, setOpen] = useState('')
-
-    const defaultParams = {
-        page: 1,
-        limit: 12,
-        gender: '',
-        season: '',
-        fragranceFamily: '',
-        search: '',
-        sort: 'id_asc'
-    }
+    const router = useRouter()
 
     useBlockYScroll(isFilterSideOpen)
 
-    const handleOpenFilterSection = (section) => {
-        setOpen(prev => prev === section ? null : section)
-    }
-
     const handleApplyFilter = (filterType, filterName) => {
-        setActiveFilterCount(prev => [...prev, filterName])
-        setDraftParams(prev => {
-            const newValue = prev[filterType] === filterName ? '' : filterName
-            return {
-                ...prev,
-                [filterType]: newValue,
-                page: 1
-            }
-        })
+        setDraftParams(prev => ({
+            ...prev,
+            [filterType]: prev[filterType] === filterName ? '' : filterName,
+        }));
     }
 
+    console.log(draftParams)
     const handleApply = () => {
-        setQueryParams(draftParams)
+        const cleanParams = Object.fromEntries(
+            Object.entries(draftParams).filter(([_, v]) => v !== "" && v !== null))
+
+        const params = new URLSearchParams(cleanParams)
+        router.push(`/shop?${params.toString()}`)
         toggleFilterSide()
     }
 
     const handleReset = () => {
-        setDraftParams(defaultParams)
-        setQueryParams(defaultParams)
-        setActiveFilterCount([])
+        router.push('/shop?page=1&limit=12')
         toggleFilterSide()
     }
 
@@ -65,63 +49,45 @@ const Filter = () => {
                     className={`h-screen w-full bg-surface max-w-100 fixed top-0 right-0 z-200 flex flex-col transition-all ease-linear ${isFilterSideOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
                     <div className='flex items-center justify-between px-5 py-6 border-b-2 border-accent shrink-0'>
-                        <h3 className='text-2xl font-semibold'>Filters</h3>
+                        <h3 className='text-2xl font-bold font-serif'>Filters</h3>
                         <span onClick={toggleFilterSide}>
                             <X size={28} className='cursor-pointer hover:rotate-180 hover:text-accent transition-all ease-linear' />
                         </span>
                     </div>
 
-                    <section className="flex-1 overflow-hidden px-5 space-y-5 py-3">
+                    <section className="flex flex-1 overflow-hidden px-5 space-y-5 py-3 overscroll-y-contain" data-lenis-prevent>
 
-
-                        <section className='flex flex-col flex-1 overflow-y-scroll'>
+                        <section className='flex flex-col flex-1 overflow-y-scroll gap-2'>
 
                             {Object.entries(filters).map(([key, values]) => {
-                                const isOpen = open === key;
-
                                 return (
-                                    <div key={key} className="flex flex-col border-b border-foreground/20">
+                                    <div key={key} className="flex flex-col border-b border-foreground/20 pb-4">
 
-                                        <div
-                                            onClick={() => handleOpenFilterSection(key)}
-                                            className="flex items-center justify-between hover:bg-foreground/5 px-2 py-3 cursor-pointer">
-                                            <h3 className="font-semibold">{key}</h3>
-                                            <span className={`transition-transform duration-300 ease-linear ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
-                                                <ChevronDown size={20} />
-                                            </span>
-                                        </div>
+                                        <h3 className="font-bold font-serif px-2 py-3">
+                                            {key === 'fragranceFamilies' ? 'Fragrance Families' : key.charAt(0).toUpperCase() + key.slice(1)}
+                                        </h3>
 
-
-                                        <div
-                                            className="grid transition-all duration-300 ease-in-out"
-                                            style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}>
-                                            <div className="overflow-hidden">
-                                                {values.map((value) => (
-                                                    <label
-                                                        key={value.value}
-                                                        className="flex items-center py-2 justify-between group/category px-2 cursor-pointer hover:bg-foreground/5 transition-colors duration-300"
+                                        <div className="flex flex-wrap gap-2 px-2">
+                                            {values.map((value) => {
+                                                const isActive = draftParams[key] === value.name;
+                                                return (
+                                                    <button
+                                                        key={value.name}
+                                                        type="button"
+                                                        onClick={() => handleApplyFilter(key, value.name)}
+                                                        className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm transition-colors duration-300 cursor-pointer
+                                                               ${isActive
+                                                                ? 'bg-foreground text-background border-foreground'
+                                                                : 'bg-transparent text-foreground border-foreground/30 hover:border-foreground/60'
+                                                            }`}
                                                     >
-                                                        <div className="flex items-center gap-5">
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={
-                                                                    Array.isArray(draftParams[key])
-                                                                        ? draftParams[key].includes(value.value)
-                                                                        : draftParams[key] === value.value
-                                                                }
-                                                                onChange={() => handleApplyFilter(key, value.value)}
-                                                            />
-                                                            <span className="group-hover/category:text-muted transition-colors duration-300">
-                                                                {value.value}
-                                                            </span>
-                                                        </div>
-
-                                                        <div className="bg-foreground/30 p-0.5 rounded-full text-xs w-7 h-7 flex items-center justify-center group-hover/category:bg-muted group-hover/category:text-background transition-colors duration-300">
+                                                        <span>{value.name}</span>
+                                                        <span className={`text-xs ${isActive ? 'text-background/70' : 'text-foreground/50'}`}>
                                                             {value.count}
-                                                        </div>
-                                                    </label>
-                                                ))}
-                                            </div>
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
 
                                     </div>

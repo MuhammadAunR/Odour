@@ -28,27 +28,27 @@ export async function GET() {
     }
     try {
         await connectDB()
-        const categories = await Product.aggregate(
+        const category = await Product.aggregate(
             handleAggregatePipeline('category')
         )
-        const fragranceFamilies = await Product.aggregate(
+        const fragranceFamily = await Product.aggregate(
             handleAggregatePipeline('fragranceFamily')
         )
         const gender = await Product.aggregate(
             handleAggregatePipeline('gender')
         )
-        const attributes = await Product.aggregate(
+        const attribute = await Product.aggregate(
             handleAggregatePipeline('attribute')
         )
-        const seasons = await Product.aggregate(
+        const season = await Product.aggregate(
             handleAggregatePipeline('season')
         )
         const filters = {
-            categories,
-            fragranceFamilies,
+            category,
+            fragranceFamily,
             gender,
-            attributes,
-            seasons,
+            attribute,
+            season,
         };
         return NextResponse.json(
             { message: 'Filter request sucessfull', filters },

@@ -16,26 +16,23 @@ const FilterContext = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState([])
 
-  const [queryParams, setQueryParams] = useState({
+  const queryParams = {
     page: Number(searchParams.get("page")) || 1,
     limit: Number(searchParams.get("limit")) || 12,
     gender: searchParams.get("gender") || "",
     attribute: searchParams.get("attribute") || "",
     category: searchParams.get("category") || "",
-    season: searchParams.get("seasone") || "",
+    season: searchParams.get("season") || "",
     fragranceFamily: searchParams.get("fragranceFamily") || "",
     search: searchParams.get("search") || "",
     sort: searchParams.get("sort") || "",
-  });
+  }
 
-  const apiUrl = React.useMemo(() => {
-    const cleanParams = Object.fromEntries(
-      Object.entries(queryParams).filter(([_, v]) => v !== "" && v !== null),
-    );
+  const cleanParams = Object.fromEntries(
+    Object.entries(queryParams).filter(([_, v]) => v !== "" && v !== null)
+  );
 
-    const params = new URLSearchParams(cleanParams);
-    return `/api/products?${params.toString()}`;
-  }, [queryParams]);
+  const apiUrl = `/api/products?${new URLSearchParams(cleanParams)}`;
 
   useEffect(() => {
     setLoading(true);
@@ -76,7 +73,6 @@ const FilterContext = ({ children }) => {
         activeFilterCount,
         filters,
         queryParams,
-        setQueryParams,
         loading,
         products,
         apiResponse,

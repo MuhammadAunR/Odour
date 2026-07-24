@@ -112,7 +112,7 @@ const ShopPage = () => {
               </span>{" "}
               of{" "}
               <span className="text-foreground font-semibold">
-                {apiResponse.total || 0}
+                {apiResponse.totalProducts || 0}
               </span>{" "}
               products
             </p>
