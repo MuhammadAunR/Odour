@@ -47,14 +47,54 @@ export async function POST(req) {
   }
 }
 
-export async function GET(params) {
+export async function GET(req) {
   try {
-    const { limit } = await params
-    console.log(limit)
+
+    const { searchParams } = new URL(req.url)
+
+    const category = searchParams.get("category");
+    const fragranceFamily = searchParams.get("fragranceFamily");
+    const gender = searchParams.get("gender");
+    const season = searchParams.get("season");
+    const attribute = searchParams.get("attribute");
+    const page = Number(searchParams.get("page")) || 1;
+    const limit = Number(searchParams.get("limit")) || 12;
+    const sortBy = searchParams.get("sort");
+
+    const query = {}
+
+    if (category) query.category = category;
+    if (fragranceFamily) query.fragranceFamily = fragranceFamily;
+    if (gender) query.gender = gender;
+    if (season) query.season = season;
+    if (attribute) query.attribute = attribute;
+
+    let sort = {}
+
+    if (sortBy === 'price_asc') sort.defaultPrice = 1;
+    if (sortBy === 'price_desc') sort.defaultPricef = -1;
+
+    let skip = (page - 1) * limit
+
+    const totalProducts = await Product.countDocuments(query);
+    const totalPages = Math.ceil(totalProducts / limit);
+    const hasNextPage = page < totalPages;
+    const hasPreviousPage = page > 1;
+
     await connectDB()
-    const products = await Product.find()
-    return NextResponse.json(
+    const products = await Product.find(query).sort(sort).skip(skip).limit(limit)
+
+    const data = {
       products,
+      totalProducts,
+      totalPages,
+      currentPage: page,
+      limit,
+      hasNextPage,
+      hasPreviousPage,
+    };
+    return NextResponse.json(
+      data,
       { message: 'Product Fetched Successfully' },
       { status: 200 },
     )

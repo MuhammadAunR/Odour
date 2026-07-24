@@ -7,8 +7,8 @@ import useBlockYScroll from '../BlockYScroll'
 import { SecondaryButton } from '../UI/Buttons'
 
 const Filter = () => {
-    const { isFilterSideOpen, toggleFilterSide, setActiveFilterCount } = useFilter()
-    const { filters, setQueryParams, queryParams } = useFilter()
+    const { filters, isFilterSideOpen, toggleFilterSide, setActiveFilterCount, setQueryParams, queryParams } = useFilter()
+    console.log(filters)
 
     const [draftParams, setDraftParams] = useState(queryParams)
     const [open, setOpen] = useState('')
@@ -76,16 +76,16 @@ const Filter = () => {
 
                         <section className='flex flex-col flex-1 overflow-y-scroll'>
 
-                            {filters.map((filter) => {
-                                const isOpen = open === filter.title;
+                            {Object.entries(filters).map(([key, values]) => {
+                                const isOpen = open === key;
 
                                 return (
-                                    <div key={filter.title} className="flex flex-col border-b border-foreground/20">
+                                    <div key={key} className="flex flex-col border-b border-foreground/20">
 
                                         <div
-                                            onClick={() => handleOpenFilterSection(filter.title)}
+                                            onClick={() => handleOpenFilterSection(key)}
                                             className="flex items-center justify-between hover:bg-foreground/5 px-2 py-3 cursor-pointer">
-                                            <h3 className="font-semibold">{filter.title === 'FragranceFamily' ? 'Fragrance Family' : filter.title}</h3>
+                                            <h3 className="font-semibold">{key}</h3>
                                             <span className={`transition-transform duration-300 ease-linear ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
                                                 <ChevronDown size={20} />
                                             </span>
@@ -96,28 +96,28 @@ const Filter = () => {
                                             className="grid transition-all duration-300 ease-in-out"
                                             style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}>
                                             <div className="overflow-hidden">
-                                                {filter.options.map((opt) => (
+                                                {values.map((value) => (
                                                     <label
-                                                        key={opt.value}
+                                                        key={value.value}
                                                         className="flex items-center py-2 justify-between group/category px-2 cursor-pointer hover:bg-foreground/5 transition-colors duration-300"
                                                     >
                                                         <div className="flex items-center gap-5">
                                                             <input
                                                                 type="checkbox"
                                                                 checked={
-                                                                    Array.isArray(draftParams[filter.key])
-                                                                        ? draftParams[filter.key].includes(opt.value)
-                                                                        : draftParams[filter.key] === opt.value
+                                                                    Array.isArray(draftParams[key])
+                                                                        ? draftParams[key].includes(value.value)
+                                                                        : draftParams[key] === value.value
                                                                 }
-                                                                onChange={() => handleApplyFilter(filter.key, opt.value)}
+                                                                onChange={() => handleApplyFilter(key, value.value)}
                                                             />
                                                             <span className="group-hover/category:text-muted transition-colors duration-300">
-                                                                {opt.value}
+                                                                {value.value}
                                                             </span>
                                                         </div>
 
                                                         <div className="bg-foreground/30 p-0.5 rounded-full text-xs w-7 h-7 flex items-center justify-center group-hover/category:bg-muted group-hover/category:text-background transition-colors duration-300">
-                                                            {opt.count}
+                                                            {value.count}
                                                         </div>
                                                     </label>
                                                 ))}

@@ -12,17 +12,20 @@ const FilterContext = ({ children }) => {
   const [isFilterSideOpen, setIsFilterSideOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState({});
   const [products, setProducts] = useState([]);
-  const [filters, setFilters] = useState([]);
   const [activeFilterCount, setActiveFilterCount] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState([])
+
   const [queryParams, setQueryParams] = useState({
     page: Number(searchParams.get("page")) || 1,
     limit: Number(searchParams.get("limit")) || 12,
     gender: searchParams.get("gender") || "",
+    attribute: searchParams.get("attribute") || "",
+    category: searchParams.get("category") || "",
     season: searchParams.get("seasone") || "",
     fragranceFamily: searchParams.get("fragranceFamily") || "",
     search: searchParams.get("search") || "",
-    sort: searchParams.get("sort") || "id_asc",
+    sort: searchParams.get("sort") || "",
   });
 
   const apiUrl = React.useMemo(() => {
@@ -40,32 +43,25 @@ const FilterContext = ({ children }) => {
       const res = await fetch(apiUrl);
       const data = await res.json();
       console.log("Raw data from FilterContext", data);
-      setProducts(data);
+      setProducts(data.products);
       setApiResponse(data);
       setLoading(false);
-
-      const filterTypes = ["gender", "season", "fragranceFamily"];
-
-      const filters = filterTypes
-        .filter((key) => Array.isArray(data[key]))
-        .map((key) => ({
-          title:
-            key === "fragranceFamily"
-              ? "Fragrance Family"
-              : key.charAt(0).toUpperCase() + key.slice(1),
-          key: key,
-          options: data[key]
-            .map((item) => ({
-              value: item._id,
-              count: item.count || 0,
-            }))
-            .sort((a, b) => a.value.localeCompare(b.value)),
-        }));
-      setFilters(filters);
     }
 
     fetchAllProducts();
   }, [apiUrl]);
+
+  useEffect(() => {
+    async function fetchAvailableFilters() {
+      const res = await fetch('api/products/filters', {
+        method: 'GET',
+      })
+      const data = await res.json()
+      setFilters(data.filters)
+    }
+    fetchAvailableFilters()
+  }, [])
+
 
   const toggleFilterSide = () => {
     setIsFilterSideOpen(!isFilterSideOpen);
