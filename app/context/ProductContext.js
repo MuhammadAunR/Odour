@@ -14,10 +14,10 @@ const ProductContext = ({ children }) => {
     async function fetchAllProducts() {
       setLoading(true)
       try {
-        const res = await fetch("/api/products?limit=12");
+        const res = await fetch("/api/products");
         const data = await res.json();
         console.log("Raw data from ProductContext", data);
-        setProducts(data);
+        setProducts(data.products);
         setApiResponse(data);
         setLoading(false)
       } catch (error) {
