@@ -23,7 +23,7 @@ const ProductList = () => {
             if (!ok) {
                 toast.error('Failed to get products')
             }
-            setProducts(data)
+            setProducts(data.products)
             setLoading(false)
         }
         getAllProducts()
