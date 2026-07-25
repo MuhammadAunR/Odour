@@ -17,7 +17,6 @@ const ShopPage = () => {
     products,
     loading,
     apiResponse,
-    queryParams,
   } = useFilter();
 
   const searchParams = useSearchParams()
@@ -26,7 +25,6 @@ const ShopPage = () => {
 
   const [productView, setProductView] = useState("grid");
   const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
-  const [draftParams, setDraftParams] = useState(queryParams)
   const isInitialMount = useRef(true);
 
   const totalPages = apiResponse.totalPages;
@@ -70,11 +68,11 @@ const ShopPage = () => {
     }
 
     const timeout = setTimeout(() => {
-      setDraftParams((prev) => ({
-        ...prev,
-        search: searchInput,
-      }));
-      router.push(`/shop?search=${encodeURIComponent(searchInput)}`);
+      if (searchInput.trim()) {
+        router.push(`/shop?search=${encodeURIComponent(searchInput.trim())}`);
+      } else {
+        router.push("/shop");
+      }
     }, 500);
     return () => clearTimeout(timeout);
   }, [searchInput]);
