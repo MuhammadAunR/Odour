@@ -60,6 +60,7 @@ export async function GET(req) {
     const page = Number(searchParams.get("page")) || 1;
     const limit = Number(searchParams.get("limit")) || 12;
     const sortBy = searchParams.get("sort");
+    const search = searchParams.get("search");
 
     const query = {}
 
@@ -68,6 +69,17 @@ export async function GET(req) {
     if (gender) query.gender = gender;
     if (season) query.season = season;
     if (attribute) query.attribute = attribute;
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { fragranceFamily: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } },
+        { gender: { $regex: search, $options: "i" } },
+        { season: { $regex: search, $options: "i" } },
+        { attribute: { $regex: search, $options: "i" } },
+      ];
+    }
 
     let sort = {}
 

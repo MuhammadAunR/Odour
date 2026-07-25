@@ -16,19 +16,20 @@ const ShopPage = () => {
     activeFilterCount,
     products,
     loading,
-    setQueryParams,
     apiResponse,
+    queryParams,
   } = useFilter();
-
-  const [productView, setProductView] = useState("grid");
-  const [searchInput, setSearchInput] = useState("");
-  const isInitialMount = useRef(true);
-
-  const totalPages = apiResponse.totalPages;
 
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
+
+  const [productView, setProductView] = useState("grid");
+  const [searchInput, setSearchInput] = useState(searchParams.get("search" || ""));
+  const [draftParams, setDraftParams] = useState(queryParams)
+  const isInitialMount = useRef(true);
+
+  const totalPages = apiResponse.totalPages;
 
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -36,10 +37,6 @@ const ShopPage = () => {
     const params = new URLSearchParams(searchParams.toString())
     params.set("page", page)
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
-    setQueryParams((prev) => ({
-      ...prev,
-      page: page,
-    }));
     window.scrollTo(0, 0);
   };
 
@@ -71,16 +68,16 @@ const ShopPage = () => {
       isInitialMount.current = false;
       return;
     }
-    const timeout = setTimeout(() => {
-      setQueryParams((prev) => ({
-        ...prev,
-        search: searchInput.trim(),
-        page: 1,
-      }));
-    }, 500);
 
+    const timeout = setTimeout(() => {
+      setDraftParams((prev) => ({
+        ...prev,
+        search: searchInput,
+      }));
+      router.push(`/shop?search=${encodeURIComponent(searchInput)}`);
+    }, 500);
     return () => clearTimeout(timeout);
-  }, [searchInput, setQueryParams]);
+  }, [searchInput]);
   return (
     <>
       <ProductQuickView />
@@ -126,18 +123,7 @@ const ShopPage = () => {
                   <Funnel size={16} />
                 </span>
                 <span className="flex items-center gap-1">
-                  {activeFilterCount.length != 0
-                    ? activeFilterCount.map((filter) => {
-                      return (
-                        <span
-                          key={filter}
-                          className="text-xs bg-foreground/5 p-1 rounded-lg"
-                        >
-                          {filter}
-                        </span>
-                      );
-                    })
-                    : "Filter"}
+                  Filters
                 </span>
               </button>
 
@@ -161,15 +147,6 @@ const ShopPage = () => {
 
         <div className="flex gap-8 pt-5 max-lg:flex-col">
 
-          {products.length === 0 && !loading &&
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1, ease: "easeInOut" }}
-              className="text-xl font-semibold font-serif w-full text-center py-10 text-foreground/50">
-              No products available
-            </motion.div>
-          }
           <section className="flex-1 min-w-0 pb-5">
             {searchInput.trim() && products.length === 0 && !loading && (
               <motion.div

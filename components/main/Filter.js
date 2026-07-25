@@ -22,7 +22,6 @@ const Filter = () => {
         }));
     }
 
-    console.log(draftParams)
     const handleApply = () => {
         const cleanParams = Object.fromEntries(
             Object.entries(draftParams).filter(([_, v]) => v !== "" && v !== null))
