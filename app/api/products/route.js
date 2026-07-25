@@ -72,7 +72,6 @@ export async function GET(req) {
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
         { fragranceFamily: { $regex: search, $options: "i" } },
         { category: { $regex: search, $options: "i" } },
         { gender: { $regex: search, $options: "i" } },
