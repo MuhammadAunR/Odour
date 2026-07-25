@@ -25,7 +25,7 @@ const ShopPage = () => {
   const pathname = usePathname()
 
   const [productView, setProductView] = useState("grid");
-  const [searchInput, setSearchInput] = useState(searchParams.get("search" || ""));
+  const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
   const [draftParams, setDraftParams] = useState(queryParams)
   const isInitialMount = useRef(true);
 
