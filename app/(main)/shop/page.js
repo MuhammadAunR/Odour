@@ -5,7 +5,7 @@ import ProductGridCard, {
 } from "@/components/UI/Card";
 import ProductQuickView from "@/components/main/ProductQuickView";
 import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useFilter } from "@/app/context/FilterContext";
@@ -17,6 +17,7 @@ const ShopPage = () => {
     products,
     loading,
     apiResponse,
+    queryParams,
   } = useFilter();
 
   const searchParams = useSearchParams()
@@ -25,7 +26,6 @@ const ShopPage = () => {
 
   const [productView, setProductView] = useState("grid");
   const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
-  const isInitialMount = useRef(true);
 
   const totalPages = apiResponse.totalPages;
 
@@ -61,18 +61,22 @@ const ShopPage = () => {
     return () => window.removeEventListener("resize", handleProductView);
   }, []);
 
+
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
+    const params = {
+      ...queryParams,
+      search: searchInput,
+    }
+
+    const cleanParams = Object.fromEntries(Object.entries(params).filter(([_, v]) => v !== "" && v !== null))
+    const newQuery = new URLSearchParams(cleanParams).toString()
+
+    if (newQuery === searchParams.toString()) {
+      return
     }
 
     const timeout = setTimeout(() => {
-      if (searchInput.trim()) {
-        router.push(`/shop?search=${encodeURIComponent(searchInput.trim())}`);
-      } else {
-        router.push("/shop");
-      }
+      router.push(`/shop?${newQuery}`)
     }, 500);
     return () => clearTimeout(timeout);
   }, [searchInput]);
