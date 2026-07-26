@@ -28,7 +28,7 @@ const CartContext = ({ children }) => {
   }, [cartItemInLS])
 
   const addCartItemIdToLS = (prod, { selectedSize = null, qty = 1 } = {}) => {
-    const ssop = selectedSize ?? prod.sizes.find((s) => s.isDefault) ?? prod.sizes[0]
+    const ssop = selectedSize ?? prod.variants.find(variant => variant.originalPrice == prod.defaultPrice) ?? prod.variants[0]
     setCartItemInLS((prev) => {
       const exist = prev.find((item) => item._id === prod._id && item.selectedSize.size === ssop.size)
       if (exist) {
@@ -105,7 +105,7 @@ const CartContext = ({ children }) => {
 
   const handleSubTotal = cartItemInLS.reduce((total, item) => {
     const finalPrice =
-      item.selectedSize.discountedPrice ?? item.selectedSize.price;
+      item.selectedSize.salePrice ?? item.selectedSize.originalPrice;
     return total + finalPrice * item.quantity;
   }, 0);
 
