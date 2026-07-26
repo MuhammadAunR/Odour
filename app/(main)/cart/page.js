@@ -27,10 +27,10 @@ const CartPage = () => {
 
             <header className="flex items-center justify-between gap-5 py-7 border-b border-foreground/30">
                 <div className="flex flex-col gap-2">
-                    <h1 className="text-4xl font-serif tracking-wider font-semibold">
+                    <h1 className="text-2xl lg:text-4xl font-serif tracking-wider font-semibold">
                         My Cart
                     </h1>
-                    <span className="font-semibold text-muted">
+                    <span className="font-semibold text-muted max-lg:text-sm">
                         Total Items: {cartItemInLS.length}
                     </span>
                 </div>
@@ -72,9 +72,9 @@ const CartPage = () => {
                             transition={{ duration: 0.2, delay: 0.1 * index }}
                             viewport={{ once: true }}
                             key={item.selectedSize.size}
-                            className="flex justify-between items-center border-b border-b-surface p-5 hover:shadow-md transition-shadow ease-linear duration-300">
+                            className="flex justify-between items-center max-lg:flex-col border-b border-b-surface p-5 hover:shadow-md transition-shadow ease-linear duration-300">
 
-                            <div className="flex items-center gap-5">
+                            <div className="flex items-center gap-5 max-lg:flex-col">
                                 <div className="w-30 h-30 rounded-full relative overflow-hidden">
                                     <Image
                                         src={item.images[0].url}
@@ -87,44 +87,45 @@ const CartPage = () => {
                                 </div>
                                 <div className="flex flex-col flex-1 min-w-0">
                                     <div className="flex items-center gap-2">
-                                        <h3 className="text-2xl tracking-wider font-serif font-semibold">{item.name}</h3>
-                                        <span className="text-sm">({item.selectedSize.size})</span>
+                                        <h3 className="text-lg lg:text-2xl tracking-wider font-serif font-semibold">{item.name}</h3>
+                                        <span className="max-lg:text-sm">({item.selectedSize.size})</span>
                                     </div>
-                                    <span className="text-sm text-gray-400">{item.brand}</span>
                                 </div>
                             </div>
 
                             <span className="text-sm font-semibold whitespace-nowrap gap-2 flex flex-col items-center justify-center">
-                                <div className="flex items-center justify-center gap-5">
-                                    <motion.button
-                                        onClick={() => {
-                                            handleWishListItemsInLS(item._id);
-                                        }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="transition-all duration-300 cursor-pointer"
-                                    >
-                                        <Heart
-                                            size={22}
-                                            strokeWidth={1}
-                                            className={
-                                                wishListProducts?.includes(item._id)
-                                                    ? "fill-red-500 text-red-500"
-                                                    : "text-red-500"
-                                            }
-                                        />
-                                    </motion.button>
-                                    <motion.span
-                                        onClick={() => removeCartItem(item)}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="cursor-pointer"
-                                    >
-                                        <Trash size={24} strokeWidth={1} className="text-red-500" />
-                                    </motion.span>
+                                <div className="flex items-center justify-center max-lg:flex-col gap-5">
+                                    <div className="flex items-center gap-3 max-lg:pt-3">
+                                        <motion.button
+                                            onClick={() => {
+                                                handleWishListItemsInLS(item._id);
+                                            }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="transition-all duration-300 cursor-pointer"
+                                        >
+                                            <Heart
+                                                size={22}
+                                                strokeWidth={1}
+                                                className={
+                                                    wishListProducts?.includes(item._id)
+                                                        ? "fill-red-500 text-red-500"
+                                                        : "text-red-500"
+                                                }
+                                            />
+                                        </motion.button>
+                                        <motion.span
+                                            onClick={() => removeCartItem(item)}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="cursor-pointer"
+                                        >
+                                            <Trash size={24} strokeWidth={1} className="text-red-500" />
+                                        </motion.span>
+                                    </div>
 
                                     <div className="flex">
                                         <span
                                             onClick={() => handleItemDec(item)}
-                                            className="border px-3 py-1 font-bold hover:bg-surface transition-colors ease-linear cursor-pointer"
+                                            className="border px-3 py-1 font-bold hover:bg-surface transition-colors ease-linear cursor-pointer select-none"
                                         >
                                             -
                                         </span>
@@ -133,12 +134,12 @@ const CartPage = () => {
                                         </span>
                                         <span
                                             onClick={() => handleItemInc(item)}
-                                            className="border px-3 py-1 font-bold hover:bg-surface transition-colors ease-linear cursor-pointer"
+                                            className="border px-3 py-1 font-bold hover:bg-surface transition-colors ease-linear cursor-pointer select-none"
                                         >
                                             +
                                         </span>
                                     </div>
-                                    <div className="h-10 w-px bg-muted"></div>
+                                    <div className="h-px w-full lg:h-10 lg:w-px bg-muted"></div>
                                     {(() => {
                                         const priceToDisplay =
                                             item.selectedSize.salePrice ??
@@ -146,7 +147,7 @@ const CartPage = () => {
                                         return (
                                             <span className="text-accent">
                                                 <span className="text-[10px] lg:text-xs">PKR</span>{" "}
-                                                <span className="lg:text-lg">
+                                                <span className="text-lg">
                                                     {(priceToDisplay * item.quantity).toLocaleString()}
                                                 </span>
                                             </span>
