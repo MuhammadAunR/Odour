@@ -71,16 +71,16 @@ const CartPage = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.2, delay: 0.1 * index }}
                             viewport={{ once: true }}
-                            key={item.id}
+                            key={item.selectedSize.size}
                             className="flex justify-between items-center border-b border-b-surface p-5 hover:shadow-md transition-shadow ease-linear duration-300">
 
                             <div className="flex items-center gap-5">
                                 <div className="w-30 h-30 rounded-full relative overflow-hidden">
                                     <Image
-                                        src={item.imgSrc}
+                                        src={item.images[0].url}
                                         alt={item.name}
                                         fill
-                                        loading="lazy"
+                                        loading="eager"
                                         sizes="1000px"
                                         className="object-cover group-hover/ProductListCard:scale-105 transition-all ease-linear duration-500"
                                     />
@@ -141,8 +141,8 @@ const CartPage = () => {
                                     <div className="h-10 w-px bg-muted"></div>
                                     {(() => {
                                         const priceToDisplay =
-                                            item.selectedSize.discountedPrice ??
-                                            item.selectedSize.price;
+                                            item.selectedSize.salePrice ??
+                                            item.selectedSize.originalPrice;
                                         return (
                                             <span className="text-accent">
                                                 <span className="text-[10px] lg:text-xs">PKR</span>{" "}
