@@ -14,7 +14,7 @@ import SectionHeader from '@/components/main/SectionHeader'
 
 const Product = ({ params }) => {
 
-    const { addCartItemIdToLS, selectedPriceAndSize, setSelectedPriceAndSize,toggleCart } = useCart()
+    const { addCartItemIdToLS, selectedPriceAndSize, setSelectedPriceAndSize, toggleCart } = useCart()
     const { products } = useProducts()
 
     const { slug } = useParams(params)
@@ -46,7 +46,9 @@ const Product = ({ params }) => {
 
     useEffect(() => {
         if (!product) return
-        const defaultSize = product.sizes?.find(size => size.isDefault) || product.sizes?.[0] || null
+        const defaultSize = product?.variants?.find((variant) => variant.originalPrice == product.defaultPrice) ||
+            product?.variants?.[0] ||
+            null;
         setSelectedPriceAndSize(defaultSize)
     }, [product])
 
@@ -141,11 +143,11 @@ const Product = ({ params }) => {
                         transition={{ duration: 0.3, delay: 0.3 }}
                         className='relative w-full lg:w-1/2 h-150 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)]'>
                         <Image
-                            src={product.imgSrc}
+                            src={product.images[0].url}
                             fill
                             sizes='1000px'
                             priority
-                            alt={product.alt}
+                            alt={product.name}
                             className='object-cover' />
                     </motion.div>
 
@@ -159,73 +161,82 @@ const Product = ({ params }) => {
                         <div>
                             <div className='flex items-baseline gap-5'>
                                 <h3 className='text-3xl lg:text-4xl xl:text-5xl font-semibold font-serif tracking-widest'>{product.name}</h3>
-                                <span className='font-semibold uppercase max-lg:text-sm'>For {product.gender}</span>
                             </div>
-                            <h4 className='md:text-lg font-semibold'>{product.brand}</h4>
-                            <p className='max-md:text-sm text-muted'>{product.description}</p>
+                            <p className='max-md:text-sm text-muted line-clamp-3'>{product.description}</p>
                         </div>
 
-                        <div className='w-full h-[.5px] bg-foreground/20'></div>
+                        <div className='w-full h-[.5px] bg-foreground/10'></div>
 
                         <div>
                             {selectedPriceAndSize && (
-                                product.isOnSale && selectedPriceAndSize.discountedPrice !== null ? (
-                                    <div className='flex flex-col gap-1'>
+                                selectedPriceAndSize.salePrice !== null ? (
+                                    <div className='flex items-baseline gap-5'>
+                                        <span className='text-sm text-foreground/40 line-through'>
+                                            PKR {selectedPriceAndSize.originalPrice.toLocaleString()}
+                                        </span>
                                         <div className='flex items-center gap-5'>
                                             <span className='font-bold text-red-500 text-lg'>
-                                                PKR {selectedPriceAndSize.discountedPrice.toLocaleString()}
+                                                PKR {selectedPriceAndSize.salePrice.toLocaleString()}
                                             </span>
                                             <span className='px-2 py-1 text-xs font-semibold bg-red-500 text-white'>
-                                                -{Math.round(((selectedPriceAndSize.price - selectedPriceAndSize.discountedPrice) / selectedPriceAndSize.price) * 100)}%
+                                                -{Math.round(((selectedPriceAndSize.originalPrice - selectedPriceAndSize.salePrice) / selectedPriceAndSize.originalPrice) * 100)}%
                                             </span>
                                         </div>
-                                        <span className='text-sm text-foreground/40 line-through'>
-                                            PKR {selectedPriceAndSize.price.toLocaleString()}
-                                        </span>
                                     </div>
                                 ) : (
                                     <span className='font-bold text-foreground text-lg'>
-                                        PKR {selectedPriceAndSize.price.toLocaleString()}
+                                        PKR {selectedPriceAndSize.originalPrice.toLocaleString()}
                                     </span>
                                 )
                             )}
                         </div>
 
-                        <div className='w-full h-[.5px] bg-foreground/20'></div>
+                        <div className='w-full h-[.5px] bg-foreground/10'></div>
 
                         <div className='flex items-center gap-2'>
-                            {product.sizes.map(item => {
+                            {product.variants.map(variant => {
                                 return <div
-                                    onClick={() => handleDefaultPriceAndSize(item)}
-                                    key={item.size}
-                                    className={`px-3 py-1 transition-all ease-linear duration-300 cursor-pointer ${selectedPriceAndSize?.size === item.size ? 'bg-foreground text-background' : 'bg-foreground/10 text-foreground hover:bg-foreground/15'}`}>
-                                    {item.size}
+                                    onClick={() => handleDefaultPriceAndSize(variant)}
+                                    key={variant.size}
+                                    className={`px-3 py-1 transition-all ease-linear duration-300 cursor-pointer 
+                                    ${selectedPriceAndSize?.size === variant.size ? 'bg-foreground text-background' : 'bg-foreground/10 text-foreground hover:bg-foreground/15'}`}>
+                                    {variant.size}
                                 </div>
                             })}
                         </div>
 
-                        <div className='w-full h-[.5px] bg-foreground/20'></div>
+                        <div className='w-full h-[.5px] bg-foreground/10'></div>
 
                         <div className='flex items-center gap-3'>
-                            <span className='tracking-[0.2em] uppercase text-foreground/50'>Fragrance |</span>
-                            <span className='text-sm font-medium'>{product.fragranceFamily}</span>
+                            {product.fragranceFamily.map(family => {
+                                return <span
+                                    key={family}
+                                    className='text-sm font-semibold tracking-[0.2em] text-foreground/70 uppercase border border-foreground/30 py-1 px-3'>
+                                    {family}
+                                </span>
+                            })}
                         </div>
 
-                        {/* <div className='w-full h-[.5px] bg-foreground/20'></div>
+                        <div className='w-full h-[.5px] bg-foreground/10'></div>
 
-                        <div className='flex items-center gap-3'>
-                            <span className='tracking-[0.2em] uppercase text-foreground/50'>For |</span>
-                            <span className='text-sm font-medium'>{product.gender}</span>
-                        </div> */}
-
-                        <div className='w-full h-[.5px] bg-foreground/20'></div>
-
-                        <div className='flex items-center gap-3'>
-                            <span className='tracking-[0.2em] uppercase text-foreground/50'>Concentration |</span>
-                            <span className='text-sm font-medium'>{product.concentration}</span>
+                        <div className="flex items-center gap-3">
+                            {product.gender.map((gen) => (
+                                <span
+                                    key={gen}
+                                    className={`text-sm font-semibold tracking-[0.2em] uppercase border py-1 px-3
+                                    ${gen === "Men"
+                                            ? "bg-blue-950 text-background border-blue-950"
+                                            : gen === "Women"
+                                                ? "bg-pink-900 text-background border-pink-900"
+                                                : "bg-foreground text-background border-foreground"
+                                        }`}
+                                >
+                                    {gen}
+                                </span>
+                            ))}
                         </div>
 
-                        <div className='w-full h-[.5px] bg-foreground/20'></div>
+                        <div className='w-full h-[.5px] bg-foreground/10'></div>
 
                         <div className='flex items-center gap-2'>
                             {product.season.map((sea) => {
@@ -241,7 +252,7 @@ const Product = ({ params }) => {
                             })}
                         </div>
 
-                        <div className='w-full h-[.5px] bg-foreground/20'></div>
+                        <div className='w-full h-[.5px] bg-foreground/10'></div>
 
                         <div className='flex items-center justify-center gap-2 max-sm:flex-col'>
                             <div className='flex'>
@@ -266,7 +277,7 @@ const Product = ({ params }) => {
 
                     <div className='flex items-center justify-center flex-wrap gap-2 pb-10'>
                         {relatedProducts.map((prod, index) => {
-                            return <ProductGridCard key={prod.id} product={prod} index={index} />
+                            return <ProductGridCard key={prod._id} product={prod} index={index} />
                         })}
                     </div>
 
