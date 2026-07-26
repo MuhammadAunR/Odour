@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 const ProductQuickView = () => {
 
     const { togglePopup, isPopupOpen, quickViewProduct } = usePopup()
-    const { cartItemInLS, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
+    const { addCartItemIdToLS, selectedPriceAndSize, setSelectedPriceAndSize } = useCart()
     useBlockYScroll(isPopupOpen)
     const router = useRouter()
 
@@ -21,7 +21,6 @@ const ProductQuickView = () => {
             quickViewProduct?.variants?.[0] ||
             null;
         setSelectedPriceAndSize(defaultSize)
-        console.log(defaultSize)
     }, [quickViewProduct])
 
     const handleDefaultPriceAndSize = (size) => {
@@ -89,7 +88,7 @@ const ProductQuickView = () => {
                                 <div className='w-full h-[.5px] bg-foreground/20'></div>
                                 <div>
                                     {selectedPriceAndSize && (
-                                        quickViewProduct.defaultSalePrice && selectedPriceAndSize.salePrice !== null ? (
+                                        selectedPriceAndSize.salePrice !== null ? (
                                             <div className='flex flex-col gap-1'>
                                                 <div className='flex items-center gap-5'>
                                                     <span className='font-bold text-red-500 text-lg'>
@@ -138,7 +137,10 @@ const ProductQuickView = () => {
                                     </button>
 
                                     <button
-                                        onClick={() => { cartItemInLS(quickViewProduct, selectedPriceAndSize), togglePopup() }}
+                                        onClick={() => {
+                                            addCartItemIdToLS(quickViewProduct, { selectedSize: selectedPriceAndSize });
+                                            togglePopup()
+                                        }}
                                         className='flex-1 flex items-center justify-center gap-2 py-3 bg-foreground
                                         hover:bg-foreground/90 cursor-pointer text-background transition-colors duration-500'>
                                         <span>Add to Cart</span>
