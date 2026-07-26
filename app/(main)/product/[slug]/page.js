@@ -25,7 +25,6 @@ const Product = ({ params }) => {
     const [productQty, setProductQty] = useState(1)
     const [relatedProducts, setRelatedProducts] = useState([])
     const [testimonialCount, setTestimonialCount] = useState(0)
-    const [stopTestimonialMovement, setStopTestimonialMovement] = useState(false)
     const [stripMotion, setStripMotion] = useState(true)
 
     useEffect(() => {
@@ -101,10 +100,6 @@ const Product = ({ params }) => {
         }
     }
 
-    const handleTestimonialMovement = () => {
-        setStopTestimonialMovement(!stopTestimonialMovement)
-    }
-
     useEffect(() => {
         intervalRef.current = setInterval(() => {
             setTestimonialCount(prev =>
@@ -132,8 +127,9 @@ const Product = ({ params }) => {
     }
     return (
         <>
-            <main className='w-10/12 mx-auto'>
+            <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full'>
 
+                {/*  Product Details Section */}
                 <div className='w-full min-h-[calc(100%-100px)] py-15 h-fit flex justify-center gap-3 lg:gap-5 max-lg:flex-col'>
 
                     <motion.div
@@ -141,11 +137,11 @@ const Product = ({ params }) => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.3, delay: 0.3 }}
-                        className='relative w-full lg:w-1/2 h-150 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)]'>
+                        className='relative w-full lg:w-1/2 h-150 border border-foreground'>
                         <Image
                             src={product.images[0].url}
                             fill
-                            sizes='1000px'
+                            sizes=''
                             priority
                             alt={product.name}
                             className='object-cover' />
@@ -156,7 +152,7 @@ const Product = ({ params }) => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.3, delay: 0.3 }}
-                        className='flex flex-col justify-center gap-4 bg-surface/30 border-2 box-border border-surface shadow-[1px_1px_5px_rgba(0,0,0,0.5)] p-5 
+                        className='flex flex-col justify-center gap-4 bg-surface/30 p-5 border border-foreground
                     lg:w-1/2 min-h-150 h-fit'>
                         <div>
                             <div className='flex items-baseline gap-5'>
@@ -272,6 +268,7 @@ const Product = ({ params }) => {
                     </motion.div>
                 </div>
 
+                {/* Related Product Section  */}
                 <section>
                     <SectionHeader headerContent={{ subHeading: 'You Might Also Like', mainHeading: 'Related Products' }} />
 
@@ -283,7 +280,7 @@ const Product = ({ params }) => {
 
                 </section>
 
-
+                {/* Testimonials Section */}
                 <section>
                     <SectionHeader headerContent={{ subHeading: 'What Our Clients Say', mainHeading: 'Testimonials' }} />
 
@@ -354,6 +351,7 @@ const Product = ({ params }) => {
                     </div>
                 </section>
 
+                {/* Stats Section  */}
                 <section className='py-10 my-20 border-t border-b border-foreground/10'>
                     <div className='flex items-center justify-center gap-0'>
                         {stats.map((stat, index) => (
@@ -379,6 +377,7 @@ const Product = ({ params }) => {
                     </div>
                 </section>
 
+                {/* Why Choose US  */}
                 <section>
                     <SectionHeader headerContent={{ subHeading: 'The ODOUR Promise', mainHeading: 'Why Choose Us' }} />
 
@@ -399,6 +398,7 @@ const Product = ({ params }) => {
                     </div>
                 </section>
 
+                {/* Moving Stripe Section  */}
                 <section>
                     <div
                         onMouseEnter={() => setStripMotion(false)}
@@ -419,6 +419,7 @@ const Product = ({ params }) => {
                         </div>
                     </div>
                 </section>
+
             </main >
         </>
     )
