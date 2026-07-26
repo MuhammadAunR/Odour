@@ -64,7 +64,7 @@ const Cart = () => {
               </Link>
             </motion.div>
           )}
-          
+
           {cartItemInLS.map((item, index) => (
             <div
               key={index}
@@ -80,8 +80,8 @@ const Cart = () => {
 
               <div className="relative w-15 h-15 overflow-hidden shrink-0">
                 <Image
-                  src={item.imgSrc}
-                  alt={item.alt}
+                  src={item.images[0].url}
+                  alt={item.name}
                   fill
                   loading="lazy"
                   sizes="60px"
@@ -100,8 +100,8 @@ const Cart = () => {
               <span className="text-sm font-semibold whitespace-nowrap gap-2 flex flex-col items-center justify-center">
                 {(() => {
                   const priceToDisplay =
-                    item.selectedSize.discountedPrice ??
-                    item.selectedSize.price;
+                    item.selectedSize.salePrice ??
+                    item.selectedSize.originalPrice;
                   return (
                     <span className="text-accent">
                       <span className="text-[10px]">PKR</span>{" "}
