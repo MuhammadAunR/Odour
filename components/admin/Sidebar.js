@@ -20,7 +20,7 @@ const Sidebar = ({ session }) => {
     ]
     const adminMenu = [
         { option: 'Admin', icon: <CircleUserRound strokeWidth={1} />, path: '/adminDashboard/admin' },
-        { option: 'Signout', icon: <LogOut strokeWidth={1} />, path: '/adminDashboard/signin' },
+        { option: 'Signout', icon: <LogOut strokeWidth={1} />, path: '/signin' },
     ]
 
     useEffect(() => {
