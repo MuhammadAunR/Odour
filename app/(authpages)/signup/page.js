@@ -6,10 +6,10 @@ import { motion } from 'motion/react'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { redirect, useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-const SignUpPage = () => {
+const SignUpPageInner = () => {
 
     const [signUpPasswordVisible, setSignUpPasswordVisible] = useState(false)
     const [signUpConfirmPasswordVisible, setSignUpConfirmPasswordVisible] = useState(false)
@@ -208,6 +208,16 @@ const SignUpPage = () => {
             </section>
 
         </motion.main>
+    )
+}
+
+
+
+const SignUpPage = () => {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center py-20"><SimpleLoader /></div>}>
+            <SignUpPageInner />
+        </Suspense>
     )
 }
 
