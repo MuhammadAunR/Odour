@@ -6,10 +6,10 @@ import { motion } from 'motion/react'
 import { getSession, signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-const SignInPage = () => {
+const SignInPageInner = () => {
 
     const [signInPasswordVisible, setSignInPasswordVisible] = useState(false)
     const [credentialsLoading, setCredentialsLoading] = useState(false)
@@ -173,6 +173,14 @@ const SignInPage = () => {
             </section>
 
         </motion.main >
+    )
+}
+
+const SignInPage = () => {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center py-20"><SimpleLoader /></div>}>
+            <SignInPageInner />
+        </Suspense>
     )
 }
 
