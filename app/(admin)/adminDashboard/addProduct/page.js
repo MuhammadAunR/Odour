@@ -9,11 +9,11 @@ import { SecondaryButton } from '@/components/UI/Buttons'
 import { createProduct, fetchProductBySlug, removeImageFromCloudinary, updateProduct, uploadImage } from '@/services/productServices'
 import { motion } from 'motion/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 
-const AddProduct = () => {
+const AddProductInner = () => {
 
     const { productDetails, validateProduct, productImagePreview, setProductImagePreview, resetProductForm, setProductDetails, imagesToRemoveFromCloudinary, setImagesToRemoveFromCloudinary } = useProductForm()
     const [loading, setLoading] = useState(false)
@@ -195,6 +195,14 @@ const AddProduct = () => {
                 </motion.section>
             </main>
         </>
+    )
+}
+
+const AddProduct = () => {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center py-20"><SimpleLoader /></div>}>
+            <AddProductInner />
+        </Suspense>
     )
 }
 
