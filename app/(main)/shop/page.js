@@ -5,15 +5,15 @@ import ProductGridCard, {
 } from "@/components/UI/Card";
 import ProductQuickView from "@/components/main/ProductQuickView";
 import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useFilter } from "@/app/context/FilterContext";
+import { SimpleLoader } from "@/components/admin/AuthPagesCompos";
 
-const ShopPage = () => {
+const ShopPageInner = () => {
   const {
     toggleFilterSide,
-    activeFilterCount,
     products,
     loading,
     apiResponse,
@@ -226,4 +226,13 @@ const ShopPage = () => {
   );
 };
 
-export default ShopPage;
+
+const ShopPage = () => {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center py-20"><SimpleLoader /></div>}>
+      <ShopPageInner />
+    </Suspense>
+  )
+}
+
+export default ShopPage
