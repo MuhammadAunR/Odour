@@ -1,12 +1,13 @@
 "use client";
+import { SimpleLoader } from "@/components/admin/AuthPagesCompos";
 import { useSearchParams } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, Suspense, useContext, useEffect, useState } from "react";
 import React from "react";
 
 export const FilterProvider = createContext();
 export const useFilter = () => useContext(FilterProvider);
 
-const FilterContext = ({ children }) => {
+const FilterContextInner = ({ children }) => {
 
   const searchParams = useSearchParams()
   const [isFilterSideOpen, setIsFilterSideOpen] = useState(false);
@@ -39,7 +40,13 @@ const FilterContext = ({ children }) => {
     async function fetchAllProducts() {
       const res = await fetch(apiUrl);
       const data = await res.json();
-      console.log("Raw data from FilterContext", data);
+      if (!res.ok) {
+        console.error("Failed to fetch products:", res.status);
+        setProducts([]);    
+        setApiResponse({});
+        return;
+      }
+      console.log("Raw data from FilterContextInner", data);
       setProducts(data.products);
       setApiResponse(data);
       setLoading(false);
@@ -83,4 +90,14 @@ const FilterContext = ({ children }) => {
   );
 };
 
-export default FilterContext;
+const FilterContext = ({ children }) => {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center py-20"><SimpleLoader /></div>}>
+      <FilterContextInner>
+        {children}
+      </FilterContextInner>
+    </Suspense>
+  )
+}
+
+export default FilterContext
