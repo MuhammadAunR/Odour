@@ -42,7 +42,7 @@ const FilterContextInner = ({ children }) => {
       const data = await res.json();
       if (!res.ok) {
         console.error("Failed to fetch products:", res.status);
-        setProducts([]);    
+        setProducts([]);
         setApiResponse({});
         return;
       }
@@ -57,8 +57,11 @@ const FilterContextInner = ({ children }) => {
 
   useEffect(() => {
     async function fetchAvailableFilters() {
-      const res = await fetch('api/products/filters', {
+      const res = await fetch('/api/products/filters', {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
       })
       const data = await res.json()
       setFilters(data.filters)
