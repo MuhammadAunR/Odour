@@ -1,33 +1,20 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
 import { Info, Search, SquarePen, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { deleteProductById, fetchAllProducts } from '@/services/productServices'
+import { deleteProductById } from '@/services/productServices'
 import { toast } from 'react-toastify'
 import Image from 'next/image'
 import { motion } from 'motion/react'
 import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
+import { useAdminProducts } from '@/app/context/admin/AdminProductContext'
 
 const ProductList = () => {
 
     const router = useRouter()
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        async function getAllProducts() {
-            setLoading(true)
-            const { data, ok } = await fetchAllProducts()
-            if (!ok) {
-                toast.error('Failed to get products')
-            }
-            setProducts(data.products)
-            setLoading(false)
-        }
-        getAllProducts()
-    }, [])
+    const { products, loading } = useAdminProducts()
 
     async function handleProductDelete(id) {
         const result = await deleteProductById(id)
