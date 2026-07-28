@@ -1,20 +1,26 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
-import { Info, Search, SquarePen, Trash2 } from 'lucide-react'
+import { Funnel, Info, Search, SquarePen, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { deleteProductById } from '@/services/productServices'
 import { toast } from 'react-toastify'
 import Image from 'next/image'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { useAdminProducts } from '@/app/context/admin/AdminProductContext'
 
 const ProductList = () => {
 
     const router = useRouter()
-    const { products, loading } = useAdminProducts()
+    const { products, loading, setProducts, filters } = useAdminProducts()
+    const [isFilterSecOpen, setisFilterSecOpen] = useState(false)
+    console.log(filters)
+
+    const toggleFilterSection = () => {
+        setisFilterSecOpen(!isFilterSecOpen)
+    }
 
     async function handleProductDelete(id) {
         const result = await deleteProductById(id)
@@ -52,8 +58,9 @@ const ProductList = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.95, delay: 0.1 }}
                 viewport={{ once: true }}
-                className='py-7 px-5 bg-white shadow-lg rounded-2xl'>
-                <label htmlFor="name" className='flex items-center'>
+                className='py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between gap-10'>
+
+                <label htmlFor="name" className='flex items-center w-full'>
                     <div className='p-2 text-foreground/80 border border-foreground/30 rounded-l-md'><Search /></div>
                     <input
                         name='name'
@@ -61,12 +68,94 @@ const ProductList = () => {
                         placeholder='Search product name or SKU'
                         className='bg-background px-5 py-2 w-full outline-none text-foreground/80 rounded-r-md border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear' />
                 </label>
+                <div onClick={() => toggleFilterSection()} className='border border-foreground/30 px-5 py-2 rounded-md flex items-center gap-2 cursor-pointer hover:bg-foreground/5 hover:border-foreground/50 transition-all ease-linear select-none'>
+                    <span>
+                        <Funnel strokeWidth={1} />
+                    </span>
+                    <span>
+                        Filters
+                    </span>
+                </div>
             </motion.section>
 
             <motion.section
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.95, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="bg-white shadow-lg rounded-2xl overflow-hidden">
+
+                {!isFilterSecOpen && (
+                    <div className="px-5 py-5">
+                        <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="font-semibold text-foreground/50">
+                            No filter applied.
+                        </motion.p>
+                    </div>
+                )}
+
+                <AnimatePresence initial={false}>
+                    {isFilterSecOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0, }}
+                            animate={{ height: "auto", opacity: 1, }}
+                            exit={{ height: 0, opacity: 0, }}
+                            transition={{ duration: 0.35, ease: "easeInOut", }}
+                            className="overflow-hidden"
+                        >
+                            <div className="px-5 py-6">
+                                <motion.h2
+                                    initial={{ opacity: 0, y: -8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    className="text-lg font-semibold mb-6"
+                                >
+                                    Filters
+                                </motion.h2>
+
+                                <div className="space-y-7">
+                                    {Object.entries(filters).map(
+                                        ([filterName, values], index) => (
+                                            <motion.div
+                                                key={filterName}
+                                                initial={{ opacity: 0, y: 15, }}
+                                                animate={{ opacity: 1, y: 0, }}
+                                                exit={{ opacity: 0, }}
+                                                transition={{ delay: index * 0.08, duration: 0.25, }}>
+                                                <h3 className="mb-3 text-sm font-semibold capitalize text-gray-700">
+                                                    {filterName}
+                                                </h3>
+
+                                                <div className="flex flex-wrap gap-3">
+                                                    {values.map((item) => (
+                                                        <button
+                                                            key={item.name}
+                                                            className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium transition-colors hover:border-black hover:bg-black hover:text-white"
+                                                        >
+                                                            {item.name}
+                                                            <span className="ml-2 text-xs opacity-70">
+                                                                {item.count}
+                                                            </span>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </motion.div>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.section>
+
+            <motion.section
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.95, delay: 0.3 }}
                 viewport={{ once: true }}
                 className=''>
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
@@ -124,8 +213,8 @@ const ProductList = () => {
                                             <td className="p-4">{product.sku}</td>
                                             <td className="p-4">{product.category}</td>
                                             <td className="p-4">{product.variants.length}</td>
-                                            <td className="p-4">{product.defaultPrice}</td>
-                                            <td className="p-4">{product.defaultSalePrice ?? 'NULL'}</td>
+                                            <td className="p-4">{product.defaultPrice.toLocaleString()}</td>
+                                            <td className="p-4">{product.defaultSalePrice?.toLocaleString() ?? 'NULL'}</td>
                                             <td className="p-4">{product.variants[0].stockQuantity}</td>
 
                                             <td className="p-4 w-42">
@@ -174,7 +263,7 @@ const ProductList = () => {
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.95, delay: 0.3 }}
+                transition={{ duration: 0.95, delay: 0.4 }}
                 viewport={{ once: true }}
                 className='w-full flex items-center justify-center py-5'>
                 <PrimaryButton text={'Load More Products'} />

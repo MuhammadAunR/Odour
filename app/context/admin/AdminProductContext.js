@@ -10,6 +10,7 @@ import React from 'react'
 
 const AdminProductContextInner = ({ children }) => {
     const [products, setProducts] = useState([])
+    const [filters, setFilters] = useState([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -30,8 +31,22 @@ const AdminProductContextInner = ({ children }) => {
         getAllProducts()
     }, [])
 
+    useEffect(() => {
+        async function fetchAvailableFilters() {
+            const res = await fetch('/api/products/filters', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            const data = await res.json()
+            setFilters(data.filters)
+        }
+        fetchAvailableFilters()
+    }, [])
+
     return (
-        <ContextProvider.Provider value={{ products, loading }}>
+        <ContextProvider.Provider value={{ products, setProducts, loading, filters }}>
             {children}
         </ContextProvider.Provider>
     )
