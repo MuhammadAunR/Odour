@@ -1,5 +1,6 @@
 "use client";
 import { SimpleLoader } from "@/components/admin/AuthPagesCompos";
+import { cleanParams } from "@/lib/productUtils";
 import { useSearchParams } from "next/navigation";
 import { createContext, Suspense, useContext, useEffect, useState } from "react";
 import React from "react";
@@ -29,11 +30,7 @@ const FilterContextInner = ({ children }) => {
     sort: searchParams.get("sort") || "",
   }
 
-  const cleanParams = Object.fromEntries(
-    Object.entries(queryParams).filter(([_, v]) => v !== "" && v !== null)
-  );
-
-  const apiUrl = `/api/products?${new URLSearchParams(cleanParams)}`;
+  const apiUrl = `/api/products?${cleanParams(queryParams)}`;
 
   useEffect(() => {
     setLoading(true);
