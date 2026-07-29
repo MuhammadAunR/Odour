@@ -77,6 +77,7 @@ export async function GET(req) {
         { gender: { $regex: search, $options: "i" } },
         { season: { $regex: search, $options: "i" } },
         { attribute: { $regex: search, $options: "i" } },
+        { sku: { $regex: search, $options: "i" } },
       ];
     }
 
