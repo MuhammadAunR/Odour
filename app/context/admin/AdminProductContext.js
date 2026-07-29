@@ -1,6 +1,8 @@
 'use client'
 
 import { SimpleLoader } from "@/components/admin/AuthPagesCompos"
+import { cleanParams } from "@/lib/productUtils"
+import { useSearchParams } from "next/navigation"
 import { createContext, Suspense, useContext, useEffect, useState } from "react"
 
 export const ContextProvider = createContext()
@@ -9,14 +11,29 @@ export const useAdminProducts = () => useContext(ContextProvider)
 import React from 'react'
 
 const AdminProductContextInner = ({ children }) => {
+
+    const searchParams = useSearchParams()
     const [products, setProducts] = useState([])
     const [filters, setFilters] = useState([])
     const [loading, setLoading] = useState(false)
 
+    const queryParams = {
+        page: Number(searchParams.get("page")) || 1,
+        limit: Number(searchParams.get("limit")) || 12,
+        gender: searchParams.get("gender") || "",
+        attribute: searchParams.get("attribute") || "",
+        category: searchParams.get("category") || "",
+        season: searchParams.get("season") || "",
+        fragranceFamily: searchParams.get("fragranceFamily") || "",
+        search: searchParams.get("search") || "",
+        sort: searchParams.get("sort") || "",
+    }
+    const apiUrl = `/api/products/?${cleanParams(queryParams).toString()}`
+
     useEffect(() => {
         async function getAllProducts() {
             setLoading(true)
-            const res = await fetch('/api/products', {
+            const res = await fetch(apiUrl, {
                 method: 'GET',
                 'Conetent-Type': 'application/json'
             })
@@ -29,7 +46,7 @@ const AdminProductContextInner = ({ children }) => {
             setLoading(false)
         }
         getAllProducts()
-    }, [])
+    }, [apiUrl])
 
     useEffect(() => {
         async function fetchAvailableFilters() {
@@ -46,7 +63,7 @@ const AdminProductContextInner = ({ children }) => {
     }, [])
 
     return (
-        <ContextProvider.Provider value={{ products, setProducts, loading, filters }}>
+        <ContextProvider.Provider value={{ products, setProducts, loading, filters, queryParams }}>
             {children}
         </ContextProvider.Provider>
     )

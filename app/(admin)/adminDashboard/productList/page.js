@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
 import { Funnel, Info, Search, SquarePen, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -10,17 +10,41 @@ import Image from 'next/image'
 import { AnimatePresence, motion } from 'motion/react'
 import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { useAdminProducts } from '@/app/context/admin/AdminProductContext'
+import { cleanParams } from '@/lib/productUtils'
 
 const ProductList = () => {
 
     const router = useRouter()
-    const { products, loading, setProducts, filters } = useAdminProducts()
+    const { products, loading, setProducts, filters, queryParams } = useAdminProducts()
     const [isFilterSecOpen, setisFilterSecOpen] = useState(false)
-    console.log(filters)
+    const [searchInput, setSearchInput] = useState('')
+    const [draftParams, setDraftParams] = useState(queryParams)
 
     const toggleFilterSection = () => {
         setisFilterSecOpen(!isFilterSecOpen)
     }
+
+    const handleFilterApply = (filterType, filterName) => {
+        setDraftParams(prev => ({
+            ...prev,
+            [filterType]: prev[filterType] === filterName ? '' : filterName
+        }))
+    }
+
+    useEffect(() => {
+        router.push(`/adminDashboard/productList?${cleanParams(draftParams)}`)
+    }, [draftParams])
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setDraftParams(prev => ({
+                ...prev,
+                search: searchInput
+            }))
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [searchInput])
+
 
     async function handleProductDelete(id) {
         const result = await deleteProductById(id)
@@ -60,10 +84,11 @@ const ProductList = () => {
                 viewport={{ once: true }}
                 className='py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between gap-10'>
 
-                <label htmlFor="name" className='flex items-center w-full'>
+                <label htmlFor="search" className='flex items-center w-full'>
                     <div className='p-2 text-foreground/80 border border-foreground/30 rounded-l-md'><Search /></div>
                     <input
-                        name='name'
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        name='search'
                         type="text"
                         placeholder='Search product name or SKU'
                         className='bg-background px-5 py-2 w-full outline-none text-foreground/80 rounded-r-md border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear' />
@@ -118,29 +143,38 @@ const ProductList = () => {
 
                                 <div className="space-y-7">
                                     {Object.entries(filters).map(
-                                        ([filterName, values], index) => (
+                                        ([key, values], index) => (
                                             <motion.div
-                                                key={filterName}
+                                                key={key}
                                                 initial={{ opacity: 0, y: 15, }}
                                                 animate={{ opacity: 1, y: 0, }}
                                                 exit={{ opacity: 0, }}
                                                 transition={{ delay: index * 0.08, duration: 0.25, }}>
                                                 <h3 className="mb-3 text-sm font-semibold capitalize text-gray-700">
-                                                    {filterName}
+                                                    {key}
                                                 </h3>
 
                                                 <div className="flex flex-wrap gap-3">
-                                                    {values.map((item) => (
-                                                        <button
-                                                            key={item.name}
-                                                            className="rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium transition-colors hover:border-black hover:bg-black hover:text-white"
-                                                        >
-                                                            {item.name}
-                                                            <span className="ml-2 text-xs opacity-70">
-                                                                {item.count}
-                                                            </span>
-                                                        </button>
-                                                    ))}
+                                                    {values.map((value) => {
+                                                        const isActive = draftParams[key] === value.name;
+                                                        return (
+                                                            <button
+                                                                key={value.name}
+                                                                type="button"
+                                                                onClick={() => handleFilterApply(key, value.name)}
+                                                                className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm transition-colors duration-300 cursor-pointer
+                                                               ${isActive
+                                                                        ? 'bg-foreground text-background border-foreground'
+                                                                        : 'bg-transparent text-foreground border-foreground/30 hover:border-foreground/60'
+                                                                    }`}
+                                                            >
+                                                                <span>{value.name}</span>
+                                                                <span className={`text-xs ${isActive ? 'text-background/70' : 'text-foreground/50'}`}>
+                                                                    {value.count}
+                                                                </span>
+                                                            </button>
+                                                        );
+                                                    })}
                                                 </div>
                                             </motion.div>
                                         )
