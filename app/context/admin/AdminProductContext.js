@@ -14,6 +14,7 @@ const AdminProductContextInner = ({ children }) => {
 
     const searchParams = useSearchParams()
     const [products, setProducts] = useState([])
+    const [apiResponse, setApiResponse] = useState({})
     const [filters, setFilters] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -43,6 +44,7 @@ const AdminProductContextInner = ({ children }) => {
             }
             const data = await res.json()
             setProducts(data.products)
+            setApiResponse(data)
             setLoading(false)
         }
         getAllProducts()
@@ -63,7 +65,7 @@ const AdminProductContextInner = ({ children }) => {
     }, [])
 
     return (
-        <ContextProvider.Provider value={{ products, setProducts, loading, filters, queryParams }}>
+        <ContextProvider.Provider value={{ products, setProducts, loading, filters, queryParams, apiResponse }}>
             {children}
         </ContextProvider.Provider>
     )

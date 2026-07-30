@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
+import { SecondaryButton } from '@/components/UI/Buttons'
 import { Funnel, Info, Search, SquarePen, Trash2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { deleteProductById } from '@/services/productServices'
 import { toast } from 'react-toastify'
 import Image from 'next/image'
@@ -15,10 +15,35 @@ import { cleanParams } from '@/lib/productUtils'
 const ProductList = () => {
 
     const router = useRouter()
-    const { products, loading, setProducts, filters, queryParams } = useAdminProducts()
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
+    const { products, loading, setProducts, filters, queryParams, apiResponse } = useAdminProducts()
     const [isFilterSecOpen, setisFilterSecOpen] = useState(false)
     const [searchInput, setSearchInput] = useState('')
     const [draftParams, setDraftParams] = useState(queryParams)
+    const [activeFilters, setActiveFilters] = useState({})
+
+    const totalPages = apiResponse.totalPages;
+    const currentPage = Number(searchParams.get("page")) || 1;
+
+    const handleCurrentPage = (page) => {
+        const params = new URLSearchParams(searchParams.toString())
+        params.set("page", page)
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+        window.scrollTo(0, 0);
+    };
+
+    const handelForwardPagination = () => {
+        if (currentPage < totalPages) {
+            handleCurrentPage(currentPage + 1)
+        }
+    };
+
+    const handelBackwardPagination = () => {
+        if (currentPage > 1) {
+            handleCurrentPage(currentPage - 1)
+        }
+    };
 
     const toggleFilterSection = () => {
         setisFilterSecOpen(!isFilterSecOpen)
@@ -29,7 +54,12 @@ const ProductList = () => {
             ...prev,
             [filterType]: prev[filterType] === filterName ? '' : filterName
         }))
+        setActiveFilters(prev => ({
+            ...prev,
+            [filterType]: prev[filterType] === filterName ? '' : filterName
+        }))
     }
+    console.log(activeFilters)
 
     useEffect(() => {
         router.push(`/adminDashboard/productList?${cleanParams(draftParams)}`)
@@ -117,7 +147,15 @@ const ProductList = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
                             className="font-semibold text-foreground/50">
-                            No filter applied.
+                            {activeFilters.length > 0 ?
+                                activeFilters.map(filter => {
+                                    console.log(filter)
+                                    return <div key={filter}>
+                                        {filter}
+                                    </div>
+                                })
+                                :
+                                'No filter applied.'}
                         </motion.p>
                     </div>
                 )}
@@ -239,7 +277,6 @@ const ProductList = () => {
                                                     </div>
                                                     <div>
                                                         <h3 className="font-medium">{product.name}</h3>
-                                                        <p className="text-sm text-gray-500">Dior</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -294,14 +331,37 @@ const ProductList = () => {
                 </div>
             </motion.section>
 
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.95, delay: 0.4 }}
-                viewport={{ once: true }}
-                className='w-full flex items-center justify-center py-5'>
-                <PrimaryButton text={'Load More Products'} />
-            </motion.div>
+            {products.length > 0 && (
+                <div className="flex items-center justify-center py-10 gap-3">
+                    <span
+                        onClick={handelBackwardPagination}
+                        className="border border-foreground/30 px-4 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear"
+                    >
+                        Prev
+                    </span>
+
+                    <div className="flex gap-1">
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <span
+                                key={i}
+                                onClick={() => {
+                                    handleCurrentPage(i + 1);
+                                }}
+                                className={`border border-foreground/30 px-3 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear
+                                        ${currentPage === i + 1 ? "bg-foreground/10" : "bg-background"}`}
+                            >
+                                {i + 1}
+                            </span>
+                        ))}
+                    </div>
+                    <span
+                        onClick={handelForwardPagination}
+                        className="border border-foreground/30 px-4 py-2 cursor-pointer hover:bg-foreground/5 transition-all ease-linear"
+                    >
+                        Next
+                    </span>
+                </div>
+            )}
         </main>
     )
 }
