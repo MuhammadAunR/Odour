@@ -57,8 +57,6 @@ const ProductList = () => {
             (!Array.isArray(value) || value.length > 0)
     );
 
-    console.log(activeFilters)
-
     const handleFilterApply = (filterType, filterName) => {
         setDraftParams(prev => ({
             ...prev,
@@ -108,7 +106,7 @@ const ProductList = () => {
                 viewport={{ once: true }}
                 className='flex items-center justify-between py-7 px-5 bg-white shadow-lg rounded-2xl'>
                 <h1 className='text-2xl font-bold'>Product List</h1>
-                <span onClick={() => router.push('/adminDashboard/addProduct')}>
+                <span onClick={() => router.push('/adminDashboard/addProduct')} className='max-md:hidden'>
                     <SecondaryButton text={'Add Product'} />
                 </span>
             </motion.header>
@@ -118,7 +116,7 @@ const ProductList = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.95, delay: 0.1 }}
                 viewport={{ once: true }}
-                className='py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between gap-10'>
+                className='py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between gap-5 lg:gap-10'>
 
                 <label htmlFor="search" className='flex items-center w-full'>
                     <div className='p-2 text-foreground/80 border border-foreground/30 rounded-l-md'><Search /></div>
@@ -152,7 +150,7 @@ const ProductList = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="font-semibold text-foreground/50 flex items-center gap-2">
+                            className="font-semibold text-foreground/50 flex items-center gap-2 flex-wrap">
                             {activeFilters.length > 0 ?
                                 activeFilters.map(([filterType, value], index) => {
                                     return <div
