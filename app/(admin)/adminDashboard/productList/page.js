@@ -321,18 +321,15 @@ const ProductList = () => {
 
                                             <td className="p-4">
                                                 <div className="flex justify-center gap-2">
-                                                    <button className="p-2 rounded-lg hover:bg-gray-200 cursor-pointer">
-                                                        <Info strokeWidth={1.5} />
-                                                    </button>
                                                     <button
                                                         onClick={() => handleProductUpdate(product)}
-                                                        className="p-2 rounded-lg hover:bg-gray-200 cursor-pointer">
-                                                        <SquarePen strokeWidth={1.5} />
+                                                        className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer">
+                                                        <SquarePen strokeWidth={1} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleProductDelete(product._id)}
-                                                        className="p-2 rounded-lg hover:bg-red-100 cursor-pointer">
-                                                        <Trash2 strokeWidth={1.5} />
+                                                        className="p-2 rounded-lg bg-red-50 hover:bg-red-100 cursor-pointer">
+                                                        <Trash2 strokeWidth={1} />
                                                     </button>
                                                 </div>
                                             </td>
