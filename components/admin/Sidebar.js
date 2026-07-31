@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import useBlockYScroll from '../BlockYScroll'
 
 const Sidebar = ({ session }) => {
     const [activeOption, setactiveOption] = useState('adminDashboard')
@@ -40,7 +41,8 @@ const Sidebar = ({ session }) => {
     }
 
     return (
-        <aside className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} fixed bottom-0 w-90 transition-all duration-300 ease-in-out p-7 flex flex-col items-start justify-between bg-surface h-[calc(100vh-60px)] z-50`}>
+        <aside className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} fixed bottom-0 w-90 transition-all duration-300 ease-in-out p-7 flex flex-col items-start justify-between bg-surface h-[calc(100vh-60px)] z-50 
+        max-lg:shadow-[5px_0_20px_rgba(0,0,0,0.6)]`}>
 
             <motion.span
                 whileTap={{ scale: 0.97 }}
