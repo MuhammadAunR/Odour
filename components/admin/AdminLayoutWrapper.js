@@ -12,7 +12,7 @@ const AdminLayoutWrapper = ({ children, session }) => {
                 <AdminNavbar session={session} />
                 <div className="flex">
                     <Sidebar session={session} />
-                    <main className={`${sidebarOpen ? 'ml-90' : 'ml-0'} mt-15 flex-1 overflow-y-auto`}>
+                    <main className={`${sidebarOpen ? 'lg:ml-90' : 'ml-0'} mt-15 flex-1 overflow-y-auto`}>
                         {children}
                     </main>
                 </div>
