@@ -17,9 +17,9 @@ const ProductInfoSec = () => {
                 className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                 <h2 className='text-xl font-semibold'>Product Information</h2>
 
-                <div className='space-y-3'>
-                    <label htmlFor="name" className='flex items-center gap-5'>
-                        <div className='font-semibold w-40'>Product Name</div>
+                <div className='space-y-5 lg:space-y-3'>
+                    <label htmlFor="name" className='flex items-center max-lg:flex-col max-lg:items-start gap-3 lg:gap-5'>
+                        <div className='font-semibold lg:w-40'>Product Name</div>
                         <input
                             name='name'
                             onChange={handleProductDetailsInput}
@@ -28,8 +28,8 @@ const ProductInfoSec = () => {
                             placeholder='Product Name'
                             className='bg-background px-5 py-2 w-full outline-none text-foreground/80 border border-foreground/30 hover:border-foreground/50 transition-colors ease-linear' />
                     </label>
-                    <label htmlFor="name" className='flex items-start gap-5'>
-                        <div className='font-semibold w-40'>Description</div>
+                    <label htmlFor="name" className='flex items-start max-lg:flex-col max-lg:items-start gap-3 lg:gap-5'>
+                        <div className='font-semibold lg:w-40'>Description</div>
                         <textarea
                             name='description'
                             onChange={handleProductDetailsInput}

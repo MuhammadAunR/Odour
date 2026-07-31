@@ -17,8 +17,8 @@ const PriceSection = () => {
                 className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
                 <h2 className='text-xl font-semibold'>Price and Inventory</h2>
 
-                <div className='space-y-3'>
-                    <div className='flex items-center gap-3'>
+                <div className='space-y-5 lg:space-y-3'>
+                    <div className='flex items-center gap-3 flex-wrap'>
                         {productDetails.variants.map((variant, index) => {
                             return <div key={index} className='w-60 h-70 border-2 border-foreground/20 shadow-lg px-2 pt-5 flex flex-col gap-1 items-center relative group/variantCard overflow-hidden'>
 
