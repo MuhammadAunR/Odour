@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { SecondaryButton } from '@/components/UI/Buttons'
-import { Funnel, Info, Search, SquarePen, Trash2 } from 'lucide-react'
+import { Funnel, Info, Search, SquarePen, Trash2, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { deleteProductById } from '@/services/productServices'
 import { toast } from 'react-toastify'
@@ -21,7 +21,6 @@ const ProductList = () => {
     const [isFilterSecOpen, setisFilterSecOpen] = useState(false)
     const [searchInput, setSearchInput] = useState('')
     const [draftParams, setDraftParams] = useState(queryParams)
-    const [activeFilters, setActiveFilters] = useState({})
 
     const totalPages = apiResponse.totalPages;
     const currentPage = Number(searchParams.get("page")) || 1;
@@ -49,17 +48,24 @@ const ProductList = () => {
         setisFilterSecOpen(!isFilterSecOpen)
     }
 
+    const activeFilters = Object.entries(draftParams).filter(
+        ([_, value]) =>
+            value !== "" &&
+            value !== null &&
+            value !== undefined &&
+            typeof value == 'string' &&
+            (!Array.isArray(value) || value.length > 0)
+    );
+
+    console.log(activeFilters)
+
     const handleFilterApply = (filterType, filterName) => {
         setDraftParams(prev => ({
             ...prev,
             [filterType]: prev[filterType] === filterName ? '' : filterName
         }))
-        setActiveFilters(prev => ({
-            ...prev,
-            [filterType]: prev[filterType] === filterName ? '' : filterName
-        }))
     }
-    console.log(activeFilters)
+
 
     useEffect(() => {
         router.push(`/adminDashboard/productList?${cleanParams(draftParams)}`)
@@ -142,21 +148,29 @@ const ProductList = () => {
 
                 {!isFilterSecOpen && (
                     <div className="px-5 py-5">
-                        <motion.p
+                        <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="font-semibold text-foreground/50">
+                            className="font-semibold text-foreground/50 flex items-center gap-2">
                             {activeFilters.length > 0 ?
-                                activeFilters.map(filter => {
-                                    console.log(filter)
-                                    return <div key={filter}>
-                                        {filter}
+                                activeFilters.map(([filterType, value], index) => {
+                                    return <div
+                                        key={index}
+                                        onClick={() => handleFilterApply(filterType, value)}
+                                        className='border-2 border-foreground/50 rounded-full px-5 py-1 cursor-pointer hover:border-red-700 transition-all ease-linear duration-300 relative 
+                                        group/deleteFilter'>
+                                        <span className='group-hover/deleteFilter:scale-0 transition-all ease-linear inline-block'>
+                                            {value}
+                                        </span>
+                                        <div className='absolute inset-0 flex items-center justify-center scale-0 group-hover/deleteFilter:scale-100 text-red-700 transition-all ease-linear'>
+                                            <X />
+                                        </div>
                                     </div>
                                 })
                                 :
                                 'No filter applied.'}
-                        </motion.p>
+                        </motion.div>
                     </div>
                 )}
 
