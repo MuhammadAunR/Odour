@@ -12,7 +12,7 @@ const AdminNavbar = ({ session }) => {
           <h1 className='font-display text-4xl'>ODOUR</h1>
         </div>
 
-        <div className='flex items-center justify-center gap-5'>
+        <div className='flex items-center justify-center gap-5 max-md:hidden'>
           <div className='flex items-center justify-center gap-3'>
             <div className='relative w-8 h-8 rounded-full overflow-hidden'>
               <Image
