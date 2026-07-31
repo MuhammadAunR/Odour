@@ -18,7 +18,7 @@ const Header = () => {
                 transition={{ delay: 0.01 }}
                 viewport={{ once: true }}
                 className='space-y-5 py-5 px-2'>
-                <section className='w-full py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between'>
+                <section className='w-full py-7 px-5 bg-white shadow-lg rounded-2xl flex items-center justify-between max-md:flex-col max-md:items-start gap-3'>
                     <div className='flex flex-col'>
                         <h1 className='font-bold text-2xl'>
                             Welcome Back, Admin 👋

@@ -42,7 +42,7 @@ const KPISection = () => {
             <main className='space-y-5 py-5 px-2'>
 
                 <section
-                    className='w-full flex items-center justify-between py-7 px-5 bg-white shadow-lg rounded-2xl'>
+                    className='w-full flex items-center justify-between flex-wrap gap-5 py-7 px-5 bg-white shadow-lg rounded-2xl'>
                     {dashboardCards.map((card, index) => {
                         const Icon = card.icon
                         return <motion.div
