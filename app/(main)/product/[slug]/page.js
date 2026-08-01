@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { avatarColors, seasonConfig, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/main/Assets'
 import CountUp from 'react-countup'
 import SectionHeader from '@/components/main/SectionHeader'
+import { PrimaryButton } from '@/components/UI/Buttons'
 
 const Product = ({ params }) => {
 
@@ -58,8 +59,8 @@ const Product = ({ params }) => {
             .filter(p => p._id !== product._id)
             .map(p => {
                 let score = 0
-                if (p.gender === product.gender) score += 3
-                if (p.fragranceFamily === product.fragranceFamily) score += 2
+                if (p.gender.some(s => product.gender.includes(s))) score += 3
+                if (p.fragranceFamily.some(s => product.fragranceFamily.includes(s))) score += 2
                 if (p.season.some(s => product.season.includes(s))) score += 1
                 return { ...p, score }
             })
@@ -261,7 +262,8 @@ const Product = ({ params }) => {
                                     addCartItemIdToLS(product, { selectedSize: selectedPriceAndSize, qty: productQty });
                                     toggleCart()
                                 }}
-                                className='flex-1 max-sm:w-full flex items-center justify-center gap-2 py-3 bg-foreground cursor-pointer text-background'>
+                                disabled={selectedPriceAndSize?.stockQuantity === 0}
+                                className='flex-1 max-sm:w-full flex items-center justify-center gap-2 py-3 bg-foreground cursor-pointer text-background hover:bg-background hover:text-foreground transition-all ease-linear duration-300 border border-foreground font-semibold disabled:cursor-not-allowed disabled:bg-foreground/70'>
                                 <span>Add to Cart</span>
                             </button>
                         </div>
