@@ -4,7 +4,6 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import { useCart } from "@/app/context/CartContext";
-import { usePopup } from "@/app/context/QuickPopupContext";
 import { useRouter } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";
 import { PrimaryButton } from "./Buttons";
@@ -12,7 +11,6 @@ import { seasonConfig } from "../main/Assets";
 
 const ProductGridCard = ({ product, index }) => {
   const router = useRouter();
-  const { togglePopup, handleProduct } = usePopup();
   const { toggleCart, addCartItemIdToLS } = useCart();
   const { handleWishListItemsInLS, wishListProducts } = useWishlist();
 
@@ -84,16 +82,6 @@ const ProductGridCard = ({ product, index }) => {
         <motion.div
           className="absolute -bottom-10 group-hover/ProductGridCard:bottom-0 left-0 right-0 flex items-center border-t border-foreground/10 bg-background transition-all ease-linear max-md:hidden"
         >
-          <button
-            onClick={() => {
-              togglePopup();
-              handleProduct(product);
-            }}
-            className="relative bg-background hover:bg-foreground/5 transition-colors ease-linear px-7 py-2 text-xs cursor-pointer border border-foreground/20 flex-1 items-center justify-center max-md:hidden"
-          >
-            Quick View
-          </button>
-
           <button
             onClick={() => {
               addCartItemIdToLS(product);

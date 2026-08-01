@@ -3,7 +3,6 @@ import ProductGridCard, {
   ProductCardSkeleton,
   ProductListCard,
 } from "@/components/UI/Card";
-import ProductQuickView from "@/components/main/ProductQuickView";
 import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
 import React, { Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -82,7 +81,6 @@ const ShopPageInner = () => {
   }, [searchInput]);
   return (
     <>
-      <ProductQuickView />
       <main className="w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative">
         <div className="flex flex-col justify-end gap-5 py-4 border-b border-foreground/10">
           <label
