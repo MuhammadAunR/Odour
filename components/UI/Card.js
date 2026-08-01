@@ -87,12 +87,14 @@ const ProductGridCard = ({ product, index }) => {
               addCartItemIdToLS(product);
               toggleCart();
             }}
-            className="relative group/btn bg-foreground px-7 py-2 text-xs cursor-pointer flex-1 items-center justify-center border border-foreground/20"
+            disabled={defaultPriceAndSize.stockQuantity === 0}
+            className="relative group/btn bg-foreground px-7 py-2 text-xs cursor-pointer flex-1 items-center justify-center border-b border-foreground/20 disabled:cursor-not-allowed disabled:bg-foreground/60"
           >
-            <span className="relative z-10 text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200">
+            <span className={`relative z-10 text-background transition-colors ease-linear duration-200 ${defaultPriceAndSize.stockQuantity === 0 ? '' : 'group-hover/btn:text-foreground'}`}>
               Add to Cart
             </span>
-            <span className="absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background"></span>
+            <span className={`absolute left-0 bottom-0 w-full h-0 transition-all ease-linear duration-300 bg-background 
+              ${defaultPriceAndSize.stockQuantity === 0 ? '' : 'group-hover/btn:h-full'}`}></span>
           </button>
         </motion.div>
       </div>
@@ -100,6 +102,9 @@ const ProductGridCard = ({ product, index }) => {
       <div className="p-4 w-full space-y-1">
         <div className="flex items-center gap-2">
           <h3 className="md:text-xl font-bold font-serif">{product.name}</h3>
+          {defaultPriceAndSize.stockQuantity === 0 &&
+            <span className="text-red-700 font-bold">(Sold Out)</span>
+          }
         </div>
 
         {product.defaultSalePrice ? (
