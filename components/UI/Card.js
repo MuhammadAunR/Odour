@@ -143,7 +143,7 @@ const ProductListCard = ({ product, index }) => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.2, delay: index * 0.1 }}
+        transition={{ duration: 0.2, delay: 0.1 }}
         viewport={{ once: true }}
         onClick={() => router.push(`/product/${product.slug}`)}
         className="flex items-center justify-start w-full group/ProductListCard hover:bg-foreground/5 hover:shadow-xl transition-all ease-in-out duration-500"
@@ -168,8 +168,10 @@ const ProductListCard = ({ product, index }) => {
                 <span className="font-semibold">
                   ({defaultPriceAndSize.size})
                 </span>
+                {defaultPriceAndSize.stockQuantity === 0 &&
+                  <span className="text-red-700 font-bold">(Sold Out)</span>
+                }
               </div>
-              <h3 className="font-semibold">{product.brand}</h3>
               <p className="text-muted max-w-lg">{product.description}</p>
             </div>
 
@@ -258,7 +260,7 @@ const ProductListCard = ({ product, index }) => {
                   toggleCart();
                 }}
               >
-                <PrimaryButton text={"Add to Cart"} textSize="sm" />
+                <PrimaryButton text={"Add to Cart"} textSize="sm" disabled={defaultPriceAndSize.stockQuantity === 0 ? true : false} />
               </span>
             </div>
           </div>
