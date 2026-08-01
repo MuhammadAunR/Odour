@@ -2,14 +2,17 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-const PrimaryButton = ({ text, textSize = 'lg' }) => {
+const PrimaryButton = ({ text, textSize = 'lg', disabled = false }) => {
 
     return (
         <motion.button
             whileTap={{ scale: 0.97 }}
-            className={`relative group/btn bg-foreground px-10 py-2 uppercase tracking-wider text-${textSize} cursor-pointer border border-foreground`}>
-            <span className='relative z-10 font-semibold text-background group-hover/btn:text-foreground transition-colors ease-linear duration-200'>{text}</span>
-            <span className='absolute left-0 bottom-0 w-full h-0 group-hover/btn:h-full transition-all ease-linear duration-300 bg-background'></span>
+            className={`relative group/btn px-10 py-2 uppercase tracking-wider border
+            text-${textSize} 
+            ${disabled ? 'cursor-not-allowed bg-foreground/70 border-foreground/70' : 'cursor-pointer bg-foreground border-foreground'}`}>
+            <span className={`relative z-10 font-semibold text-background transition-colors ease-linear duration-200 ${disabled ? '' : 'group-hover/btn:text-foreground'}`}>{text}</span>
+            <span className={`absolute left-0 bottom-0 w-full h-0 transition-all ease-linear duration-300 bg-background 
+              ${disabled ? '' : 'group-hover/btn:h-full'}`}></span>
         </motion.button>
 
     )
