@@ -16,6 +16,10 @@ const ProductGridCard = ({ product, index }) => {
   const { toggleCart, addCartItemIdToLS } = useCart();
   const { handleWishListItemsInLS, wishListProducts } = useWishlist();
 
+  const defaultPriceAndSize =
+    product?.variants?.find((variant) => variant.originalPrice == product.defaultPrice) ||
+    product?.variants?.[0] ||
+    null;
 
   return (
     <motion.div
@@ -52,9 +56,9 @@ const ProductGridCard = ({ product, index }) => {
           <span className="absolute top-2 right-2 px-2 py-1 text-xs font-semibold bg-red-500 text-white">
             -
             {Math.round(
-              ((product.defaultPrice -
-                product.defaultSalePrice) /
-                product.defaultPrice) *
+              ((defaultPriceAndSize.originalPrice -
+                defaultPriceAndSize.salePrice) /
+                defaultPriceAndSize.originalPrice) *
               100,
             )}
             %
@@ -109,20 +113,19 @@ const ProductGridCard = ({ product, index }) => {
         <div className="flex items-center gap-2">
           <h3 className="md:text-xl font-bold font-serif">{product.name}</h3>
         </div>
-        {/* <p className="text-xs text-foreground/40 mb-1">{product.brand}</p> */}
 
         {product.defaultSalePrice ? (
           <div className="flex items-baseline gap-2">
             <span className="max-md:text-[10px] text-xs text-foreground/40 line-through">
-              PKR {product.defaultPrice.toLocaleString()}
+              PKR {defaultPriceAndSize.originalPrice.toLocaleString()}
             </span>
             <span className="font-semibold text-red-500 max-md:text-sm">
-              PKR {product.defaultSalePrice.toLocaleString()}
+              PKR {defaultPriceAndSize.salePrice.toLocaleString()}
             </span>
           </div>
         ) : (
           <span className="max-md:text-sm font-semibold text-foreground">
-            PKR {product.defaultPrice.toLocaleString()}
+            PKR {defaultPriceAndSize.originalPrice.toLocaleString()}
           </span>
         )}
       </div>
@@ -147,7 +150,7 @@ const ProductListCard = ({ product, index }) => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.2, delay: 0.1 }}
+        transition={{ duration: 0.2, delay: index * 0.1 }}
         viewport={{ once: true }}
         onClick={() => router.push(`/product/${product.slug}`)}
         className="flex items-center justify-start w-full group/ProductListCard hover:bg-foreground/5 hover:shadow-xl transition-all ease-in-out duration-500"
