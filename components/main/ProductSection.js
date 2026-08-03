@@ -10,7 +10,7 @@ const ProductSection = () => {
     const [activeFilter, setActiveFilter] = useState('New Arrivals')
     const { products } = useProducts()
 
-    const availableAttribute = [...new Set(products.flatMap(prod => prod.attribute))]
+    const availableAttribute = [...new Set(products?.flatMap(prod => prod.attribute))]
     const filteredProducts = products.filter(prod => prod.attribute.includes(activeFilter))
 
     return (
@@ -33,7 +33,7 @@ const ProductSection = () => {
                                 onClick={() => setActiveFilter(tag)}
                                 className={`px-5 py-3 transition-all ease-linear duration-300 cursor-pointer
                                     ${activeFilter === tag ? 'bg-foreground text-background' : 'bg-surface text-foreground'}`}>
-                                {tag === 'New Arrivals' ? 'New Arrivals' : 'Limited Edition'}
+                                {tag}
                             </button>
                         ))}
                     </div>
