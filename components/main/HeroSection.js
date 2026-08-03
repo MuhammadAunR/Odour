@@ -35,7 +35,7 @@ const HeroSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.90, ease: 'linear' }}
           viewport={{ once: true }}
-          className="absolute top-[60%] -translate-y-1/2 left-5 lg:left-30 space-y-7">
+          className="absolute top-[55%] md:top-[60%] -translate-y-1/2 left-5 lg:left-30 space-y-7">
 
           <h1
             className="uppercase max-w-md font-bold text-5xl md:text-7xl font-display tracking-wider leading-[1.1]"
