@@ -18,7 +18,7 @@ export async function PATCH(req, { params }) {
         if (existing) {
             return NextResponse.json(
                 { message: "Category already exist", existing },
-                { status: 400 }
+                { status: 409 }
             );
         }
 
