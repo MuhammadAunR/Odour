@@ -1,12 +1,11 @@
 'use client'
 import { useSidebar } from '@/app/context/admin/SidebarContext'
-import { CirclePlus, CircleUserRound, ListOrdered, LogOut, PanelLeftClose, PanelLeftOpen, SquareArrowRightExit, Warehouse } from 'lucide-react'
+import { CirclePlus, CircleUserRound, ListOrdered, LogOut, PanelLeftClose, PanelLeftOpen, SquareArrowRightExit, SquareStack, Warehouse } from 'lucide-react'
 import { motion } from 'motion/react'
 import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import useBlockYScroll from '../BlockYScroll'
 
 const Sidebar = ({ session }) => {
     const [activeOption, setactiveOption] = useState('adminDashboard')
@@ -16,6 +15,7 @@ const Sidebar = ({ session }) => {
 
     const mainMenu = [
         { option: 'Dashboard', icon: <Warehouse strokeWidth={1} />, path: '/adminDashboard' },
+        { option: 'Catalog Management', icon: <SquareStack strokeWidth={1} />, path: '/adminDashboard/catalog' },
         { option: 'Add Product', icon: <CirclePlus strokeWidth={1} />, path: '/adminDashboard/addProduct' },
         { option: 'Product List', icon: <ListOrdered strokeWidth={1} />, path: '/adminDashboard/productList' },
     ]
