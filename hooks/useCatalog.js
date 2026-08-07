@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 export function useCatalog(type) {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [deletingId, setDeletingId] = useState(null)
 
     const endpoint = `/api/catalog/${type}`
 
@@ -95,6 +97,7 @@ export function useCatalog(type) {
 
     async function deleteItem(id, itemData) {
         setLoading(true)
+        setDeletingId(id)
         setError(null)
 
         try {
@@ -102,14 +105,14 @@ export function useCatalog(type) {
             const data = await res.json()
 
             if (!checkResponse(res, data)) return
-
+            toast.success(data.message)
             await getItems()
-
             return data
         } catch (err) {
             setError(err.message)
         } finally {
             setLoading(false)
+            setDeletingId(null)
         }
     }
 
@@ -139,6 +142,7 @@ export function useCatalog(type) {
         items,
         loading,
         error,
+        deletingId,
 
         getItems,
         createItem,
