@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 export function useCatalog(type) {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
     const [deletingId, setDeletingId] = useState(null)
 
     const endpoint = `/api/catalog/${type}`
@@ -26,30 +25,16 @@ export function useCatalog(type) {
         return await fetch(url, options)
     }
 
-    const checkResponse = (response, data) => {
-        if (!response.ok) {
-            setError(data.message || 'Something went wrong')
-            return false
-        }
-
-        return true
-    }
-
     const getItems = useCallback(async () => {
         setLoading(true)
-        setError(null)
 
         try {
             const res = await apiRequest(endpoint, 'GET')
             const data = await res.json()
 
-            if (!checkResponse(res, data)) return
-
             setItems(data.data)
 
             return data.data
-        } catch (err) {
-            setError(err.message)
         } finally {
             setLoading(false)
         }
@@ -57,19 +42,19 @@ export function useCatalog(type) {
 
     async function createItem(itemData) {
         setLoading(true)
-        setError(null)
 
         try {
             const res = await apiRequest(endpoint, 'POST', itemData)
             const data = await res.json()
 
-            if (!checkResponse(res, data)) return
+            if (!res.ok) {
+                toast.error(data.message)
+                return
+            }
 
+            toast.success(data.message)
             await getItems()
-
             return data
-        } catch (err) {
-            setError(err.message)
         } finally {
             setLoading(false)
         }
@@ -77,39 +62,39 @@ export function useCatalog(type) {
 
     async function updateItem(id, itemData) {
         setLoading(true)
-        setError(null)
 
         try {
             const res = await apiRequest(`${endpoint}/${id}`, 'PATCH', itemData)
             const data = await res.json()
 
-            if (!checkResponse(res, data)) return
-
+            if (!res.ok) {
+                toast.error(data.message)
+                return
+            }
+            toast.success(data.message)
             await getItems()
-
             return data
-        } catch (err) {
-            setError(err.message)
         } finally {
             setLoading(false)
         }
     }
 
-    async function deleteItem(id, itemData) {
+    async function deleteItem(id) {
         setLoading(true)
         setDeletingId(id)
-        setError(null)
 
         try {
-            const res = await apiRequest(`${endpoint}/${id}`, 'DELETE', itemData)
+            const res = await apiRequest(`${endpoint}/${id}`, 'DELETE')
             const data = await res.json()
 
-            if (!checkResponse(res, data)) return
+            if (!res.ok) {
+                toast.error(data.message)
+                return
+            }
             toast.success(data.message)
+            setItems(prev => prev.filter(item => item._id !== id))
             await getItems()
             return data
-        } catch (err) {
-            setError(err.message)
         } finally {
             setLoading(false)
             setDeletingId(null)
@@ -118,17 +103,16 @@ export function useCatalog(type) {
 
     async function getItemById(id) {
         setLoading(true)
-        setError(null)
-
         try {
             const res = await apiRequest(`${endpoint}/${id}`, 'GET')
             const data = await res.json()
 
-            if (!checkResponse(res, data)) return
+            if (!res.ok) {
+                toast.error(data.message)
+                return
+            }
 
             return data.data
-        } catch (err) {
-            setError(err.message)
         } finally {
             setLoading(false)
         }
@@ -141,7 +125,6 @@ export function useCatalog(type) {
     return {
         items,
         loading,
-        error,
         deletingId,
 
         getItems,
