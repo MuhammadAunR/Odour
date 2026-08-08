@@ -53,7 +53,7 @@ const item = {
 
 export { item }
 
-const SimpleLoader = () => {
+const SimpleLoader = ({ size = 32 }) => {
     return (
         <motion.span
             animate={{ rotate: 360 }}
@@ -64,8 +64,9 @@ const SimpleLoader = () => {
             }}
             className="inline-flex"
         >
-            <LoaderCircle size={32} />
+            <LoaderCircle size={size} />
         </motion.span>
     );
 };
-export { SimpleLoader }
+
+export { SimpleLoader };
