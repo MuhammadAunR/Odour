@@ -4,9 +4,10 @@ import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import useBlockYScroll from '@/components/BlockYScroll'
 import { useCatalog } from '@/hooks/useCatalog'
 import { getCatalogDetails } from '@/services/catalogServices'
-import { CircleCheck, CircleX, MoveRight, Plus, Save, SquarePen, Trash2, X } from 'lucide-react'
+import { CircleCheck, CircleX, MoveRight, Plus, SquarePen, Trash2, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import React, { useEffect, useState } from 'react'
+import CountUp from 'react-countup'
 import { toast } from 'react-toastify'
 
 const Catalog = () => {
@@ -64,16 +65,15 @@ const Catalog = () => {
                 return
             }
             createItem(newCatalogItem)
-            toast.success(`${catalogNameFormat(activeCatalog)} Added`)
         } else {
             updateItem(newCatalogItem.id, newCatalogItem)
-            toast.success(`${catalogNameFormat(activeCatalog)} Updated`)
         }
         setNewCatalogItem({
             name: "",
             isActive: false
         })
         setPopupOpening(false)
+        setFormAction('Create')
     }
 
     const handleFormCancel = () => {
@@ -160,7 +160,7 @@ const Catalog = () => {
                                     {data.description}
                                 </p>
                                 <div>
-                                    <p className="text-2xl font-bold">{data.count}</p>
+                                    <p className="text-2xl font-bold"><CountUp end={data.count} duration={1} /></p>
                                     <span className="text-sm text-muted">Items</span>
                                 </div>
                             </div>
@@ -183,18 +183,16 @@ const Catalog = () => {
                     <div className='flex items-center justify-between'>
                         <h3 className='text-2xl font-bold'>{activeCatalog.toUpperCase()}</h3>
                         <button
-                            onClick={() => setPopupOpening(true)}
+                            onClick={() => { setPopupOpening(true); setFormAction('Create') }}
                             className='flex items-center gap-1 bg-foreground text-white box-border border border-foreground px-7 py-2 cursor-pointer hover:bg-foreground/10 hover:text-foreground transition-all ease-linear duration-300'>
                             <span><Plus size={20} /></span>
                             <span className='font-semibold'>Create</span>
                         </button>
                     </div>
 
-                    <div className='py-5 flex items-center justify-start gap-5'>
-                        {loading ?
-                            <div className='w-full flex items-center justify-center'>
-                                <SimpleLoader />
-                            </div>
+                    <div className='py-5 flex items-center justify-start gap-5 flex-wrap'>
+                        {items.length === 0 ?
+                            <div className='text-lg text-muted font-semibold'>No {catalogNameFormat(activeCatalog)} available</div>
                             : items?.map((item, index) => {
                                 return <motion.div
                                     initial={{ opacity: 0, x: -10 }}
@@ -215,13 +213,13 @@ const Catalog = () => {
                                     <div className="flex justify-between gap-2">
                                         <button
                                             onClick={() => handleCatalogItemUpdate(item.name, item.isActive, item._id)}
-                                            className="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer">
+                                            className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer">
                                             <SquarePen strokeWidth={1} />
                                         </button>
                                         <button
-                                            onClick={() => deleteItem(item._id, item)}
-                                            className="p-2 rounded-lg bg-red-100 hover:bg-red-200 cursor-pointer">
-                                            {deletingId === item._id ? <SimpleLoader /> : <Trash2 strokeWidth={1} />}
+                                            onClick={() => deleteItem(item._id)}
+                                            className="w-10 h-10 flex items-center justify-center rounded-lg bg-red-100 hover:bg-red-200 cursor-pointer">
+                                            {deletingId === item._id ? <SimpleLoader size={20} /> : <Trash2 strokeWidth={1} />}
                                         </button>
                                     </div>
                                 </motion.div>
