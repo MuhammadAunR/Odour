@@ -37,7 +37,7 @@ const ProductSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    
+
     sku: {
         type: String,
         required: true,
@@ -49,30 +49,35 @@ const ProductSchema = new mongoose.Schema({
         required: true,
     },
 
-    category: {
-        type: [String],
+    category: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
         default: [],
-    },
+    }],
 
-    attribute: {
-        type: [String],
+    attribute: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Attribute",
         default: [],
-    },
+    }],
 
-    gender: {
-        type: [String],
+    gender: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Gender",
         default: [],
-    },
+    }],
 
-    season: {
-        type: [String],
+    season: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Season",
         default: [],
-    },
+    }],
 
-    fragranceFamily: {
-        type: [String],
+    fragranceFamily: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FragranceFamily",
         default: [],
-    },
+    }],
 
     images: {
         type: [ImageSchema],
