@@ -1,12 +1,18 @@
 'use client'
 import { useProductForm } from '@/app/context/admin/ProductFormContext'
-import { gender, seasons, fragranceFamily, productAttributes, productCategories } from '@/constants/ProductClassificationConstants'
-
+import { useAllCatalog } from '@/hooks/useAllCatalog'
 import { motion } from 'motion/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const ProductClassificationSec = () => {
+
     const { productDetails, handleProductDetailsViaButton, } = useProductForm()
+    const { catalog, getCatalog } = useAllCatalog()
+
+    useEffect(() => {
+        getCatalog()
+    }, [])
+
     return (
         <>
             <motion.section
@@ -15,21 +21,21 @@ const ProductClassificationSec = () => {
                 transition={{ duration: 0.95, delay: 0.3 }}
                 viewport={{ once: true }}
                 className='space-y-5 bg-white shadow-xl p-3 rounded-2xl'>
-                <h2 className='text-xl font-semibold'>Product Classification</h2>
+                <h2 className='text-xl font-semibold'>Product Catalog</h2>
 
                 <div className='space-y-5 lg:space-y-3'>
                     <div className='flex items-center max-lg:flex-col max-lg:items-start gap-3 lg:gap-5'>
                         <div className='font-semibold lg:w-40'>Fragrance Family</div>
                         <div className='flex items-center gap-3 flex-wrap'>
-                            {fragranceFamily.map((family, i) => {
+                            {catalog.fragranceFamily.map((family, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('fragranceFamily', family)}
+                                    onClick={() => handleProductDetailsViaButton('fragranceFamily', family.name)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.fragranceFamily.includes(family) ? 'bg-foreground/80 text-background'
-                                            : 'bg-background'}`}>
-                                    {family}
+                                    ${productDetails.fragranceFamily.includes(family.name) ?
+                                            'bg-foreground/80 text-background' : 'bg-background'}`}>
+                                    {family.name}
                                 </motion.button>
                             })}
                         </div>
@@ -37,15 +43,15 @@ const ProductClassificationSec = () => {
                     <div className='flex items-center max-lg:flex-col max-lg:items-start gap-3 lg:gap-5'>
                         <div className='font-semibold lg:w-40'>Season</div>
                         <div className='flex items-center gap-3 flex-wrap'>
-                            {seasons.map((season, i) => {
+                            {catalog.season.map((season, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('season', season)}
+                                    onClick={() => handleProductDetailsViaButton('season', season.name)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.season.includes(season) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.season.includes(season.name) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
-                                    {season}
+                                    {season.name}
                                 </motion.button>
                             })}
                         </div>
@@ -53,15 +59,15 @@ const ProductClassificationSec = () => {
                     <div className='flex items-center max-lg:flex-col max-lg:items-start gap-3 lg:gap-5'>
                         <div className='font-semibold lg:w-40'>Categories</div>
                         <div className='flex items-center gap-3 flex-wrap'>
-                            {productCategories.map((cat, i) => {
+                            {catalog.category.map((cat, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('category', cat)}
+                                    onClick={() => handleProductDetailsViaButton('category', cat.name)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.category.includes(cat) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.category.includes(cat.name) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
-                                    {cat}
+                                    {cat.name}
                                 </motion.button>
                             })}
                         </div>
@@ -69,15 +75,15 @@ const ProductClassificationSec = () => {
                     <div className='flex items-center max-lg:flex-col max-lg:items-start gap-3 lg:gap-5'>
                         <div className='font-semibold lg:w-40'>Atrributes</div>
                         <div className='flex items-center gap-3 flex-wrap'>
-                            {productAttributes.map((attribute, i) => {
+                            {catalog.attribute.map((attribute, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('attribute', attribute)}
+                                    onClick={() => handleProductDetailsViaButton('attribute', attribute.name)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.attribute.includes(attribute) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.attribute.includes(attribute.name) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
-                                    {attribute}
+                                    {attribute.name}
                                 </motion.button>
                             })}
                         </div>
@@ -85,15 +91,15 @@ const ProductClassificationSec = () => {
                     <div className='flex items-center max-lg:flex-col max-lg:items-start gap-3 lg:gap-5'>
                         <div className='font-semibold lg:w-40'>Gender</div>
                         <div className='flex items-center gap-3 flex-wrap'>
-                            {gender.map((gender, i) => {
+                            {catalog.gender.map((gender, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('gender', gender)}
+                                    onClick={() => handleProductDetailsViaButton('gender', gender.name)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.gender.includes(gender) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.gender.includes(gender.name) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
-                                    {gender}
+                                    {gender.name}
                                 </motion.button>
                             })}
                         </div>
