@@ -1,5 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
-import { generateSLUG } from "@/lib/productUtils";
+import { generateSLUG, handleAggregatePipeline } from "@/lib/productUtils";
 import Category from "@/models/Category";
 import { NextResponse } from "next/server";
 
@@ -40,8 +40,9 @@ export async function POST(req) {
 export async function GET() {
     try {
         await connectDB()
-
-        const data = await Category.find()
+        const data = await Category.aggregate(
+            handleAggregatePipeline("products", "category")
+        );
 
         if (data.length === 0) {
             return NextResponse.json(
