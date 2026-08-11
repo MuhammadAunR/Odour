@@ -11,7 +11,6 @@ import { AnimatePresence, motion } from "framer-motion"
 import { avatarColors, seasonConfig, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/main/Assets'
 import CountUp from 'react-countup'
 import SectionHeader from '@/components/main/SectionHeader'
-import { PrimaryButton } from '@/components/UI/Buttons'
 
 const Product = ({ params }) => {
 
@@ -59,9 +58,9 @@ const Product = ({ params }) => {
             .filter(p => p._id !== product._id)
             .map(p => {
                 let score = 0
-                if (p.gender.some(s => product.gender.includes(s))) score += 3
-                if (p.fragranceFamily.some(s => product.fragranceFamily.includes(s))) score += 2
-                if (p.season.some(s => product.season.includes(s))) score += 1
+                if (p.gender.some(s => product.gender.name.includes(s.name))) score += 3
+                if (p.fragranceFamily.some(s => product.fragranceFamily.name.includes(s.name))) score += 2
+                if (p.season.some(s => product.season.name.includes(s.name))) score += 1
                 return { ...p, score }
             })
             .filter(p => p.score > 0)
@@ -207,9 +206,9 @@ const Product = ({ params }) => {
                         <div className='flex items-center gap-3'>
                             {product.fragranceFamily.map(family => {
                                 return <span
-                                    key={family}
+                                    key={family._id}
                                     className='text-sm font-semibold tracking-[0.2em] text-foreground/70 uppercase border border-foreground/30 py-1 px-3'>
-                                    {family}
+                                    {family.name}
                                 </span>
                             })}
                         </div>
@@ -219,16 +218,16 @@ const Product = ({ params }) => {
                         <div className="flex items-center gap-3">
                             {product.gender.map((gen) => (
                                 <span
-                                    key={gen}
+                                    key={gen._id}
                                     className={`text-sm font-semibold tracking-[0.2em] uppercase border py-1 px-3
-                                    ${gen === "Men"
+                                    ${gen.name === "Men"
                                             ? "bg-blue-950 text-background border-blue-950"
-                                            : gen === "Women"
+                                            : gen.name === "Women"
                                                 ? "bg-pink-900 text-background border-pink-900"
                                                 : "bg-foreground text-background border-foreground"
                                         }`}
                                 >
-                                    {gen}
+                                    {gen.name}
                                 </span>
                             ))}
                         </div>
@@ -237,13 +236,13 @@ const Product = ({ params }) => {
 
                         <div className='flex items-center gap-2'>
                             {product.season.map((sea) => {
-                                const config = seasonConfig[sea]
+                                const config = seasonConfig[sea.name]
                                 return (
                                     <span
-                                        key={sea}
+                                        key={sea._id}
                                         className={`${config.color} ${config.bg} text-sm font-semibold tracking-[0.2em] uppercase px-3 py-1 border border-current/20`}
                                     >
-                                        {config.icon} {sea}
+                                        {config.icon} {sea.name}
                                     </span>
                                 )
                             })}
@@ -275,6 +274,9 @@ const Product = ({ params }) => {
                     <SectionHeader headerContent={{ subHeading: 'You Might Also Like', mainHeading: 'Related Products' }} />
 
                     <div className='flex items-center justify-center flex-wrap gap-2 pb-10'>
+                        {relatedProducts.length === 0 &&
+                            <div className='text-lg font-semibold text-muted'>Oops ---- No related product found</div>
+                        }
                         {relatedProducts.map((prod, index) => {
                             return <ProductGridCard key={prod._id} product={prod} index={index} />
                         })}
