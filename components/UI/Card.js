@@ -40,14 +40,14 @@ const ProductGridCard = ({ product, index }) => {
 
         <span
           className={`absolute top-2 left-2 px-2 py-1 text-xs font-medium
-                    ${product.gender[0] === "Men"
+                    ${product.gender[0].name === "Men"
               ? "bg-blue-950 text-background"
-              : product.gender[0] === "Women"
+              : product.gender[0].name === "Women"
                 ? "bg-pink-900 text-background"
                 : "bg-foreground text-background"
             }`}
         >
-          {product.gender[0]}
+          {product.gender[0].name}
         </span>
 
         {product.defaultSalePrice && (
@@ -179,25 +179,25 @@ const ProductListCard = ({ product, index }) => {
               <div className="flex items-center justify-center gap-2">
                 <span
                   className={`px-2 py-1 text-xs font-medium
-                    ${product.gender[0] === "Men"
+                    ${product.gender[0].name === "Men"
                       ? "bg-blue-950 text-background"
-                      : product.gender[0] === "Women"
+                      : product.gender[0].name === "Women"
                         ? "bg-pink-900 text-background"
                         : "bg-foreground text-background"
                     }`}
                 >
-                  {product.gender[0]}
+                  {product.gender[0].name}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 {product.season.map((sea) => {
-                  const config = seasonConfig[sea];
+                  const config = seasonConfig[sea.name];
                   return (
                     <span
-                      key={sea}
+                      key={sea._id}
                       className={`${config.color} ${config.bg} text-sm font-semibold tracking-[0.2em] uppercase px-3 py-1 border border-current/20`}
                     >
-                      {config.icon} {sea}
+                      {config.icon} {sea.name}
                     </span>
                   );
                 })}
