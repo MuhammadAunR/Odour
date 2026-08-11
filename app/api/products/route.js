@@ -94,7 +94,13 @@ export async function GET(req) {
     const hasPreviousPage = page > 1;
 
     await connectDB()
-    const products = await Product.find(query).sort(sort).skip(skip).limit(limit)
+    const products = await Product.find(query).sort(sort).skip(skip).limit(limit).populate([
+      "category",
+      "attribute",
+      "gender",
+      "season",
+      "fragranceFamily",
+    ])
 
     const data = {
       products,
