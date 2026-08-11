@@ -30,10 +30,10 @@ const ProductClassificationSec = () => {
                             {catalog.fragranceFamily.map((family, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('fragranceFamily', family.name)}
+                                    onClick={() => handleProductDetailsViaButton('fragranceFamily', family._id)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                    ${productDetails.fragranceFamily.includes(family.name) ?
+                                    ${productDetails.fragranceFamily.includes(family._id) ?
                                             'bg-foreground/80 text-background' : 'bg-background'}`}>
                                     {family.name}
                                 </motion.button>
@@ -46,10 +46,10 @@ const ProductClassificationSec = () => {
                             {catalog.season.map((season, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('season', season.name)}
+                                    onClick={() => handleProductDetailsViaButton('season', season._id)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.season.includes(season.name) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.season.includes(season._id) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
                                     {season.name}
                                 </motion.button>
@@ -62,10 +62,10 @@ const ProductClassificationSec = () => {
                             {catalog.category.map((cat, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('category', cat.name)}
+                                    onClick={() => handleProductDetailsViaButton('category', cat._id)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.category.includes(cat.name) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.category.includes(cat._id) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
                                     {cat.name}
                                 </motion.button>
@@ -78,10 +78,10 @@ const ProductClassificationSec = () => {
                             {catalog.attribute.map((attribute, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('attribute', attribute.name)}
+                                    onClick={() => handleProductDetailsViaButton('attribute', attribute._id)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.attribute.includes(attribute.name) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.attribute.includes(attribute._id) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
                                     {attribute.name}
                                 </motion.button>
@@ -94,10 +94,10 @@ const ProductClassificationSec = () => {
                             {catalog.gender.map((gender, i) => {
                                 return <motion.button
                                     key={i}
-                                    onClick={() => handleProductDetailsViaButton('gender', gender.name)}
+                                    onClick={() => handleProductDetailsViaButton('gender', gender._id)}
                                     whileTap={{ scale: 0.97 }}
                                     className={`bg-background px-5 py-2 outline-none border border-foreground/30 hover:bg-foreground/80 hover:text-background transition-colors ease-linear duration-300 cursor-pointer
-                                        ${productDetails.gender.includes(gender.name) ? 'bg-foreground/80 text-background'
+                                        ${productDetails.gender.includes(gender._id) ? 'bg-foreground/80 text-background'
                                             : 'bg-background'}`}>
                                     {gender.name}
                                 </motion.button>
