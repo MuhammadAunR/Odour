@@ -8,7 +8,13 @@ export async function GET(req, { params }) {
 
         const { slug } = await params;
 
-        const product = await Product.findOne({ slug });
+        const product = await Product.findOne({ slug }).populate([
+            "category",
+            "attribute",
+            "gender",
+            "season",
+            "fragranceFamily",
+        ])
 
         return NextResponse.json(product);
     } catch (error) {
