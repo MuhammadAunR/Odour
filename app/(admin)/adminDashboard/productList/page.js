@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { SecondaryButton } from '@/components/UI/Buttons'
-import { Funnel, Info, Search, SquarePen, Trash2, X } from 'lucide-react'
+import { Funnel, Search, SquarePen, Trash2, X } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { deleteProductById } from '@/services/productServices'
 import { toast } from 'react-toastify'
@@ -11,19 +11,30 @@ import { AnimatePresence, motion } from 'motion/react'
 import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { useAdminProducts } from '@/app/context/admin/AdminProductContext'
 import { cleanParams } from '@/lib/productUtils'
+import { useAllCatalog } from '@/hooks/useAllCatalog'
 
 const ProductList = () => {
 
     const router = useRouter()
     const searchParams = useSearchParams()
     const pathname = usePathname()
-    const { products, loading, setProducts, filters, queryParams, apiResponse } = useAdminProducts()
+    const { products, loading, setProducts, queryParams, apiResponse } = useAdminProducts()
+    const { catalog, getCatalog } = useAllCatalog()
     const [isFilterSecOpen, setisFilterSecOpen] = useState(false)
     const [searchInput, setSearchInput] = useState('')
     const [draftParams, setDraftParams] = useState(queryParams)
 
     const totalPages = apiResponse.totalPages;
     const currentPage = Number(searchParams.get("page")) || 1;
+
+    useEffect(() => {
+        getCatalog()
+    }, [])
+
+    console.log('Catalog => ', catalog)
+
+    console.log('Query => ', queryParams)
+    console.log('Draft => ', draftParams)
 
     const handleCurrentPage = (page) => {
         const params = new URLSearchParams(searchParams.toString())
@@ -191,7 +202,7 @@ const ProductList = () => {
                                 </motion.h2>
 
                                 <div className="space-y-7">
-                                    {Object.entries(filters).map(
+                                    {Object.entries(catalog).map(
                                         ([key, values], index) => (
                                             <motion.div
                                                 key={key}
@@ -205,21 +216,22 @@ const ProductList = () => {
 
                                                 <div className="flex flex-wrap gap-3">
                                                     {values.map((value) => {
-                                                        const isActive = draftParams[key] === value.name;
+                                                        const isActive = draftParams[key] === value._id;
                                                         return (
                                                             <button
                                                                 key={value.name}
                                                                 type="button"
-                                                                onClick={() => handleFilterApply(key, value.name)}
+                                                                onClick={() => handleFilterApply(key, value._id)}
                                                                 className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm transition-colors duration-300 cursor-pointer
                                                                ${isActive
                                                                         ? 'bg-foreground text-background border-foreground'
                                                                         : 'bg-transparent text-foreground border-foreground/30 hover:border-foreground/60'
                                                                     }`}
                                                             >
-                                                                <span>{value.name}</span>
-                                                                <span className={`text-xs ${isActive ? 'text-background/70' : 'text-foreground/50'}`}>
-                                                                    {value.count}
+                                                                <span className='text-lg'>{value.name}</span>
+                                                                <div className='h-full w-px bg-muted'></div>
+                                                                <span className={`text-lg ${isActive ? 'text-background/70' : 'text-foreground/50'} ${value.productCount === 0 && 'text-red-600'}`}>
+                                                                    {value.productCount}
                                                                 </span>
                                                             </button>
                                                         );
