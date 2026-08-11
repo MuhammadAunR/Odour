@@ -64,7 +64,6 @@ const ProductList = () => {
         }))
     }
 
-
     useEffect(() => {
         router.push(`/adminDashboard/productList?${cleanParams(draftParams)}`)
     }, [draftParams])
@@ -294,7 +293,7 @@ const ProductList = () => {
                                             </td>
 
                                             <td className="p-4">{product.sku}</td>
-                                            <td className="p-4">{product.category}</td>
+                                            <td className="p-4">{product.category[0].name}</td>
                                             <td className="p-4">{product.variants.length}</td>
                                             <td className="p-4">{product.defaultPrice.toLocaleString()}</td>
                                             <td className="p-4">{product.defaultSalePrice?.toLocaleString() ?? 'NULL'}</td>
