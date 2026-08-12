@@ -8,7 +8,7 @@ import { SecondaryButton } from '../UI/Buttons'
 import { useRouter } from 'next/navigation'
 
 const Filter = () => {
-    const { filters, isFilterSideOpen, toggleFilterSide, queryParams } = useFilter()
+    const { catalog, isFilterSideOpen, toggleFilterSide, queryParams } = useFilter()
 
     const [draftParams, setDraftParams] = useState(queryParams)
     const router = useRouter()
@@ -58,12 +58,12 @@ const Filter = () => {
 
                         <section className='flex flex-col flex-1 overflow-y-scroll gap-2'>
 
-                            {Object.entries(filters).map(([key, values]) => {
+                            {Object.entries(catalog).map(([key, values]) => {
                                 return (
                                     <div key={key} className="flex flex-col border-b border-foreground/20 pb-4">
 
-                                        <h3 className="font-bold font-serif px-2 py-3">
-                                            {key === 'fragranceFamilies' ? 'Fragrance Families' : key.charAt(0).toUpperCase() + key.slice(1)}
+                                        <h3 className="font-bold font-serif px-2 py-3 uppercase">
+                                            {key === 'fragranceFamily' ? 'Fragrance Family' : key.charAt(0).toUpperCase() + key.slice(1)}
                                         </h3>
 
                                         <div className="flex flex-wrap gap-2 px-2">
@@ -80,9 +80,10 @@ const Filter = () => {
                                                                 : 'bg-transparent text-foreground border-foreground/30 hover:border-foreground/60'
                                                             }`}
                                                     >
-                                                        <span>{value.name}</span>
-                                                        <span className={`text-xs ${isActive ? 'text-background/70' : 'text-foreground/50'}`}>
-                                                            {value.count}
+                                                        <span className=''>{value.name}</span>
+                                                        <div className='h-full w-px bg-muted'></div>
+                                                        <span className={`text-xs ${isActive ? 'text-background/70' : 'text-foreground/50'} ${value.productCount === 0 && 'text-red-600'}`}>
+                                                            {value.productCount}
                                                         </span>
                                                     </button>
                                                 );

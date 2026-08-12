@@ -1,5 +1,6 @@
 "use client";
 import { SimpleLoader } from "@/components/admin/AuthPagesCompos";
+import { useAllCatalog } from "@/hooks/useAllCatalog";
 import { cleanParams } from "@/lib/productUtils";
 import { useSearchParams } from "next/navigation";
 import { createContext, Suspense, useContext, useEffect, useState } from "react";
@@ -16,7 +17,12 @@ const FilterContextInner = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [activeFilterCount, setActiveFilterCount] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState([])
+  const { catalog, getCatalog } = useAllCatalog()
+
+
+  useEffect(() => {
+    getCatalog()
+  }, [])
 
   const queryParams = {
     page: Number(searchParams.get("page")) || 1,
@@ -52,20 +58,6 @@ const FilterContextInner = ({ children }) => {
     fetchAllProducts();
   }, [apiUrl]);
 
-  useEffect(() => {
-    async function fetchAvailableFilters() {
-      const res = await fetch('/api/products/filters', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      const data = await res.json()
-      setFilters(data.filters)
-    }
-    fetchAvailableFilters()
-  }, [])
-
 
   const toggleFilterSide = () => {
     setIsFilterSideOpen(!isFilterSideOpen);
@@ -78,7 +70,7 @@ const FilterContextInner = ({ children }) => {
         isFilterSideOpen,
         setActiveFilterCount,
         activeFilterCount,
-        filters,
+        catalog,
         queryParams,
         loading,
         products,
