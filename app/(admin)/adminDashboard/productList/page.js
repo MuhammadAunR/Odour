@@ -31,11 +31,6 @@ const ProductList = () => {
         getCatalog()
     }, [])
 
-    console.log('Catalog => ', catalog)
-
-    console.log('Query => ', queryParams)
-    console.log('Draft => ', draftParams)
-
     const handleCurrentPage = (page) => {
         const params = new URLSearchParams(searchParams.toString())
         params.set("page", page)
@@ -216,12 +211,12 @@ const ProductList = () => {
 
                                                 <div className="flex flex-wrap gap-3">
                                                     {values.map((value) => {
-                                                        const isActive = draftParams[key] === value._id;
+                                                        const isActive = draftParams[key] === value.name;
                                                         return (
                                                             <button
                                                                 key={value.name}
                                                                 type="button"
-                                                                onClick={() => handleFilterApply(key, value._id)}
+                                                                onClick={() => handleFilterApply(key, value.name)}
                                                                 className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm transition-colors duration-300 cursor-pointer
                                                                ${isActive
                                                                         ? 'bg-foreground text-background border-foreground'
