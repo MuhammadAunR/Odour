@@ -1,6 +1,11 @@
 import { connectDB } from "@/lib/mongodb";
 import { generateSKU, generateSLUG } from "@/lib/productUtils";
+import Attribute from "@/models/Attribute";
+import Category from "@/models/Category";
+import FragranceFamily from "@/models/FragranceFamily";
+import Gender from "@/models/Gender";
 import Product from "@/models/Product";
+import Season from "@/models/Season";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -62,13 +67,27 @@ export async function GET(req) {
     const sortBy = searchParams.get("sort");
     const search = searchParams.get("search");
 
+    const catalogModels = {
+      category: Category,
+      attribute: Attribute,
+      gender: Gender,
+      season: Season,
+      fragranceFamily: FragranceFamily,
+    }
+
+    const resolveCatalogNameToRefId = async (type, value) => {
+      const Model = catalogModels[type]
+      const catalog = await Model.findOne({ name: value })
+      return catalog?._id
+    }
+
     const query = {}
 
-    if (category) query.category = category;
-    if (fragranceFamily) query.fragranceFamily = fragranceFamily;
-    if (gender) query.gender = gender;
-    if (season) query.season = season;
-    if (attribute) query.attribute = attribute;
+    if (category) { query.category = await resolveCatalogNameToRefId("category", category); }
+    if (fragranceFamily) { query.fragranceFamily = await resolveCatalogNameToRefId("fragranceFamily", fragranceFamily); }
+    if (gender) { query.gender = await resolveCatalogNameToRefId("gender", gender); }
+    if (season) { query.season = await resolveCatalogNameToRefId("season", season); }
+    if (attribute) { query.attribute = await resolveCatalogNameToRefId("attribute", attribute); }
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: "i" } },
