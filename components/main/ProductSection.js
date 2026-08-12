@@ -1,17 +1,32 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductGridCard, { ProductCardSkeleton } from '../UI/Card'
 import { useProducts } from '@/app/context/ProductContext'
 import SectionHeader from './SectionHeader'
 import { motion } from 'motion/react'
+import { useAllCatalog } from '@/hooks/useAllCatalog'
 
 const ProductSection = () => {
 
-    const [activeFilter, setActiveFilter] = useState('New Arrivals')
+    const [activeFilter, setActiveFilter] = useState(null)
+
+    const { catalog, getCatalog } = useAllCatalog()
     const { products } = useProducts()
 
-    const availableAttribute = [...new Set(products?.flatMap(prod => prod.attribute))]
-    const filteredProducts = products.filter(prod => prod.attribute.includes(activeFilter))
+    const availableAttribute = catalog['attribute']
+    const filteredProducts = products.filter(product => product.attribute.some(attr => attr.name === activeFilter))
+
+    useEffect(() => {
+        if (availableAttribute?.length > 0) {
+            setActiveFilter(availableAttribute[0].name)
+        }
+    }, [availableAttribute])
+
+
+    useEffect(() => {
+        getCatalog()
+    }, [])
+
 
     return (
         <>
@@ -27,13 +42,13 @@ const ProductSection = () => {
                     </div>
 
                     <div className='flex items-center justify-center gap-5 flex-wrap'>
-                        {availableAttribute.map(tag => (
+                        {availableAttribute.map(attribute => (
                             <button
-                                key={tag}
-                                onClick={() => setActiveFilter(tag)}
-                                className={`px-5 py-3 transition-all ease-linear duration-300 cursor-pointer
-                                    ${activeFilter === tag ? 'bg-foreground text-background' : 'bg-surface text-foreground'}`}>
-                                {tag}
+                                key={attribute._id}
+                                onClick={() => setActiveFilter(attribute.name)}
+                                className={`px-5 py-3 transition-all ease-linear duration-300 cursor-pointer border border-transparent hover:border-muted
+                                    ${activeFilter === attribute.name ? 'bg-foreground text-background' : 'bg-surface text-foreground'}`}>
+                                {attribute.name}
                             </button>
                         ))}
                     </div>
@@ -48,7 +63,7 @@ const ProductSection = () => {
                 }
                 <section className='flex items-center justify-center gap-4 w-full flex-wrap'>
                     {filteredProducts.slice(0, 4).map((prod, index) => (
-                        <ProductGridCard key={index} product={prod} index={index} />
+                        <ProductGridCard key={prod._id} product={prod} index={index} />
                     ))}
                 </section>
             </main>
