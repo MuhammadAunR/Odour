@@ -2,7 +2,7 @@
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useCart } from "@/app/context/CartContext";
 import { useRouter } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";

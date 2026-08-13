@@ -5,7 +5,7 @@ import ProductGridCard, {
 } from "@/components/UI/Card";
 import { Funnel, LayoutGrid, LayoutList, Search } from "lucide-react";
 import React, { Suspense, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useFilter } from "@/app/context/FilterContext";
 import { SimpleLoader } from "@/components/admin/AuthPagesCompos";

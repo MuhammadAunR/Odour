@@ -2,7 +2,7 @@
 import React from "react";
 import { PrimaryButton, SecondaryButton } from "@/components/UI/Buttons";
 import { BookHeart, Heart, Trash } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/app/context/CartContext";

@@ -3,7 +3,7 @@ import { useCart } from "@/app/context/CartContext";
 import { ShoppingCart, Trash, X } from "lucide-react";
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { PrimaryButton } from "../UI/Buttons";
 import Link from "next/link";
 import useBlockYScroll from "../BlockYScroll";

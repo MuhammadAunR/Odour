@@ -3,7 +3,7 @@ import React from "react";
 import { SecondaryButton } from "@/components/UI/Buttons";
 import ProductGridCard from "@/components/UI/Card";
 import { BookHeart } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { useWishlist } from "@/app/context/WishlistContext";
 

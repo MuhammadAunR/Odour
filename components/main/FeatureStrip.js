@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { fragranceFamilies } from "./Assets";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import SectionHeader from "./SectionHeader";
 
 const FeatureStrip = () => {
