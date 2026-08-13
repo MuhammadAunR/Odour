@@ -15,7 +15,6 @@ const AdminProductContextInner = ({ children }) => {
     const searchParams = useSearchParams()
     const [products, setProducts] = useState([])
     const [apiResponse, setApiResponse] = useState({})
-    const [filters, setFilters] = useState([])
     const [loading, setLoading] = useState(false)
 
     const queryParams = {
@@ -50,22 +49,8 @@ const AdminProductContextInner = ({ children }) => {
         getAllProducts()
     }, [apiUrl])
 
-    useEffect(() => {
-        async function fetchAvailableFilters() {
-            const res = await fetch('/api/products/filters', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            const data = await res.json()
-            setFilters(data.filters)
-        }
-        fetchAvailableFilters()
-    }, [])
-
     return (
-        <ContextProvider.Provider value={{ products, setProducts, loading, filters, queryParams, apiResponse }}>
+        <ContextProvider.Provider value={{ products, setProducts, loading, queryParams, apiResponse }}>
             {children}
         </ContextProvider.Provider>
     )
