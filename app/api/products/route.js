@@ -75,10 +75,21 @@ export async function GET(req) {
       fragranceFamily: FragranceFamily,
     }
 
+    // Helper function that resolve the catalog name coming from frontend into the reference Id
     const resolveCatalogNameToRefId = async (type, value) => {
       const Model = catalogModels[type]
       const catalog = await Model.findOne({ name: value })
       return catalog?._id
+    }
+
+   // Helper function that resolve the search query into the catalog collection ref Id
+    const resolveSearchQueryToRefId = async (type, search) => {
+      const Model = catalogModels[type]
+      const refId = await Model.find({
+        name: { $regex: search, $options: "i" }
+      }).distinct("_id")
+
+      return refId
     }
 
     const query = {}
@@ -89,13 +100,27 @@ export async function GET(req) {
     if (season) { query.season = await resolveCatalogNameToRefId("season", season); }
     if (attribute) { query.attribute = await resolveCatalogNameToRefId("attribute", attribute); }
     if (search) {
+      const [
+        fragranceFamilyIds,
+        categoryIds,
+        genderIds,
+        seasonIds,
+        attributeIds,
+      ] = await Promise.all([
+        resolveSearchQueryToRefId("fragranceFamily", search),
+        resolveSearchQueryToRefId("category", search),
+        resolveSearchQueryToRefId("gender", search),
+        resolveSearchQueryToRefId("season", search),
+        resolveSearchQueryToRefId("attribute", search),
+      ]);
+
       query.$or = [
         { name: { $regex: search, $options: "i" } },
-        { fragranceFamily: { $regex: search, $options: "i" } },
-        { category: { $regex: search, $options: "i" } },
-        { gender: { $regex: search, $options: "i" } },
-        { season: { $regex: search, $options: "i" } },
-        { attribute: { $regex: search, $options: "i" } },
+        { fragranceFamily: { $in: fragranceFamilyIds } },
+        { category: { $in: categoryIds } },
+        { gender: { $in: genderIds } },
+        { season: { $in: seasonIds } },
+        { attribute: { $in: attributeIds } },
         { sku: { $regex: search, $options: "i" } },
       ];
     }
@@ -136,6 +161,7 @@ export async function GET(req) {
       { status: 200 },
     )
   } catch (error) {
+    console.log(error.message)
     return NextResponse.json(
       { message: "Failed to fetch products", error: error.message },
       { status: 500 },
