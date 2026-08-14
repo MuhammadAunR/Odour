@@ -34,13 +34,13 @@ const PrivacyPolicy = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                     viewport={{ once: true }}
-                    className='text-5xl font-bold'>Privacy Policy</motion.h1>
+                    className='text-4xl md:text-5xl font-bold'>Privacy Policy</motion.h1>
                 <motion.p
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                     viewport={{ once: true }}
-                    className='max-w-xl'>We're committed to protecting your privacy and ensuring transparency about how we collect, use, and safeguard your personal information on our educational platform.</motion.p>
+                    className='max-w-xl max-md:text-sm'>We're committed to protecting your privacy and ensuring transparency about how we collect, use, and safeguard your personal information on our educational platform.</motion.p>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -52,13 +52,13 @@ const PrivacyPolicy = () => {
                 </motion.div>
             </header>
 
-            <main className='bg-background flex items-start gap-10 p-5 w-10/12 mx-auto container-limit'>
+            <main className='bg-background flex items-start gap-y-5 gap-x-10 p-5 w-10/12 mx-auto container-limit max-lg:flex-col max-lg:w-full'>
                 <motion.aside
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.95, delay: 0.1 }}
                     viewport={{ once: true }}
-                    className='border border-muted rounded-lg px-5 py-10  h-fit flex flex-col items-start gap-2 w-80 sticky top-30'>
+                    className='border border-muted rounded-lg p-5  h-fit flex flex-col items-start gap-2 w-full lg:w-80 lg:sticky lg:top-30'>
                     {policyArticles.map((article, index) => {
                         return <span
                             key={article.id}
