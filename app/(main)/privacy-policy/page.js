@@ -3,7 +3,7 @@
 import { policyArticles, policyContent } from '@/constants/PrivacyPolicyConst'
 import { Shield } from 'lucide-react'
 import { motion } from 'motion/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const PrivacyPolicy = () => {
 
@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
         const target = document.getElementById(id)
         setArticleInView(id)
         if (target && window.lenis) {
-            window.lenis.scrollTo(target, { offset: -150 })
+            window.lenis.scrollTo(target, { offset: -300 })
         }
     }
 
