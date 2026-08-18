@@ -3,7 +3,7 @@ import { SimpleLoader } from "@/components/admin/AuthPagesCompos";
 import { useAllCatalog } from "@/hooks/useAllCatalog";
 import { cleanParams } from "@/lib/productUtils";
 import { useSearchParams } from "next/navigation";
-import { createContext, Suspense, useContext, useEffect, useState } from "react";
+import { createContext, Suspense, useCallback, useContext, useEffect, useState } from "react";
 import React from "react";
 
 export const FilterProvider = createContext();
@@ -19,10 +19,10 @@ const FilterContextInner = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { catalog, getCatalog } = useAllCatalog()
 
-
   useEffect(() => {
-    getCatalog()
-  }, [])
+    getCatalog();
+  }, []);
+
 
   const queryParams = {
     page: Number(searchParams.get("page")) || 1,
@@ -38,25 +38,38 @@ const FilterContextInner = ({ children }) => {
 
   const apiUrl = `/api/products?${cleanParams(queryParams)}`;
 
-  useEffect(() => {
-    setLoading(true);
+  const fetchAllProducts = useCallback(
     async function fetchAllProducts() {
-      const res = await fetch(apiUrl);
-      const data = await res.json();
-      if (!res.ok) {
-        console.error("Failed to fetch products:", res.status);
+      setLoading(true);
+      try {
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+
+        if (!res.ok) {
+          console.error("Failed to fetch products:", res.status);
+          setProducts([]);
+          setApiResponse({});
+          return;
+        }
+
+        console.log("Raw data from FilterContextInner", data);
+        setProducts(data.products);
+        setApiResponse(data);
+      } catch (error) {
+        console.error("Network error:", error);
         setProducts([]);
         setApiResponse({});
-        return;
+      } finally {
+        setLoading(false);
       }
-      console.log("Raw data from FilterContextInner", data);
-      setProducts(data.products);
-      setApiResponse(data);
-      setLoading(false);
-    }
+    },
+    [apiUrl],
+  )
 
+
+  useEffect(() => {
     fetchAllProducts();
-  }, [apiUrl]);
+  }, [fetchAllProducts]);
 
 
   const toggleFilterSide = () => {
