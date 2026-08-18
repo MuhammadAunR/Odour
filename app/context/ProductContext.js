@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { createContext, useContext } from "react";
 
 export const ContextProvider = createContext();
@@ -10,29 +10,43 @@ const ProductContext = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function fetchAllProducts() {
-      setLoading(true)
+  const fetchLocalProducts = useCallback(
+    async function fetchLocalProducts() {
+      setLoading(true);
       try {
         const res = await fetch("/api/products");
+
+        if (!res.ok) {
+          console.error('Fetch failed with status:', res.status);
+          setProducts([]);
+          setApiResponse({});
+          setLoading(false);
+          return;
+        }
+
         const data = await res.json();
-        console.log("Raw data from ProductContext", data);
-        setProducts(data.products);
+        console.log("Raw data from UnfilteredProducts", data);
+        setProducts(data.products || []);
         setApiResponse(data);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setProducts([]);
+        setApiResponse({});
+        setLoading(false);
       }
-    }
-    fetchAllProducts();
-  }, []);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    fetchLocalProducts();
+  }, [fetchLocalProducts]);
 
   return (
-    <>
-      <ContextProvider.Provider value={{ products, apiResponse }}>
-        {children}
-      </ContextProvider.Provider>
-    </>
+    <ContextProvider.Provider value={{ products, apiResponse, loading }}>
+      {children}
+    </ContextProvider.Provider>
   );
 };
 
