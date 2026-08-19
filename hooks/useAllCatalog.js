@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 export function useAllCatalog() {
     const [catalog, setCatalog] = useState({
@@ -10,7 +10,8 @@ export function useAllCatalog() {
         season: [],
         gender: [],
     })
-    async function getCatalog() {
+
+    const getCatalog = useCallback(async () => {
         const types = [
             "category",
             "attribute",
@@ -31,7 +32,9 @@ export function useAllCatalog() {
             season: data[3].data,
             gender: data[4].data,
         })
-    }
+    },
+        [],
+    )
 
     return {
         catalog,
