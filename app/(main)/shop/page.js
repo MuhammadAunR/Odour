@@ -9,6 +9,7 @@ import { motion } from "motion/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useFilter } from "@/app/context/FilterContext";
 import { SimpleLoader } from "@/components/admin/AuthPagesCompos";
+import ProductNotFound from "@/components/main/NotFoundError";
 
 const ShopPageInner = () => {
   const {
@@ -149,14 +150,10 @@ const ShopPageInner = () => {
 
           <section className="flex-1 min-w-0 pb-5">
             {searchInput.trim() && products.length === 0 && !loading && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1, ease: "easeInOut" }}
-                className="w-full text-center md:text-lg text-muted"
-              >
-                No match Found
-              </motion.div>
+              <ProductNotFound />
+            )}
+            {products.length === 0 && !loading && (
+              <ProductNotFound />
             )}
             <div className="min-h-[50vh]">
               {loading ? (

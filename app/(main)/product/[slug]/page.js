@@ -6,11 +6,12 @@ import Loader from '@/components/LoaderUI'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from "framer-motion"
 import { avatarColors, seasonConfig, stats, stripeItems, testimonials, WhyChooseUsData } from '@/components/main/Assets'
 import CountUp from 'react-countup'
 import SectionHeader from '@/components/main/SectionHeader'
+import ProductNotFound from '@/components/main/NotFoundError'
 
 const Product = ({ params }) => {
 
@@ -27,7 +28,7 @@ const Product = ({ params }) => {
     const [testimonialCount, setTestimonialCount] = useState(0)
     const [stripMotion, setStripMotion] = useState(true)
 
-    useEffect(() => {
+    const fetchBySlug = useCallback(
         async function fetchProductBySlug(slug) {
             try {
                 const res = await fetch(`/api/products/${slug}`)
@@ -39,7 +40,11 @@ const Product = ({ params }) => {
             } finally {
                 setLoading(false)
             }
-        }
+        },
+        [slug],
+    )
+
+    useEffect(() => {
         if (slug) fetchProductBySlug(slug)
     }, [slug])
 
@@ -58,9 +63,9 @@ const Product = ({ params }) => {
             .filter(p => p._id !== product._id)
             .map(p => {
                 let score = 0
-                if (p.gender.some(s => product.gender.name.includes(s.name))) score += 3
-                if (p.fragranceFamily.some(s => product.fragranceFamily.name.includes(s.name))) score += 2
-                if (p.season.some(s => product.season.name.includes(s.name))) score += 1
+                if (p.gender.some(s => product?.gender.name?.includes(s.name))) score += 3
+                if (p.fragranceFamily.some(s => product?.fragranceFamily.name?.includes(s.name))) score += 2
+                if (p.season.some(s => product?.season.name?.includes(s.name))) score += 1
                 return { ...p, score }
             })
             .filter(p => p.score > 0)
@@ -120,9 +125,7 @@ const Product = ({ params }) => {
     }
     if (!product) {
         return (
-            <div className='h-screen w-full flex items-center justify-center text-4xl'>
-                Product not found
-            </div>
+            <ProductNotFound />
         )
     }
     return (
@@ -156,7 +159,7 @@ const Product = ({ params }) => {
                     lg:w-1/2 min-h-150 h-fit'>
                         <div>
                             <div className='flex items-baseline gap-5'>
-                                <h3 className='text-3xl lg:text-4xl xl:text-5xl font-semibold font-serif tracking-widest'>{product.name}</h3>
+                                <h3 className='text-3xl lg:text-4xl xl:text-5xl font-semibold font-serif tracking-wide'>{product.name}</h3>
                             </div>
                             <p className='max-md:text-sm text-muted line-clamp-3'>{product.description}</p>
                         </div>
