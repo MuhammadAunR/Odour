@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
 import localFont from "next/font/local";
-import AppWrapper from "./context/AppWrapper";
 import LenisWrapper from "@/components/LenisWrapper";
 import ScrollToTop from "@/components/ScrollToTop";
 import ReactToastContainer from "@/components/ReactToastContainer";
@@ -41,11 +40,9 @@ export default function RootLayout({ children }) {
         <ScrollToTop />
         <ReactToastContainer>
           <LenisWrapper>
-            <AppWrapper>
-              <AuthProviders>
-                {children}
-              </AuthProviders>
-            </AppWrapper>
+            <AuthProviders>
+              {children}
+            </AuthProviders>
           </LenisWrapper>
         </ReactToastContainer>
       </body>
