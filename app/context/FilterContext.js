@@ -38,31 +38,30 @@ const FilterContextInner = ({ children }) => {
 
   const apiUrl = `/api/products?${cleanParams(queryParams)}`;
 
-  const fetchAllProducts = useCallback(
-    async function fetchAllProducts() {
-      setLoading(true);
-      try {
-        const res = await fetch(apiUrl);
-        const data = await res.json();
+  const fetchAllProducts = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(apiUrl);
+      const data = await res.json();
 
-        if (!res.ok) {
-          console.error("Failed to fetch products:", res.status);
-          setProducts([]);
-          setApiResponse({});
-          return;
-        }
-
-        console.log("Raw data from FilterContextInner", data);
-        setProducts(data.products);
-        setApiResponse(data);
-      } catch (error) {
-        console.error("Network error:", error);
+      if (!res.ok) {
+        console.error("Failed to fetch products:", res.status);
         setProducts([]);
         setApiResponse({});
-      } finally {
-        setLoading(false);
+        return;
       }
-    },
+
+      console.log("Raw data from FilterContextInner", data);
+      setProducts(data.products);
+      setApiResponse(data);
+    } catch (error) {
+      console.error("Network error:", error);
+      setProducts([]);
+      setApiResponse({});
+    } finally {
+      setLoading(false);
+    }
+  },
     [apiUrl],
   )
 
