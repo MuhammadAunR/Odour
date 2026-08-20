@@ -14,6 +14,10 @@ export async function POST(req) {
     await connectDB()
     const body = await req.json()
 
+    const defaultPrice = body.variants[0].originalPrice;
+    const defaultSalePrice = body.variants[0].salePrice ?? null;
+    const effectivePrice = defaultSalePrice ?? defaultPrice;
+
     const product = await Product.create({
       name: body.name,
       slug: generateSLUG(body.name),
@@ -31,10 +35,9 @@ export async function POST(req) {
 
       variants: body.variants,
 
-      defaultPrice: body.variants[0].originalPrice,
-
-      defaultSalePrice:
-        body.variants[0].salePrice || null,
+      defaultPrice,
+      defaultSalePrice,
+      effectivePrice,
     })
 
     return NextResponse.json(
@@ -64,7 +67,6 @@ export async function GET(req) {
     const attribute = searchParams.get("attribute");
     const page = Number(searchParams.get("page")) || 1;
     const limit = Number(searchParams.get("limit")) || 12;
-    const sortBy = searchParams.get("sort");
     const search = searchParams.get("search");
 
     const catalogModels = {
@@ -82,7 +84,7 @@ export async function GET(req) {
       return catalog?._id
     }
 
-   // Helper function that resolve the search query into the catalog collection ref Id
+    // Helper function that resolve the search query into the catalog collection ref Id
     const resolveSearchQueryToRefId = async (type, search) => {
       const Model = catalogModels[type]
       const refId = await Model.find({
@@ -125,10 +127,15 @@ export async function GET(req) {
       ];
     }
 
-    let sort = {}
+    await connectDB()
 
-    if (sortBy === 'price_asc') sort.defaultPrice = 1;
-    if (sortBy === 'price_desc') sort.defaultPricef = -1;
+    const allowedSortFields = [
+      "createdAt",
+      "price",
+      "name",
+    ];
+    const sortBy = allowedSortFields.includes(searchParams.get('sortBy')) ? searchParams.get('sortBy') : 'createdAt'
+    const sortOrder = searchParams.get('sortOrder') === 'asc' ? 1 : -1
 
     let skip = (page - 1) * limit
 
@@ -137,8 +144,7 @@ export async function GET(req) {
     const hasNextPage = page < totalPages;
     const hasPreviousPage = page > 1;
 
-    await connectDB()
-    const products = await Product.find(query).sort(sort).skip(skip).limit(limit).populate([
+    const products = await Product.find(query).sort({ [sortBy === 'price' ? 'effectivePrice' : sortBy]: sortOrder }).skip(skip).limit(limit).populate([
       "category",
       "attribute",
       "gender",
@@ -213,6 +219,9 @@ export async function PUT(req) {
     const sku =
       existingProduct.category !== body.category ? generateSKU(body.category) : existingProduct.sku
 
+    const defaultPrice = body.variants[0].originalPrice;
+    const defaultSalePrice = body.variants[0].salePrice ?? null;
+    const effectivePrice = defaultSalePrice ?? defaultPrice;
 
     const updatedProduct = await Product.findByIdAndUpdate(
       body._id,
@@ -228,8 +237,9 @@ export async function PUT(req) {
         fragranceFamily: body.fragranceFamily,
         images: body.images,
         variants: body.variants,
-        defaultPrice: body.variants[0].originalPrice,
-        defaultSalePrice: body.variants[0].salePrice || null,
+        defaultPrice,
+        defaultSalePrice,
+        effectivePrice,
       },
       {
         new: true,

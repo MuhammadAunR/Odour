@@ -33,7 +33,9 @@ const FilterContextInner = ({ children }) => {
     season: searchParams.get("season") || "",
     fragranceFamily: searchParams.get("fragranceFamily") || "",
     search: searchParams.get("search") || "",
-    sort: searchParams.get("sort") || "",
+
+    sortBy: searchParams.get("sortBy") || "createdAt",
+    sortOrder: searchParams.get("sortOrder") || "desc",
   }
 
   const apiUrl = `/api/products?${cleanParams(queryParams)}`;
