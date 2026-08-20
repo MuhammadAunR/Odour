@@ -98,7 +98,11 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         default: null,
     },
-
+    effectivePrice: {
+        type: Number,
+        required: true,
+        index: true,
+    },
 }, { timestamps: true });
 
 export default mongoose.models.Product ||
