@@ -49,10 +49,6 @@ const Filter = () => {
         <>
             <main className='w-full flex overflow-hidden'>
 
-                {/* <section onClick={() => { toggleFilterSide() }}
-                    className={`bg-surface/50 backdrop-blur-lg h-screen fixed top-0 z-200 w-full ${isFilterSideOpen ? 'block' : 'hidden'}`}>
-                </section> */}
-
                 <section
                     className={`h-screen w-screen bg-surface fixed top-0 right-0 z-200 flex flex-col transition-all ease-linear duration-300 ${isFilterSideOpen ? 'translate-y-0' : 'translate-y-full'}`}>
 
@@ -130,7 +126,7 @@ const Filter = () => {
 
                     </section>
 
-                    <div className='px-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 flex justify-between'>
+                    <div className='px-5 border-t-2 border-accent bg-accent py-4 shrink-0 sticky bottom-0 flex justify-between'>
                         <span onClick={handleReset} className=''>
                             <SecondaryButton text={'Reset'} />
                         </span>
