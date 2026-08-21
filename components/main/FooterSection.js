@@ -8,19 +8,19 @@ const FooterSection = () => {
     {
       title: "Shop",
       links: [
-        { label: "New Arrivals", href: "/" },
-        { label: "Best Sellers", href: "/" },
+        { label: "Limited Edition", href: "/shop?page=1&limit=12&attribute=Limited+Edition&sortBy=createdAt&sortOrder=desc" },
+        { label: "Top Sellers", href: "/shop?page=1&limit=12&attribute=Top+Sellers&sortBy=createdAt&sortOrder=desc" },
         { label: "Collections", href: "/shop" },
-        { label: "Gift Sets", href: "/" },
+        { label: "Gift Sets", href: "/shop?page=1&limit=12&attribute=Gift+Sets&sortBy=createdAt&sortOrder=desc" },
       ],
     },
     {
       title: "Account",
       links: [
         { label: "My Account", href: "/signin" },
-        { label: "Order History", href: "/" },
+        { label: "Order History", href: "/signin" },
         { label: "Wishlist", href: "/wishlist" },
-        { label: "Track Order", href: "/" },
+        { label: "Track Order", href: "/signin" },
       ],
     },
     {
@@ -38,7 +38,7 @@ const FooterSection = () => {
       <section className="w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative">
         <div className="w-full py-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
           <div className="flex flex-col gap-6">
-            <h1 className="font-display font-bold text-4xl">ODOUR</h1>
+            <Link href={'/'} className="font-display font-bold text-4xl">ODOUR</Link>
             <p className="text-muted text-sm leading-relaxed max-w-xs">
               Subscribe to our newsletter and be the first to discover new
               arrivals, exclusive offers, and the art of fine fragrance.
