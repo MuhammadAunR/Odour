@@ -8,15 +8,17 @@ export default async function AdminLayout({ children }) {
   const session = await getServerSession()
   return (
     <>
-      <SidebarContext>
-        <ProductFormContext>
-          <AdminProductContext>
-            <AdminLayoutWrapper session={session}>
-              {children}
-            </AdminLayoutWrapper>
-          </AdminProductContext>
-        </ProductFormContext>
-      </SidebarContext>
+      <div className="container-limit">
+        <SidebarContext>
+          <ProductFormContext>
+            <AdminProductContext>
+              <AdminLayoutWrapper session={session}>
+                {children}
+              </AdminLayoutWrapper>
+            </AdminProductContext>
+          </ProductFormContext>
+        </SidebarContext>
+      </div>
     </>
   )
 }

@@ -47,10 +47,8 @@ const Filter = () => {
 
     return (
         <>
-            <main className='w-full flex overflow-hidden'>
-
                 <section
-                    className={`h-screen w-screen bg-surface fixed top-0 right-0 z-200 flex flex-col transition-all ease-linear duration-300 ${isFilterSideOpen ? 'translate-y-0' : 'translate-y-full'}`}>
+                    className={`h-screen w-screen container-limit bg-surface fixed top-0 z-200 flex flex-col transition-all ease-linear duration-300 ${isFilterSideOpen ? 'translate-y-0' : 'translate-y-full'}`}>
 
                     <div className='flex items-center justify-between px-5 py-6 border-b-2 border-accent shrink-0'>
                         <h1 className='text-2xl lg:text-3xl font-bold font-serif'>Filters</h1>
@@ -135,7 +133,6 @@ const Filter = () => {
                         </span>
                     </div>
                 </section>
-            </main>
         </>
     )
 }

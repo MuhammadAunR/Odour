@@ -20,9 +20,8 @@
 
 @utility container-limit {
   width: 100%;
-  max-width: 1600px;
+  max-width: 1650px;
   margin-inline: auto;
-  padding-inline: 1.25rem;
 }
 
 html,
