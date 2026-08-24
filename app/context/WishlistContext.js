@@ -10,16 +10,20 @@ import { toast } from "react-toastify";
 
 const WishlistContext = ({ children }) => {
   const [wishListProducts, setWishListProducts] = useState([])
+  const [isInitialized, setIsInitialized] = useState(false)
 
 
   useEffect(() => {
     const stored = localStorage.getItem("wishListedProducts");
-    if (stored) setWishListProducts(JSON.parse(stored));
+    setWishListProducts(stored ? JSON.parse(stored) : []);
+    setIsInitialized(true)
   }, []);
 
   useEffect(() => {
+    if (!isInitialized) return
+
     localStorage.setItem("wishListedProducts", JSON.stringify(wishListProducts));
-  }, [wishListProducts]);
+  }, [wishListProducts, isInitialized]);
 
   const handleWishListItemsInLS = (prod) => {
     const exists = wishListProducts.some(
