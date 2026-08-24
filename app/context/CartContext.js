@@ -1,31 +1,37 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useProducts } from "./ProductContext";
 
 export const ContextProvider = createContext();
 export const useCart = () => useContext(ContextProvider);
 
 const CartContext = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [cartItemInLS, setCartItemInLS] = useState([])
+  const [cartItemInLS, setCartItemInLS] = useState([]);
+  const [isInitialized, setIsInitialized] = useState(false);
   const [selectedPriceAndSize, setSelectedPriceAndSize] = useState(null);
+  const router = useRouter()
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem("cartItemInLS")
-    if (stored) {
-      setCartItemInLS(JSON.parse(stored))
-    }
-  }, [])
+    const stored = localStorage.getItem("cartItemInLS");
+
+    setCartItemInLS(stored ? JSON.parse(stored) : []);
+    setIsInitialized(true);
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem("cartItemInLS", JSON.stringify(cartItemInLS))
-  }, [cartItemInLS])
+    if (!isInitialized) return;
+
+    localStorage.setItem(
+      "cartItemInLS",
+      JSON.stringify(cartItemInLS)
+    );
+  }, [cartItemInLS, isInitialized]);
 
   const addCartItemIdToLS = (prod, { selectedSize = null, qty = 1 } = {}) => {
     const ssop = selectedSize ?? prod.variants.find(variant => variant.originalPrice == prod.defaultPrice) ?? prod.variants[0]
@@ -42,21 +48,11 @@ const CartContext = ({ children }) => {
   }
 
   const handleCheckout = () => {
-    if (cartItemInLS.length === 0) return;
-    const confirm = window.confirm("Continue Checkout");
-    if (confirm) {
-      setCartItems([]);
-      const msg = cartItemInLS
-        .map(
-          (i) =>
-            `${i.name} (${i.selectedSize.size}) x${i.quantity} - PKR ${(i.selectedSize.discountedPrice ?? i.selectedSize.price) * i.quantity}`,
-        )
-        .join("%0A");
-      window.open(`https://wa.me/923286536520?text=Order:%0A${msg}`);
-      toast.success("Payment Successful");
-    } else {
-      toast.info("Checkout cancelled");
+    if (cartItemInLS.length === 0) {
+      toast.info("Can't proceed with empty cart")
+      return
     }
+    router.push('/checkout')
   };
 
   const handleItemInc = (i) => {
