@@ -1,7 +1,11 @@
+import CartContext from "../context/CartContext";
+
 export default function CheckoutLayout({ children }) {
     return (
         <>
-            {children}
+            <CartContext>
+                {children}
+            </CartContext>
         </>
     )
 }

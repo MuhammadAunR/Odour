@@ -1,8 +1,11 @@
 'use client'
-import { Lock } from 'lucide-react'
+import { useCart } from '@/app/context/CartContext'
+import { Check, ChevronLeft, Lock } from 'lucide-react'
 import { motion } from 'motion/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
+
 
 const HandwrittenTick = ({ method = 'cod', selected }) => {
     return (
@@ -47,6 +50,11 @@ const CheckoutLayout = () => {
         paymentMethod: "cod",
     });
 
+    const { cartItemInLS, handleSubTotal } = useCart()
+    let subTotal = handleSubTotal
+    let tax = 1000
+    let total = subTotal + tax
+
     const handleFormData = (e) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -65,24 +73,49 @@ const CheckoutLayout = () => {
         }))
     }
 
+    const steps = ["Cart", "Information", "Shipping", "Payment"];
+    let currentStep = 1
     return (
         <>
-            <header className='w-10/12 bg-surface/50 mx-auto p-3 container-limit my-2 rounded-xl'>
-                <div className='flex flex-col items-center justify-center gap-5 p-7'>
-                    <h1 className='font-bold text-5xl font-display uppercase'>Odour</h1>
-                    <span>Secure Checkout</span>
-                    <span>
-                        <Lock size={40} />
-                    </span>
-                </div>
-                <div className='flex justify-end'>
-                    <Link href={'/shop'} className='underline underline-offset-2 text-muted hover:text-foreground transition-colors ease-linear'>
-                        Continue Shoping
+
+            <header className="border-b border-muted bg-surface/50 backdrop-blur-lg z-50 fixed w-full">
+                <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+                    <Link href="/cart" className="flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-900 transition-colors ease-linear duration-300">
+                        <ChevronLeft size={16} />
+                        Back to cart
                     </Link>
+
+                    <Link href="/" className="text-2xl tracking-widest font-display">
+                        ODOUR
+                    </Link>
+
+                    <div className="flex items-center gap-1.5 text-xs text-neutral-500">
+                        <Lock size={13} />
+                        <span>Secure Checkout</span>
+                    </div>
+                </div>
+
+
+                <div className="max-w-6xl mx-auto px-6 pb-4 flex items-center gap-2">
+                    {steps.map((step, i) => (
+                        <div key={step} className="flex items-center gap-2">
+                            <div className={`flex items-center gap-1.5 text-xs font-medium ${i <= currentStep ? "text-neutral-900" : "text-neutral-400"
+                                }`}>
+                                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${i < currentStep ? "bg-neutral-900 text-white" :
+                                    i === currentStep ? "border border-neutral-900" : "border border-neutral-300"
+                                    }`}>
+                                    {i < currentStep ? <Check size={11} /> : i + 1}
+                                </span>
+                                {step}
+                            </div>
+                            {i < steps.length - 1 && <div className="w-8 h-px bg-neutral-300" />}
+                        </div>
+                    ))}
                 </div>
             </header>
 
-            <main className='grid grid-cols-1 lg:grid-cols-2 w-10/12 gap-5 mx-auto container-limit my-2'>
+
+            <main className='grid grid-cols-1 lg:grid-cols-2 w-10/12 gap-5 mx-auto container-limit mt-30 mb-7 relative'>
                 <section className='space-y-3'>
                     <div className='bg-surface/50 rounded-xl p-5 space-y-5'>
                         <h2 className='font-bold text-2xl'>Personal Information</h2>
@@ -206,8 +239,83 @@ const CheckoutLayout = () => {
 
                     </div>
                 </section>
-                <aside>
-                    Checkout Summery
+
+                <aside className='bg-surface/50 p-5 rounded-xl h-fit sticky top-30'>
+                    <h2 className='font-bold text-2xl pb-5'>Checkout Summary</h2>
+
+                    <div className='space-y-7'>
+
+                        <section className=''>
+                            {cartItemInLS.map(item => {
+                                return <div key={item._id} className='flex items-start justify-between border-b border-muted p-3'>
+                                    <div className='flex items-start gap-5'>
+                                        <div className='relative w-20 h-20 rounded-xl overflow-hidden'>
+                                            <Image
+                                                src={item.images[0].url}
+                                                alt={item.name}
+                                                fill
+                                                sizes='240px'
+                                                className='w-full h-full object-cover' />
+                                        </div>
+                                        <div className='flex flex-col items-start gap-1'>
+                                            <h3 className='font-bold'>{item.name}</h3>
+                                            <div className='flex items-center gap-2 text-muted font-semibold'>
+                                                <span>{item.variants[0].size}</span>
+                                                <span className='w-px h-5 bg-muted'></span>
+                                                <span>{item.gender[0].name}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='font-semibold text-lg'>
+                                        {item.effectivePrice.toLocaleString()}
+                                    </div>
+                                </div>
+                            })}
+                        </section>
+
+                        <div className='flex gap-3'>
+                            <label htmlFor="promo"></label>
+                            <input
+                                type="text"
+                                id='promo'
+                                name='promoCode'
+                                placeholder='Promo Code'
+                                className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
+                            <button className='bg-muted/5 text-lg text-foreground px-5 py-2 rounded-full border-2 border-muted hover:border-foreground transition-all ease-linear duration-300 cursor-pointer uppercase'>
+                                Apply
+                            </button>
+                        </div>
+
+                        <section className='border-t border-b py-5 border-muted'>
+                            <div className='space-y-2'>
+                                <div className='flex items-center justify-between font-semibold text-muted lg:text-lg'>
+                                    <span>Subtotal</span>
+                                    <span>{subTotal.toLocaleString()}</span>
+                                </div>
+                                <div className='flex items-center justify-between font-semibold text-muted lg:text-lg'>
+                                    <span>Shipping</span>
+                                    <span>Free</span>
+                                </div>
+                                <div className='flex items-center justify-between font-semibold text-muted lg:text-lg'>
+                                    <span>Tax</span>
+                                    <span>{tax.toLocaleString()}</span>
+                                </div>
+                            </div>
+                            <div className='w-full h-px bg-muted my-3'></div>
+                            <div>
+                                <div className='flex items-center justify-between'>
+                                    <span className='text-xl lg:text-2xl font-bold'>Total</span>
+                                    <span className='text-xl lg:text-2xl font-bold'>{total.toLocaleString()}</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div className='w-full flex items-center justify-center'>
+                            <button className='bg-foreground w-full lg:text-xl text-background px-10 py-3 rounded-full border-2 border-foreground hover:bg-background hover:text-foreground transition-all ease-linear duration-300 cursor-pointer tracking-widest uppercase'>
+                                Place Order
+                            </button>
+                        </div>
+                    </div>
                 </aside>
             </main>
         </>
