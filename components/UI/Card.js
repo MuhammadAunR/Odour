@@ -246,7 +246,7 @@ const ProductListCard = ({ product, index }) => {
               >
                 <Heart
                   className={
-                    wishListProducts?.includes(product)
+                    wishListProducts?.some(item => item._id === product._id)
                       ? "fill-red-500 text-red-500"
                       : "text-foreground/50"
                   }
