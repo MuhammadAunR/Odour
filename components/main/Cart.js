@@ -13,7 +13,6 @@ const Cart = () => {
   const {
     toggleCart,
     isCartOpen,
-    cartItems,
     cartItemInLS,
     handleSubTotal,
     removeCartItem,
@@ -162,7 +161,7 @@ const Cart = () => {
               className="flex flex-col items-end"
             >
               <span>
-                <PrimaryButton text={"Check Out"} />
+                <PrimaryButton text={"CheckOut"} />
               </span>
             </span>
           </div>
