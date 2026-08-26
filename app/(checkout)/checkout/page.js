@@ -1,10 +1,12 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
+import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
+import { CartItemSkeleton } from '@/components/main/SkeletonUI'
 import { Check, ChevronLeft, Lock } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 const HandwrittenTick = ({ method = 'cod', selected }) => {
@@ -49,11 +51,15 @@ const CheckoutLayout = () => {
 
         paymentMethod: "cod",
     });
-
     const { cartItemInLS, handleSubTotal } = useCart()
+    const [cartItemLoaded, setCartItemLoaded] = useState(false)
     let subTotal = handleSubTotal
     let tax = 1000
     let total = subTotal + tax
+
+    useEffect(() => {
+        setCartItemLoaded(true)
+    }, [])
 
     const handleFormData = (e) => {
         const { name, value } = e.target
@@ -117,7 +123,12 @@ const CheckoutLayout = () => {
 
             <main className='grid grid-cols-1 lg:grid-cols-2 w-10/12 gap-5 mx-auto container-limit mt-30 mb-7 relative'>
                 <section className='space-y-3'>
-                    <div className='bg-surface/50 rounded-xl p-5 space-y-5'>
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.95, delay: 0.1 }}
+                        viewport={{ once: true }}
+                        className='bg-surface/50 rounded-xl p-5 space-y-5'>
                         <h2 className='font-bold text-2xl'>Personal Information</h2>
                         <div className='w-full h-px bg-muted'></div>
 
@@ -157,9 +168,14 @@ const CheckoutLayout = () => {
                             name='phone'
                             placeholder='Phone Number'
                             className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
-                    </div>
+                    </motion.div>
 
-                    <div className='bg-surface/50 rounded-xl p-5 space-y-5'>
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.95, delay: 0.2 }}
+                        viewport={{ once: true }}
+                        className='bg-surface/50 rounded-xl p-5 space-y-5'>
                         <h2 className='font-bold text-2xl'>Shipping Address</h2>
                         <div className='w-full h-px bg-muted'></div>
 
@@ -199,9 +215,14 @@ const CheckoutLayout = () => {
                             onChange={handleShipingAddress}
                             placeholder='Postal Code'
                             className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
-                    </div>
+                    </motion.div>
 
-                    <div className="bg-surface/50 rounded-xl p-5 space-y-5">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.95, delay: 0.3 }}
+                        viewport={{ once: true }}
+                        className="bg-surface/50 rounded-xl p-5 space-y-5">
                         <h2 className="font-bold text-2xl">Payment Method</h2>
                         <div className="w-full h-px bg-muted" />
 
@@ -237,40 +258,53 @@ const CheckoutLayout = () => {
                             <HandwrittenTick method='card' selected={formData.paymentMethod} />
                         </label>
 
-                    </div>
+                    </motion.div>
                 </section>
 
-                <aside className='bg-surface/50 p-5 rounded-xl h-fit sticky top-30'>
+                <motion.aside
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.95, delay: 0.1 }}
+                    viewport={{ once: true }}
+                    className='bg-surface/50 p-5 rounded-xl h-fit sticky top-30'>
                     <h2 className='font-bold text-2xl pb-5'>Checkout Summary</h2>
-
                     <div className='space-y-7'>
-
                         <section className=''>
-                            {cartItemInLS.map(item => {
-                                return <div key={item._id} className='flex items-start justify-between border-b border-muted p-3'>
-                                    <div className='flex items-start gap-5'>
-                                        <div className='relative w-20 h-20 rounded-xl overflow-hidden'>
-                                            <Image
-                                                src={item.images[0].url}
-                                                alt={item.name}
-                                                fill
-                                                sizes='240px'
-                                                className='w-full h-full object-cover' />
-                                        </div>
-                                        <div className='flex flex-col items-start gap-1'>
-                                            <h3 className='font-bold'>{item.name}</h3>
-                                            <div className='flex items-center gap-2 text-muted font-semibold'>
-                                                <span>{item.variants[0].size}</span>
-                                                <span className='w-px h-5 bg-muted'></span>
-                                                <span>{item.gender[0].name}</span>
+                            {!cartItemLoaded ?
+                                <div className='w-full flex flex-col gap-2'>
+                                    {Array.from({ length: 3 }).map((_, i) => {
+                                        return <CartItemSkeleton key={i} />
+                                    })}
+                                </div>
+                                : cartItemInLS.length === 0 ?
+                                    <div className='w-full text-center font-semibold text-muted py-5'>
+                                        Your cart is empty
+                                    </div>
+                                    : cartItemInLS.map(item => {
+                                        return <div key={item._id} className='flex items-start justify-between border-b border-muted p-3'>
+                                            <div className='flex items-start gap-5'>
+                                                <div className='relative w-20 h-20 rounded-xl overflow-hidden'>
+                                                    <Image
+                                                        src={item.images[0].url}
+                                                        alt={item.name}
+                                                        fill
+                                                        sizes='240px'
+                                                        className='w-full h-full object-cover' />
+                                                </div>
+                                                <div className='flex flex-col items-start gap-1'>
+                                                    <h3 className='font-bold'>{item.name}</h3>
+                                                    <div className='flex items-center gap-2 text-muted font-semibold'>
+                                                        <span>{item.variants[0].size}</span>
+                                                        <span className='w-px h-5 bg-muted'></span>
+                                                        <span>{item.gender[0].name}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='font-semibold text-lg'>
+                                                {item.effectivePrice.toLocaleString()}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className='font-semibold text-lg'>
-                                        {item.effectivePrice.toLocaleString()}
-                                    </div>
-                                </div>
-                            })}
+                                    })}
                         </section>
 
                         <div className='flex gap-3'>
@@ -281,9 +315,11 @@ const CheckoutLayout = () => {
                                 name='promoCode'
                                 placeholder='Promo Code'
                                 className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
-                            <button className='bg-muted/5 text-lg text-foreground px-5 py-2 rounded-full border-2 border-muted hover:border-foreground transition-all ease-linear duration-300 cursor-pointer uppercase'>
+                            <motion.button
+                                whileTap={{ scale: 0.95 }}
+                                className='bg-muted/5 text-lg text-foreground px-5 py-2 rounded-full border-2 border-muted hover:border-foreground transition-all ease-linear duration-300 cursor-pointer uppercase'>
                                 Apply
-                            </button>
+                            </motion.button>
                         </div>
 
                         <section className='border-t border-b py-5 border-muted'>
@@ -305,18 +341,25 @@ const CheckoutLayout = () => {
                             <div>
                                 <div className='flex items-center justify-between'>
                                     <span className='text-xl lg:text-2xl font-bold'>Total</span>
-                                    <span className='text-xl lg:text-2xl font-bold'>{total.toLocaleString()}</span>
+                                    <span className='text-xl lg:text-2xl font-bold'>{subTotal && total.toLocaleString()}</span>
                                 </div>
                             </div>
                         </section>
 
-                        <div className='w-full flex items-center justify-center'>
-                            <button className='bg-foreground w-full lg:text-xl text-background px-10 py-3 rounded-full border-2 border-foreground hover:bg-background hover:text-foreground transition-all ease-linear duration-300 cursor-pointer tracking-widest uppercase'>
+                        <div className='w-full flex flex-col gap-5 items-center justify-center'>
+                            <motion.button
+                                disabled={cartItemInLS.length === 0}
+                                whileTap={{ scale: 0.95 }}
+                                className='bg-foreground w-full font-bold lg:text-xl text-background px-10 py-3 rounded-full border-2 border-foreground hover:bg-background hover:text-foreground transition-all ease-linear duration-300 cursor-pointer tracking-widest uppercase disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-foreground disabled:hover:text-background'>
                                 Place Order
-                            </button>
+                            </motion.button>
+                            <div className='flex items-center justify-center gap-2'>
+                                <span><Lock strokeWidth={1} size={16} /></span>
+                                <span className='text-sm'>Encrypted and secure payment</span>
+                            </div>
                         </div>
                     </div>
-                </aside>
+                </motion.aside>
             </main>
         </>
     )
