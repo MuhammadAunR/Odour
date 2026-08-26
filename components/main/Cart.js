@@ -64,9 +64,9 @@ const Cart = () => {
             </motion.div>
           )}
 
-          {cartItemInLS.map((item, index) => (
+          {cartItemInLS.map((item) => (
             <div
-              key={index}
+              key={item._id}
               className="flex items-center gap-3 px-5 py-3 mx-1 hover:bg-background/70 transition-all ease-linear bg-background/50 relative group"
             >
               <motion.span
