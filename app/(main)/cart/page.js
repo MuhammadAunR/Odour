@@ -71,7 +71,7 @@ const CartPage = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.2, delay: 0.1 * index }}
                             viewport={{ once: true }}
-                            key={item.selectedSize.size}
+                            key={item._id}
                             className="flex justify-between items-center max-lg:flex-col border-b border-b-surface p-5 hover:shadow-md transition-shadow ease-linear duration-300">
 
                             <div className="flex items-center gap-5 max-lg:flex-col">
@@ -107,7 +107,7 @@ const CartPage = () => {
                                                 size={22}
                                                 strokeWidth={1}
                                                 className={
-                                                    wishListProducts?.includes(item._id)
+                                                    wishListProducts?.some(product => product._id === item._id)
                                                         ? "fill-red-500 text-red-500"
                                                         : "text-red-500"
                                                 }
