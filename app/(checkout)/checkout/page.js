@@ -2,7 +2,7 @@
 import { useCart } from '@/app/context/CartContext'
 import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { CartItemSkeleton } from '@/components/main/SkeletonUI'
-import { Check, ChevronLeft, Lock } from 'lucide-react'
+import { Banknote, Check, ChevronLeft, Lock } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -53,12 +53,19 @@ const CheckoutLayout = () => {
     });
     const { cartItemInLS, handleSubTotal } = useCart()
     const [cartItemLoaded, setCartItemLoaded] = useState(false)
+    const [currentStep, setCurrentStep] = useState(0)
+
+    const steps = ["Cart", "Information", "Shipping", "Payment"];
+
     let subTotal = handleSubTotal
-    let tax = 1000
+    let tax = Math.floor((subTotal * 5) / 100)
     let total = subTotal + tax
 
     useEffect(() => {
         setCartItemLoaded(true)
+        if (cartItemInLS.length > 0) {
+            setCurrentStep(1)
+        }
     }, [])
 
     const handleFormData = (e) => {
@@ -79,15 +86,17 @@ const CheckoutLayout = () => {
         }))
     }
 
-    const steps = ["Cart", "Information", "Shipping", "Payment"];
-    let currentStep = 1
+    useEffect(() => {
+
+    }, [formData])
+
     return (
         <>
 
             <header className="border-b border-muted bg-surface/50 backdrop-blur-lg z-50 fixed w-full">
                 <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
                     <Link href="/cart" className="flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-900 transition-colors ease-linear duration-300">
-                        <ChevronLeft size={16} />
+                        <ChevronLeft size={18} />
                         Back to cart
                     </Link>
 
@@ -96,8 +105,8 @@ const CheckoutLayout = () => {
                     </Link>
 
                     <div className="flex items-center gap-1.5 text-xs text-neutral-500">
-                        <Lock size={13} />
-                        <span>Secure Checkout</span>
+                        <Banknote size={20} />
+                        <span>Currency: PKR</span>
                     </div>
                 </div>
 
@@ -122,6 +131,7 @@ const CheckoutLayout = () => {
 
 
             <main className='grid grid-cols-1 lg:grid-cols-2 w-10/12 gap-5 mx-auto container-limit mt-30 mb-7 relative'>
+
                 <section className='space-y-3'>
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -269,7 +279,7 @@ const CheckoutLayout = () => {
                     className='bg-surface/50 p-5 rounded-xl h-fit sticky top-30'>
                     <h2 className='font-bold text-2xl pb-5'>Checkout Summary</h2>
                     <div className='space-y-7'>
-                        <section className=''>
+                        <section className='overflow-y-auto'>
                             {!cartItemLoaded ?
                                 <div className='w-full flex flex-col gap-2'>
                                     {Array.from({ length: 3 }).map((_, i) => {
@@ -300,8 +310,13 @@ const CheckoutLayout = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='font-semibold text-lg'>
-                                                {item.effectivePrice.toLocaleString()}
+                                            <div className='flex flex-col items-end'>
+                                                <span className='font-semibold text-lg'>
+                                                    {(item.effectivePrice * item.quantity).toLocaleString()}
+                                                </span>
+                                                <span className='text-sm font-semibold text-muted'>
+                                                    Qty:  {item.quantity}
+                                                </span>
                                             </div>
                                         </div>
                                     })}
