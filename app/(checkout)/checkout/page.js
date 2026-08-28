@@ -1,6 +1,5 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
-import { SimpleLoader } from '@/components/admin/AuthPagesCompos'
 import { CartItemSkeleton } from '@/components/main/SkeletonUI'
 import { Banknote, Check, ChevronLeft, Lock } from 'lucide-react'
 import { motion } from 'motion/react'
@@ -53,9 +52,19 @@ const CheckoutLayout = () => {
     });
     const { cartItemInLS, handleSubTotal } = useCart()
     const [cartItemLoaded, setCartItemLoaded] = useState(false)
-    const [currentStep, setCurrentStep] = useState(0)
+    const [currentStep, setCurrentStep] = useState(1)
+    const [emailError, setemailError] = useState(false)
 
     const steps = ["Cart", "Information", "Shipping", "Payment"];
+    const isStep1Valid = formData.firstName.trim() &&
+        formData.lastName.trim() &&
+        formData.email.trim() &&
+        formData.phone.trim();
+
+    const isStep2Valid = formData.shippingAddress.address.trim() &&
+        formData.shippingAddress.city.trim() &&
+        formData.shippingAddress.state.trim() &&
+        formData.shippingAddress.postalCode.trim();
 
     let subTotal = handleSubTotal
     let tax = Math.floor((subTotal * 5) / 100)
@@ -63,9 +72,6 @@ const CheckoutLayout = () => {
 
     useEffect(() => {
         setCartItemLoaded(true)
-        if (cartItemInLS.length > 0) {
-            setCurrentStep(1)
-        }
     }, [])
 
     const handleFormData = (e) => {
@@ -87,8 +93,14 @@ const CheckoutLayout = () => {
     }
 
     useEffect(() => {
-
-    }, [formData])
+        if (isStep1Valid && isStep2Valid) {
+            setCurrentStep(3);
+        } else if (isStep1Valid) {
+            setCurrentStep(2);
+        } else {
+            setCurrentStep(1);
+        }
+    }, [isStep1Valid, isStep2Valid]);
 
     return (
         <>
@@ -115,10 +127,11 @@ const CheckoutLayout = () => {
                     {steps.map((step, i) => (
                         <div key={step} className="flex items-center gap-2">
                             <div className={`flex items-center gap-1.5 text-xs font-medium ${i <= currentStep ? "text-neutral-900" : "text-neutral-400"
-                                }`}>
-                                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${i < currentStep ? "bg-neutral-900 text-white" :
-                                    i === currentStep ? "border border-neutral-900" : "border border-neutral-300"
-                                    }`}>
+                                } transition-colors ease-linear duration-300`}>
+                                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] 
+                                ${i < currentStep ? "bg-neutral-900 text-white" :
+                                        i === currentStep ? "border border-neutral-900" : "border border-neutral-300"
+                                    } transition-all ease-linear duration-300`}>
                                     {i < currentStep ? <Check size={11} /> : i + 1}
                                 </span>
                                 {step}
@@ -168,7 +181,7 @@ const CheckoutLayout = () => {
                             value={formData.email}
                             onChange={handleFormData}
                             placeholder='Email'
-                            className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
+                            className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
                         <label htmlFor="phone"></label>
                         <input
                             type="text"
@@ -299,6 +312,7 @@ const CheckoutLayout = () => {
                                                         alt={item.name}
                                                         fill
                                                         sizes='240px'
+                                                        loading='eager'
                                                         className='w-full h-full object-cover' />
                                                 </div>
                                                 <div className='flex flex-col items-start gap-1'>
@@ -363,7 +377,7 @@ const CheckoutLayout = () => {
 
                         <div className='w-full flex flex-col gap-5 items-center justify-center'>
                             <motion.button
-                                disabled={cartItemInLS.length === 0}
+                                disabled={cartItemInLS.length === 0 || !isStep1Valid || !isStep2Valid}
                                 whileTap={{ scale: 0.95 }}
                                 className='bg-foreground w-full font-bold lg:text-xl text-background px-10 py-3 rounded-full border-2 border-foreground hover:bg-background hover:text-foreground transition-all ease-linear duration-300 cursor-pointer tracking-widest uppercase disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-foreground disabled:hover:text-background'>
                                 Place Order
