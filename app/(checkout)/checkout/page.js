@@ -1,11 +1,12 @@
 'use client'
 import { useCart } from '@/app/context/CartContext'
 import { CartItemSkeleton } from '@/components/main/SkeletonUI'
-import { Banknote, Check, ChevronLeft, Lock } from 'lucide-react'
+import { Banknote, Check, ChevronLeft, CircleAlert, Lock } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 
 
 const HandwrittenTick = ({ method = 'cod', selected }) => {
@@ -52,16 +53,19 @@ const CheckoutLayout = () => {
     });
     const { cartItemInLS, handleSubTotal } = useCart()
     const [cartItemLoaded, setCartItemLoaded] = useState(false)
-    const [currentStep, setCurrentStep] = useState(1)
-    const [emailError, setemailError] = useState(false)
+    const [currentStep, setCurrentStep] = useState(0)
+    const isEmailValid = useRef(true)
 
     const steps = ["Cart", "Information", "Shipping", "Payment"];
-    const isStep1Valid = formData.firstName.trim() &&
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const isStep1Valid = cartItemInLS.length > 0
+    const isStep2Valid = formData.firstName.trim() &&
         formData.lastName.trim() &&
         formData.email.trim() &&
         formData.phone.trim();
 
-    const isStep2Valid = formData.shippingAddress.address.trim() &&
+    const isStep3Valid = formData.shippingAddress.address.trim() &&
         formData.shippingAddress.city.trim() &&
         formData.shippingAddress.state.trim() &&
         formData.shippingAddress.postalCode.trim();
@@ -80,7 +84,15 @@ const CheckoutLayout = () => {
             ...prev,
             [name]: value
         }))
+        if (name === 'email') {
+            if (!emailRegex.test(value)) {
+                isEmailValid.current = false
+            } else {
+                isEmailValid.current = true
+            }
+        }
     }
+    
     const handleShipingAddress = (e) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -93,14 +105,16 @@ const CheckoutLayout = () => {
     }
 
     useEffect(() => {
-        if (isStep1Valid && isStep2Valid) {
+        if (isStep1Valid && isStep2Valid && isStep3Valid) {
             setCurrentStep(3);
-        } else if (isStep1Valid) {
+        } else if (isStep1Valid && isStep2Valid) {
             setCurrentStep(2);
-        } else {
+        } else if (isStep1Valid) {
             setCurrentStep(1);
+        } else {
+            setCurrentStep(0);
         }
-    }, [isStep1Valid, isStep2Valid]);
+    }, [isStep1Valid, isStep2Valid, isStep3Valid]);
 
     return (
         <>
@@ -143,7 +157,7 @@ const CheckoutLayout = () => {
             </header>
 
 
-            <main className='grid grid-cols-1 lg:grid-cols-2 w-10/12 gap-5 mx-auto container-limit mt-30 mb-7 relative'>
+            <main className='grid grid-cols-1 lg:grid-cols-2 max-lg:px-5 lg:w-10/12 gap-5 mx-auto container-limit mt-30 mb-7 relative'>
 
                 <section className='space-y-3'>
                     <motion.div
@@ -173,15 +187,18 @@ const CheckoutLayout = () => {
                             onChange={handleFormData}
                             placeholder='Last Name'
                             className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
-                        <label htmlFor="email"></label>
-                        <input
-                            type="email"
-                            id='email'
-                            name='email'
-                            value={formData.email}
-                            onChange={handleFormData}
-                            placeholder='Email'
-                            className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
+                        <div className='relative'>
+                            <label htmlFor="email"></label>
+                            <input
+                                type="email"
+                                id='email'
+                                name='email'
+                                value={formData.email}
+                                onChange={handleFormData}
+                                placeholder='Email'
+                                className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
+                            <span className={`absolute right-5 top-3 text-red-500 ${isEmailValid.current ? 'scale-0' : 'scale-100'} transition-all ease-linear duration-300`}><CircleAlert /></span>
+                        </div>
                         <label htmlFor="phone"></label>
                         <input
                             type="text"
@@ -377,7 +394,7 @@ const CheckoutLayout = () => {
 
                         <div className='w-full flex flex-col gap-5 items-center justify-center'>
                             <motion.button
-                                disabled={cartItemInLS.length === 0 || !isStep1Valid || !isStep2Valid}
+                                disabled={!isStep1Valid || !isStep2Valid || !isStep3Valid || !isEmailValid}
                                 whileTap={{ scale: 0.95 }}
                                 className='bg-foreground w-full font-bold lg:text-xl text-background px-10 py-3 rounded-full border-2 border-foreground hover:bg-background hover:text-foreground transition-all ease-linear duration-300 cursor-pointer tracking-widest uppercase disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:bg-foreground disabled:hover:text-background'>
                                 Place Order
