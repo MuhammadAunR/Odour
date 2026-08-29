@@ -6,8 +6,6 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
-import { toast } from 'react-toastify'
-
 
 const HandwrittenTick = ({ method = 'cod', selected }) => {
     return (
@@ -54,7 +52,7 @@ const CheckoutLayout = () => {
     const { cartItemInLS, handleSubTotal } = useCart()
     const [cartItemLoaded, setCartItemLoaded] = useState(false)
     const [currentStep, setCurrentStep] = useState(0)
-    const isEmailValid = useRef(true)
+    const [isEmailValid, setIsEmailValid] = useState(true)
 
     const steps = ["Cart", "Information", "Shipping", "Payment"];
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -86,13 +84,13 @@ const CheckoutLayout = () => {
         }))
         if (name === 'email') {
             if (!emailRegex.test(value)) {
-                isEmailValid.current = false
+                setIsEmailValid(false)
             } else {
-                isEmailValid.current = true
+                setIsEmailValid(true)
             }
         }
     }
-    
+
     const handleShipingAddress = (e) => {
         const { name, value } = e.target
         setFormData(prev => ({
@@ -197,7 +195,7 @@ const CheckoutLayout = () => {
                                 onChange={handleFormData}
                                 placeholder='Email'
                                 className='bg-muted/5 text-lg text-muted px-5 py-2 w-full rounded-full outline-none border-2 border-muted/30 hover:border-muted transition-all ease-linear duration-300 focus:border-muted' />
-                            <span className={`absolute right-5 top-3 text-red-500 ${isEmailValid.current ? 'scale-0' : 'scale-100'} transition-all ease-linear duration-300`}><CircleAlert /></span>
+                            <span className={`absolute right-5 top-3 text-red-500 ${isEmailValid ? 'scale-0' : 'scale-100'} transition-all ease-linear duration-300`}><CircleAlert /></span>
                         </div>
                         <label htmlFor="phone"></label>
                         <input
