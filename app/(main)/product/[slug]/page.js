@@ -45,7 +45,7 @@ const Product = ({ params }) => {
     )
 
     useEffect(() => {
-        if (slug) fetchProductBySlug(slug)
+        if (slug) fetchBySlug(slug)
     }, [slug])
 
     useEffect(() => {
