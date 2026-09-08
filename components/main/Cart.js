@@ -36,7 +36,10 @@ const Cart = () => {
         className={`h-screen w-full bg-surface max-w-100 fixed top-0 right-0 z-200 flex flex-col transition-all ease-linear ${isCartOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex items-center justify-between px-5 py-6.5 border-b-2 border-accent shrink-0">
-          <h3 className="text-2xl font-semibold">Your Cart</h3>
+          <div className="flex flex-col items-start">
+            <h3 className="text-2xl font-semibold">Your Cart</h3>
+            <span className="text-sm">Items: {cartItemInLS.length}</span>
+          </div>
           <span onClick={toggleCart}>
             <X
               size={28}
@@ -131,21 +134,6 @@ const Cart = () => {
         </section>
 
         {cartItemInLS.length > 0 && (
-          <section className="py-2 w-full border-t-2 overflow-hidden">
-            <div className="relative group w-fit left-1/2 -translate-x-1/2">
-              <Link
-                href={'/cart'}
-                onClick={toggleCart}
-                className="font-semibold text-lg transition-colors ease-linear duration-300 group-hover:text-muted"
-              >
-                View Full Cart
-              </Link>
-              <span className="absolute w-full h-0.5 bg-foreground left-0 bottom-0 group-hover:-bottom-10 group-hover:scale-0 transition-all ease-linear duration-300"></span>
-            </div>
-          </section>
-        )}
-
-        {cartItemInLS.length > 0 && (
           <div className="px-5 space-y-5 border-t-2 border-accent py-4 shrink-0 sticky bottom-0 w-full">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl font-semibold">Subtotal</h3>
@@ -154,16 +142,26 @@ const Cart = () => {
                 {finalPriceFormat.toLocaleString()}
               </span>
             </div>
-            <span
-              onClick={() => {
-                (toggleCart(), handleCheckout());
-              }}
-              className="flex flex-col items-end"
-            >
-              <span>
+
+            <div className="flex flex-row-reverse items-center justify-between">
+              <span
+                onClick={() => {
+                  (toggleCart(), handleCheckout());
+                }}
+                className="flex flex-col items-end"
+              >
                 <PrimaryButton text={"CheckOut"} />
               </span>
-            </span>
+              <span>
+                <Link
+                  href={'/cart'}
+                  onClick={toggleCart}
+                  className="font-semibold border px-7 py-3 bg-background hover:bg-surface transition-colors ease-linear duration-300"
+                >
+                  View Full Cart
+                </Link>
+              </span>
+            </div>
           </div>
         )}
       </aside>
