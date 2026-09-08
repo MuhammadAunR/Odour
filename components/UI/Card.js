@@ -1,5 +1,5 @@
 "use client";
-import { Heart } from "lucide-react";
+import { Heart, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { motion } from "motion/react";
@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useWishlist } from "@/app/context/WishlistContext";
 import { PrimaryButton } from "./Buttons";
 import { seasonConfig } from "../main/Assets";
+import { div } from "motion/react-client";
 
 const ProductGridCard = ({ product, index }) => {
   const router = useRouter();
@@ -67,7 +68,7 @@ const ProductGridCard = ({ product, index }) => {
           onClick={() => {
             handleWishListItemsInLS(product);
           }}
-          className="absolute bottom-3 md:-bottom-10 right-3 md:group-hover/ProductGridCard:bottom-12 p-1.5 bg-background/80 backdrop-blur-sm rounded-full transition-all duration-300 cursor-pointer"
+          className="absolute bottom-3 md:-bottom-10 right-5 md:group-hover/ProductGridCard:bottom-5 p-1.5 bg-background/80 backdrop-blur-sm rounded-full transition-all duration-300 cursor-pointer"
         >
           <Heart
             size={16}
@@ -78,49 +79,41 @@ const ProductGridCard = ({ product, index }) => {
             }
           />
         </motion.button>
-
-        <motion.div
-          className="absolute -bottom-10 group-hover/ProductGridCard:bottom-0 left-0 right-0 flex items-center border-t border-foreground/10 bg-background transition-all ease-linear max-md:hidden"
-        >
-          <button
-            onClick={() => {
-              addCartItemIdToLS(product);
-              toggleCart();
-            }}
-            disabled={defaultPriceAndSize.stockQuantity === 0}
-            className="relative group/btn bg-foreground px-7 py-2 text-xs cursor-pointer flex-1 items-center justify-center border-b border-foreground/20 disabled:cursor-not-allowed disabled:bg-foreground/60"
-          >
-            <span className={`relative z-10 text-background transition-colors ease-linear duration-200 ${defaultPriceAndSize.stockQuantity === 0 ? '' : 'group-hover/btn:text-foreground'}`}>
-              Add to Cart
-            </span>
-            <span className={`absolute left-0 bottom-0 w-full h-0 transition-all ease-linear duration-300 bg-background 
-              ${defaultPriceAndSize.stockQuantity === 0 ? '' : 'group-hover/btn:h-full'}`}></span>
-          </button>
-        </motion.div>
       </div>
 
-      <div className="p-4 w-full space-y-1">
-        <div className="flex items-center gap-2">
-          <h3 className="md:text-xl font-bold font-serif">{product.name}</h3>
-          {defaultPriceAndSize.stockQuantity === 0 &&
-            <span className="text-red-700 font-bold">(Sold Out)</span>
-          }
-        </div>
-
-        {product.defaultSalePrice ? (
-          <div className="flex items-baseline gap-2">
-            <span className="max-md:text-[10px] text-xs text-foreground/40 line-through">
+      <div className="p-4 w-full flex items-end justify-between">
+        <div className="flex flex-col items-start gap-2">
+          <div className="flex items-center gap-2">
+            <h3 className="md:text-xl font-bold font-serif">{product.name}</h3>
+            {defaultPriceAndSize.stockQuantity === 0 &&
+              <span className="text-red-700 font-bold text-xs">(Sold Out)</span>
+            }
+          </div>
+          {product.defaultSalePrice ? (
+            <div className="flex items-baseline gap-2">
+              <span className="max-md:text-[10px] text-xs text-foreground/40 line-through">
+                PKR {defaultPriceAndSize.originalPrice.toLocaleString()}
+              </span>
+              <span className="font-semibold text-red-500 max-md:text-sm">
+                PKR {defaultPriceAndSize.salePrice.toLocaleString()}
+              </span>
+            </div>
+          ) : (
+            <span className="max-md:text-sm font-semibold text-foreground">
               PKR {defaultPriceAndSize.originalPrice.toLocaleString()}
             </span>
-            <span className="font-semibold text-red-500 max-md:text-sm">
-              PKR {defaultPriceAndSize.salePrice.toLocaleString()}
-            </span>
-          </div>
-        ) : (
-          <span className="max-md:text-sm font-semibold text-foreground">
-            PKR {defaultPriceAndSize.originalPrice.toLocaleString()}
-          </span>
-        )}
+          )}
+        </div>
+        <button
+          onClick={() => {
+            addCartItemIdToLS(product);
+            toggleCart();
+          }}
+          disabled={defaultPriceAndSize.stockQuantity === 0}
+          className={`rounded-full p-2 bg-foreground text-background hover:-translate-y-0.5 transition-all ease-linear duration-300 cursor-pointer
+          disabled:cursor-not-allowed disabled:bg-foreground/60`}>
+          <ShoppingBag strokeWidth={1.5} size={20} />
+        </button>
       </div>
     </motion.div>
   );
