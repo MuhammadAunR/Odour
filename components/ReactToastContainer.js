@@ -14,7 +14,7 @@ const ReactToastContainer = ({ children }) => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover={false}
-                theme="dark"
+                theme="light"
                 transition={Slide}
             />
             {children}
