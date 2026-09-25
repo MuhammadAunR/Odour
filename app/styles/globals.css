@@ -117,15 +117,15 @@ html.lenis {
 
 @keyframes whatsappButtonAnimation {
   0% {
-    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(140, 128, 112, 1);
   }
 
-  50% {
-    transform: scale(1.15);
+  70% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
   }
 
   100% {
-    transform: scale(1);
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
   }
 }
 
