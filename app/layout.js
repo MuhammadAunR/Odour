@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
 import "./styles/globals.css";
 import localFont from "next/font/local";
 import LenisWrapper from "@/components/LenisWrapper";
@@ -18,8 +18,8 @@ const topLuxury = localFont({
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
 });
 
@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${raleway.variable} ${topLuxury.variable} h-full antialiased`}
+      className={`${playfair.variable} ${raleway.variable} ${topLuxury.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ScrollToTop />
