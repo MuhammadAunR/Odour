@@ -67,7 +67,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`${isOpen ? 'bg-surface' : 'bg-white'} relative z-100 flex flex-col py-3 gap-2`}>
+
+      {/* Static Navbar  */}
+
+      <nav className={`${isOpen ? 'bg-surface' : 'bg-transparent'} absolute w-full z-100 flex flex-col py-3 gap-2`}>
 
         <section className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full flex items-center justify-between">
           <span className="lg:hidden">
@@ -91,7 +94,7 @@ const Navbar = () => {
               <span>
                 <Heart
                   strokeWidth={1}
-                  className={`${wishListProducts.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
+                  className={`${wishListProducts.length > 0 && "text-[#993556]"} hover:text-surface transition-colors ease-linear`}
                 />
               </span>
               {wishListProducts.length > 0 && (
@@ -100,11 +103,11 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 group/groupNavCartIcon">
               <span
                 title="Cart Items"
                 onClick={toggleCart}
-                className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative"
+                className="hover:text-surface transition-colors ease-linear duration-300 cursor-pointer relative"
               >
                 <ShoppingBag strokeWidth={1} />
                 {cartItemInLS.length > 0 && (
@@ -113,14 +116,14 @@ const Navbar = () => {
                   </span>
                 )}
               </span>
-              <span className="max-md:hidden text-xs">
+              <span className="max-md:hidden text-xs group-hover/groupNavCartIcon:text-surface transition-colors ease-linear duration-300">
                 PKR {formatPrice(handleSubTotal)}
               </span>
             </span>
             <span
               title="Accounts"
               onClick={handleAuthPageRouting}
-              className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden"
+              className="hover:text-surface transition-all ease-linear duration-300 cursor-pointer max-lg:hidden"
             >
               <UserRound strokeWidth={1} />
             </span>
@@ -137,11 +140,11 @@ const Navbar = () => {
                 className="relative group/navOption"
               >
                 <li
-                  className={`text-xl tracking-wider font-bold uppercase text-foreground/80`}
+                  className={`text-xl tracking-wider font-bold font-playfair uppercase text-foreground/80`}
                 >
                   {opt.option}
                 </li>
-                <span className={`absolute top-0 left-1/2 -translate-x-1/2 bg-foreground/80 h-[1.5px] group-hover/navOption:w-full transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? 'w-full' : 'w-0'}`}></span>
+                <span className={`absolute top-0 left-1/2 -translate-x-1/2 bg-foreground/60 h-[1.5px] group-hover/navOption:w-full transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? 'w-full' : 'w-0'}`}></span>
                 <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-foreground/80 h-[1.5px] group-hover/navOption:w-full transition-all ease-linear duration-300 ${activeNav === opt.option.toLowerCase() ? 'w-full' : 'w-0'}`}></span>
               </Link>
             ))}
@@ -150,11 +153,13 @@ const Navbar = () => {
 
       </nav>
 
+      {/* Dynamic Navbar  */}
+
       <nav
         className={`
                 fixed top-0 left-0 w-full z-50 py-3 space-y-2
                 transition-transform duration-500 ease-in-out shadow-[2px_2px_5px_rgba(0,0,0,0.3)]
-                ${isOpen ? 'bg-surface' : 'bg-white'}
+                ${isOpen ? 'bg-surface' : 'bg-background'}
                 ${fixNavbar ? "translate-y-0" : "-translate-y-full"}
             `}
       >
@@ -226,7 +231,7 @@ const Navbar = () => {
                 className="relative group/navOption"
               >
                 <li
-                  className={`text-xl tracking-wider font-bold uppercase text-foreground/80`}
+                  className={`text-xl tracking-wider font-bold font-playfair uppercase text-foreground/80`}
                 >
                   {opt.option}
                 </li>
