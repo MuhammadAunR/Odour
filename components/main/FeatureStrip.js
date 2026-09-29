@@ -1,25 +1,14 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { fragranceFamilies } from "./Assets";
 import { motion } from "motion/react";
 import SectionHeader from "./SectionHeader";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 
 const FeatureStrip = () => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
 
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0 },
-  };
+  const [activeIndex, setActiveIndex] = useState(0)
 
   const featureStrip = [
     {
@@ -40,10 +29,60 @@ const FeatureStrip = () => {
     },
   ];
 
+  const scentFamilies = [
+    {
+      name: "Floral",
+      description:
+        "A bouquet of petals in bloom — jasmine, rose, and lily layered into something soft, romantic, and unmistakably feminine.",
+      image: "/mint-extracted.webp",
+      href: "/shop?page=1&limit=12&fragranceFamily=Floral&sortBy=createdAt&sortOrder=desc",
+    },
+    {
+      name: "Citrus",
+      description:
+        "Bright, zesty, alive. Notes of bergamot, blood orange, and mandarin peel spark the senses awake.",
+      image: "/citrus-extracted.webp",
+      href: "/shop?page=1&limit=12&fragranceFamily=Citrus&sortBy=createdAt&sortOrder=desc",
+    },
+    {
+      name: "Woody",
+      description:
+        "Warm sandalwood, smoky vetiver, and grounded amber blend into a scent that lingers like dusk.",
+      image: "/wooden-extracted.webp",
+      href: "/shop?page=1&limit=12&fragranceFamily=Woody&sortBy=createdAt&sortOrder=desc",
+    },
+  ];
+
+  const handleNextCarousal = () => {
+    if (activeIndex === scentFamilies.length - 1) {
+      setActiveIndex(0)
+      return
+    }
+    setActiveIndex(prev => prev + 1)
+  }
+  const handlePrevCarousal = () => {
+    if (activeIndex === 0) {
+      setActiveIndex(scentFamilies.length - 1)
+      return
+    }
+    setActiveIndex(prev => prev - 1)
+  }
+
+  const currentSlide = scentFamilies.find((_, i) => i === activeIndex)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      handleNextCarousal()
+    }, 3000);
+    return () => clearInterval(timer)
+  }, [activeIndex])
+
+
   return (
     <>
-      <main className="w-full px-5 max-w-7xl lg:px-0 lg:w-10/12 lg:mx-auto pt-90 mt-50 md:mt-70">
-        <section className="flex items-center justify-between gap-x-7 py-15 flex-wrap">
+      <main className=" space-y-7">
+
+        <section className="flex items-center justify-between flex-wrap gap-2 w-full px-5 max-w-7xl lg:px-0 lg:w-10/12 lg:mx-auto pb-5">
           {featureStrip.map((feature, i) => {
             return (
               <motion.div
@@ -52,56 +91,79 @@ const FeatureStrip = () => {
                 transition={{ duration: 0.2, delay: i * 0.1 }}
                 viewport={{ once: true }}
                 key={i}
-                className="flex flex-col items-start gap-3 md:w-70 p-5"
+                className="flex flex-col items-start gap-5 md:w-75 h-60 bg-surface/30 border-2 border-muted/50 
+                 px-5 py-10 relative hover:-translate-y-1 transition-transform ease-linear duration-300"
               >
-                <h3 className="text-xl font-semibold">{feature.title}</h3>
-                <div className="bg-foreground h-1 w-1/5"></div>
+                <span className="absolute -top-2 right-1 font-bold leading-none text-6xl text-surface">0{i + 1}</span>
+                <h3 className="text-xl font-semibold font-playfair tracking-wider">{feature.title}</h3>
+                <div className="bg-muted h-px w-1/5"></div>
                 <p className="text-muted text-left">{feature.desc}</p>
               </motion.div>
             );
           })}
         </section>
 
-        <section>
-          <SectionHeader
-            headerContent={{
-              subHeading: "Discover Your Signature",
-              mainHeading: "Scent Families",
-            }}
-          />
+        <SectionHeader
+          headerContent={{
+            subHeading: "Discover Your Signature",
+            mainHeading: "Scent Families",
+          }}
+        />
 
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="py-7 flex items-center justify-center gap-3 flex-wrap"
-          >
-            {fragranceFamilies.map((family) => {
-              return (
-                <motion.div
-                  key={family.name}
-                  variants={item}
-                  className="relative w-full h-100 md:w-60 md:h-80 overflow-hidden group"
-                >
-                  <h4 className="relative z-10 bg-black/50 backdrop-blur-sm w-full p-2 transition-transform ease-linear text-white">
-                    {family.name}
-                  </h4>
-                  <div className="absolute inset-0">
-                    <Image
-                      src={family.image}
-                      alt={family.name}
-                      fill
-                      sizes="240px"
-                      priority
-                      className="object-cover group-hover:scale-110 transition-transform ease-linear duration-300"
-                    />
-                  </div>
-                </motion.div>
-              );
-            })}
+
+        <section className="space-y-7">
+          <motion.div key={currentSlide.name} className="grid grid-cols-1 lg:grid-cols-2 gap-2 bg-linear-to-r from-surface to-background">
+            <motion.div className="flex flex-col items-center justify-center gap-5 max-lg:py-10 min-h-50">
+              <motion.h3
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.80, delay: 0.01 }}
+                className="font-playfair font-bold text-2xl md:text-5xl tracking-widest uppercase">
+                {currentSlide.name}
+              </motion.h3>
+              <motion.span
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.80, delay: 0.03 }}
+                className="max-lg:px-5 lg:max-w-lg text-center text-muted tracking-wider">
+                {currentSlide.description}
+              </motion.span>
+              <motion.a
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.80, delay: 0.05 }}
+                href={currentSlide.href}
+                className="max-lg:px-5 lg:max-w-lg text-center text-xl text-muted tracking-wider bg-background border border-foreground px-5 py-1 uppercase font-semibold hover:tracking-widest transition-all ease-linear duration-300">
+                Shop {currentSlide.name}
+              </motion.a>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 0.70, delay: 0.01 }}
+              className="relative w-full h-80 lg:h-100">
+              <Image
+                src={currentSlide.image}
+                alt={currentSlide.name}
+                fill
+                sizes="100%"
+                className="object-cover" />
+            </motion.div>
           </motion.div>
+          <div className="flex items-center justify-center gap-7">
+            <div
+              onClick={handlePrevCarousal}
+              className="bg-surface/50 border border-surface/70 p-2 rounded-full hover:border-muted transition-all ease-initial duration-300 group/chevron">
+              <ChevronLeft className="group-hover/chevron:-translate-x-0.5 transition-transform ease-linear duration-300" />
+            </div>
+            <div
+              onClick={handleNextCarousal}
+              className="bg-surface/50 border border-surface/70 p-2 rounded-full hover:border-muted transition-all ease-initial duration-300 group/chevron">
+              <ChevronRight className="group-hover/chevron:translate-x-0.5 transition-transform ease-linear duration-300" />
+            </div>
+          </div>
         </section>
+
       </main>
     </>
   );
