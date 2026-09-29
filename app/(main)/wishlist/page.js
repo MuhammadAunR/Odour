@@ -13,7 +13,7 @@ const WishlistPage = () => {
   console.log('prods from wishlist page =>', wishListProducts)
 
   return (
-    <main className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full">
+    <main className="lg:w-10/12 lg:mx-auto lg:px-0 px-5 max-w-7xl w-full mt-30">
       <header className="flex items-center justify-between gap-5 py-7 border-b border-foreground/30">
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-serif tracking-wider font-semibold">

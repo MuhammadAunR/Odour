@@ -5,14 +5,14 @@ import Image from 'next/image'
 import SectionHeader from '@/components/main/SectionHeader'
 import { processingSteps } from '@/components/main/Assets'
 import Link from 'next/link'
-import { PrimaryButton, SecondaryButton } from '@/components/UI/Buttons'
+import { SecondaryButton } from '@/components/UI/Buttons'
 
 
 const AboutPage = () => {
 
     return (
         <>
-            <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 w-full max-w-7xl'>
+            <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 w-full max-w-7xl mt-25'>
                 <header className='min-h-100 h-fit my-10'>
 
                     <SectionHeader headerContent={{ subHeading: 'The ODOUR Story', mainHeading: 'About Us' }} />

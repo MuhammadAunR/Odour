@@ -7,7 +7,7 @@ const PolicyPageHeader = ({ icon: Icon, title, description, date }) => {
 
     return (
         <>
-            <header className='bg-surface flex flex-col items-center justify-center gap-4 text-center px-5 py-12 container-limit'>
+            <header className='bg-surface flex flex-col items-center justify-center gap-4 text-center px-5 py-12 container-limit mt-30'>
                 <motion.span
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}

@@ -41,7 +41,7 @@ const ContactPage = () => {
         window.open(mailtoLink)
     }
     return (
-        <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 w-full max-w-7xl'>
+        <main className='lg:w-10/12 lg:mx-auto lg:px-0 px-5 w-full max-w-7xl mt-30'>
 
             <SectionHeader headerContent={{ subHeading: 'Get In Touch', mainHeading: 'Contact Us' }} />
 

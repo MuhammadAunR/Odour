@@ -82,7 +82,7 @@ const ShopPageInner = () => {
   }, [searchInput]);
   return (
     <>
-      <main className="w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative">
+      <main className="w-full max-w-7xl lg:w-10/12 lg:mx-auto px-5 lg:px-0 relative mt-30">
         <div className="flex flex-col justify-end gap-5 py-4 border-b border-foreground/10">
           <label
             htmlFor="search"
