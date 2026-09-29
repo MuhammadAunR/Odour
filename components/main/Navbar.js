@@ -89,12 +89,12 @@ const Navbar = () => {
             <Link
               href={"/wishlist"}
               title="Favorite Items"
-              className="relative"
+              className="relative hover:-translate-y-0.5 transition-transform ease-linear duration-300"
             >
               <span>
                 <Heart
                   strokeWidth={1}
-                  className={`${wishListProducts.length > 0 && "text-[#993556]"} hover:text-surface transition-colors ease-linear`}
+                  className={`${wishListProducts.length > 0 && "text-[#993556]"}`}
                 />
               </span>
               {wishListProducts.length > 0 && (
@@ -103,11 +103,11 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
-            <span className="flex items-center gap-2 group/groupNavCartIcon">
+            <span className="flex items-center gap-2 hover:-translate-y-0.5 transition-transform ease-linear duration-300">
               <span
                 title="Cart Items"
                 onClick={toggleCart}
-                className="hover:text-surface transition-colors ease-linear duration-300 cursor-pointer relative"
+                className="cursor-pointer relative"
               >
                 <ShoppingBag strokeWidth={1} />
                 {cartItemInLS.length > 0 && (
@@ -116,14 +116,14 @@ const Navbar = () => {
                   </span>
                 )}
               </span>
-              <span className="max-md:hidden text-xs group-hover/groupNavCartIcon:text-surface transition-colors ease-linear duration-300">
+              <span className="max-md:hidden text-xs">
                 PKR {formatPrice(handleSubTotal)}
               </span>
             </span>
             <span
               title="Accounts"
               onClick={handleAuthPageRouting}
-              className="hover:text-surface transition-all ease-linear duration-300 cursor-pointer max-lg:hidden"
+              className="hover:-translate-y-0.5 transition-transform ease-linear duration-300 cursor-pointer max-lg:hidden"
             >
               <UserRound strokeWidth={1} />
             </span>
@@ -180,12 +180,12 @@ const Navbar = () => {
             <Link
               href={"/wishlist"}
               title="Favorite Items"
-              className="relative"
+              className="relative hover:-translate-y-0.5 transition-transform ease-linear duration-300"
             >
               <span>
                 <Heart
                   strokeWidth={1}
-                  className={`${wishListProducts.length > 0 && "text-[#993556]"} hover:text-muted transition-all ease-linear`}
+                  className={`${wishListProducts.length > 0 && "text-[#993556]"}`}
                 />
               </span>
               {wishListProducts.length > 0 && (
@@ -194,11 +194,11 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 hover:-translate-y-0.5 transition-transform ease-linear duration-300">
               <span
                 title="Cart Items"
                 onClick={toggleCart}
-                className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer relative"
+                className="cursor-pointer relative"
               >
                 <ShoppingBag strokeWidth={1} />
                 {cartItemInLS.length > 0 && (
@@ -214,7 +214,7 @@ const Navbar = () => {
             <span
               title="Accounts"
               onClick={handleAuthPageRouting}
-              className="hover:text-muted transition-all ease-linear duration-300 cursor-pointer max-lg:hidden"
+              className="hover:-translate-y-0.5 transition-transform ease-linear duration-300 cursor-pointer max-lg:hidden"
             >
               <UserRound strokeWidth={1} />
             </span>
